@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text(appTitle)),
       body: Container(
-        color: Colors.green,
+        color: Colors.yellow,
         child: Row(
           children: [
             const Spacer(),
@@ -24,7 +24,8 @@ class HomePage extends StatelessWidget {
                   const Expanded(flex: 3, child: FinInfo()),
                   const Expanded(flex: 3, child: AssetInfo()),
                   const Expanded(flex: 3, child: LoanInfo()),
-                  Expanded(flex: 2, child: Container(color: Colors.purpleAccent)),
+                  Expanded(
+                      flex: 2, child: Container(color: Colors.purpleAccent)),
                 ],
               ),
             ),
