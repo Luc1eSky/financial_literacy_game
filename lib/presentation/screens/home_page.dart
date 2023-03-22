@@ -4,6 +4,7 @@ import 'package:financial_literacy_game/domain/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../config/constants.dart';
 import '../../domain/concepts/loan.dart';
 
 class HomePage extends StatelessWidget {
@@ -63,7 +64,7 @@ class SmallPortraitLayout extends ConsumerWidget {
               Expanded(
                 flex: 2,
                 child: SectionCard(
-                  title: 'PROGRESS',
+                  title: 'GAME PROGRESS',
                   content: PeriodIndicator(period: period),
                 ),
               ),
@@ -94,14 +95,17 @@ class SmallPortraitLayout extends ConsumerWidget {
                             actions: [
                               TextButton(
                                   onPressed: () {
-                                    ref.read(gameDataNotifierProvider.notifier).advance();
+                                    ref
+                                        .read(gameDataNotifierProvider.notifier)
+                                        .advance();
                                     Navigator.pop(context);
                                   },
                                   child: Text("don't buy")),
                               TextButton(
                                   onPressed: () {
                                     if (ref
-                                            .read(gameDataNotifierProvider.notifier)
+                                            .read(gameDataNotifierProvider
+                                                .notifier)
                                             .buyAsset(cow1) ==
                                         false) {
                                       showDialog(
@@ -109,10 +113,12 @@ class SmallPortraitLayout extends ConsumerWidget {
                                           builder: (context) {
                                             return AlertDialog(
                                               title: const Text('Error'),
-                                              content: const Text('Not enough cash!'),
+                                              content: const Text(
+                                                  'Not enough cash!'),
                                               actions: [
                                                 TextButton(
-                                                  onPressed: () => Navigator.pop(context),
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
                                                   child: const Text('okay'),
                                                 )
                                               ],
@@ -180,7 +186,7 @@ class PeriodIndicator extends StatelessWidget {
             child: Container(
               height: 12,
               // TODO: REPLACE 50 WITH MAX PERIODS
-              width: constraints.maxWidth * ((period + 1) / 50),
+              width: constraints.maxWidth * ((period + 1) / maxPeriod),
               decoration: BoxDecoration(
                 color: Colors.pinkAccent,
                 borderRadius: BorderRadius.circular(20.0),
@@ -241,27 +247,31 @@ class OverviewContent extends ConsumerWidget {
     final AutoSizeGroup valueSizeGroup = AutoSizeGroup();
 
     double cash = ref.watch(gameDataNotifierProvider).cash;
-    double income = ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
-    double expenses = ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
+    double income =
+        ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
+    double expenses =
+        ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
 
     return Row(
       children: [
         Expanded(
           child: ContentCard(
-            content: OverviewTileContent(title: 'Cash', value: cash, group: valueSizeGroup),
+            content: OverviewTileContent(
+                title: 'Cash', value: cash, group: valueSizeGroup),
           ),
         ),
         const SizedBox(width: 7.0),
         Expanded(
           child: ContentCard(
-            content: OverviewTileContent(title: 'Income', value: income, group: valueSizeGroup),
+            content: OverviewTileContent(
+                title: 'Income', value: income, group: valueSizeGroup),
           ),
         ),
         const SizedBox(width: 7.0),
         Expanded(
           child: ContentCard(
-            content:
-                OverviewTileContent(title: 'Expenses', value: -expenses, group: valueSizeGroup),
+            content: OverviewTileContent(
+                title: 'Expenses', value: -expenses, group: valueSizeGroup),
           ),
         ),
       ],
@@ -398,11 +408,15 @@ class AssetContent extends ConsumerWidget {
     int chickens = ref.watch(gameDataNotifierProvider).chickens;
     int goats = ref.watch(gameDataNotifierProvider).goats;
 
-    double cowIncome = ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.cow);
-    double chickenIncome =
-        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.chicken);
-    double goatIncome =
-        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.goat);
+    double cowIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.cow);
+    double chickenIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.chicken);
+    double goatIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.goat);
     return Row(
       children: [
         Expanded(
@@ -411,7 +425,7 @@ class AssetContent extends ConsumerWidget {
           count: cows,
           income: cowIncome,
           group: valueSizeGroup,
-          imagePath: 'images/cow.jpg',
+          imagePath: 'assets/images/cow.jpg',
         )),
         const SizedBox(width: 7.0),
         Expanded(
@@ -420,7 +434,7 @@ class AssetContent extends ConsumerWidget {
           count: chickens,
           income: chickenIncome,
           group: valueSizeGroup,
-          imagePath: 'images/chicken.jpg',
+          imagePath: 'assets/images/chicken.jpg',
         )),
         const SizedBox(width: 7.0),
         Expanded(
@@ -429,7 +443,7 @@ class AssetContent extends ConsumerWidget {
           count: goats,
           income: goatIncome,
           group: valueSizeGroup,
-          imagePath: 'images/goat.jpg',
+          imagePath: 'assets/images/goat.jpg',
         )),
       ],
     );
@@ -571,18 +585,32 @@ class SmallAssetCard extends StatelessWidget {
                 flex: 2,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: FittedBox(
-                    child: Image.asset(imagePath),
-                  ),
+                  child: Image.asset(imagePath),
                 ),
               ),
               Expanded(
-                child: AutoSizeText(
-                  '${count}X',
-                  style: TextStyle(
-                    color: Colors.grey[300],
-                    fontSize: 100.0,
-                  ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: AutoSizeText(
+                        '${count}',
+                        style: TextStyle(
+                          color: Colors.grey[300],
+                          fontSize: 100.0,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: AutoSizeText(
+                        title,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: Colors.grey[300],
+                          fontSize: 40.0,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(

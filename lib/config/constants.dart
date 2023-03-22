@@ -7,3 +7,4 @@ const double initialCashInterest = 0.05;
 
 const int defaultLifeSpan = 2; // 6
 const int defaultLoanTerm = 2;
+const int maxPeriod = 10;
