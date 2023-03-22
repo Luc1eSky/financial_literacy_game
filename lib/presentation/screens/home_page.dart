@@ -13,11 +13,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[800],
+      backgroundColor: Colors.white, //Colors.grey[800],
       //appBar: AppBar(title: const Text(appTitle)),
       body: SafeArea(
         child: LayoutBuilder(builder: (context, constraints) {
-          bool isPortrait = constraints.maxHeight > constraints.maxWidth * 1.5;
+          bool isPortrait = constraints.maxHeight > constraints.maxWidth;
           return SingleChildScrollView(
             child: constraints.maxWidth > 1000
                 ? const LargeLayout()
@@ -76,17 +76,21 @@ class SmallPortraitLayout extends ConsumerWidget {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text('Want to buy asset?'),
+                            title: const Text('Investment Option'),
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //Image.asset(''),
+
                                 Text(cow1.type.name),
+                                Image.asset('images/cow.png',
+                                    height: 60.0, fit: BoxFit.cover),
+                                //imagePath: 'assets/images/cow.png',
                                 Text('Price: ${cow1.price}'),
                                 Text('Expected Income: ${cow1.income}'),
                                 Text('Life Expectancy: ${cow1.lifeSpan}'),
-                                Text('Risk: ${cow1.riskLevel}'),
+                                //Text('Risk: ${cow1.riskLevel}'),
                                 SizedBox(height: 10),
                                 Text('Borrow at 25%'),
                                 Text('Interest on cash is 5%'),
@@ -212,7 +216,7 @@ class SectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[900],
+        color: Colors.grey[400],
         borderRadius: BorderRadius.circular(22.0),
       ),
       child: Padding(
@@ -223,7 +227,7 @@ class SectionCard extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: Colors.grey[300],
+                color: Colors.white,
                 fontSize: 20.0,
                 //fontWeight: FontWeight.bold,
               ),
@@ -421,29 +425,29 @@ class AssetContent extends ConsumerWidget {
       children: [
         Expanded(
             child: SmallAssetCard(
-          title: 'COW',
+          title: 'cow',
           count: cows,
           income: cowIncome,
           group: valueSizeGroup,
-          imagePath: 'assets/images/cow.jpg',
+          imagePath: 'assets/images/cow.png',
         )),
         const SizedBox(width: 7.0),
         Expanded(
             child: SmallAssetCard(
-          title: 'CHICKEN',
+          title: 'chicken',
           count: chickens,
           income: chickenIncome,
           group: valueSizeGroup,
-          imagePath: 'assets/images/chicken.jpg',
+          imagePath: 'assets/images/chicken.png',
         )),
         const SizedBox(width: 7.0),
         Expanded(
             child: SmallAssetCard(
-          title: 'GOAT',
+          title: 'goat',
           count: goats,
           income: goatIncome,
           group: valueSizeGroup,
-          imagePath: 'assets/images/goat.jpg',
+          imagePath: 'assets/images/goat.png',
         )),
       ],
     );
@@ -594,6 +598,7 @@ class SmallAssetCard extends StatelessWidget {
                     Expanded(
                       child: AutoSizeText(
                         '${count}',
+                        textAlign: TextAlign.right,
                         style: TextStyle(
                           color: Colors.grey[300],
                           fontSize: 100.0,
@@ -602,11 +607,11 @@ class SmallAssetCard extends StatelessWidget {
                     ),
                     Expanded(
                       child: AutoSizeText(
-                        title,
+                        ' assets',
                         maxLines: 1,
                         style: TextStyle(
                           color: Colors.grey[300],
-                          fontSize: 40.0,
+                          fontSize: 10.0,
                         ),
                       ),
                     ),
