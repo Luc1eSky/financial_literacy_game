@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:financial_literacy_game/domain/concepts/asset.dart';
 import 'package:financial_literacy_game/domain/game_data_notifier.dart';
@@ -6,6 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/constants.dart';
 import '../../domain/concepts/loan.dart';
+import '../../domain/entities/assets.dart';
+import '../../domain/entities/loans.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -69,98 +73,160 @@ class SmallPortraitLayout extends ConsumerWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Investment Option'),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //Image.asset(''),
-
-                                Text(cow1.type.name),
-                                Image.asset('images/cow.png',
-                                    height: 60.0, fit: BoxFit.cover),
-                                //imagePath: 'assets/images/cow.png',
-                                Text('Price: ${cow1.price}'),
-                                Text('Expected Income: ${cow1.income}'),
-                                Text('Life Expectancy: ${cow1.lifeSpan}'),
-                                //Text('Risk: ${cow1.riskLevel}'),
-                                SizedBox(height: 10),
-                                Text('Borrow at 25%'),
-                                Text('Interest on cash is 5%'),
-                              ],
-                            ),
-                            actions: [
-                              TextButton(
-                                  onPressed: () {
-                                    ref
-                                        .read(gameDataNotifierProvider.notifier)
-                                        .advance();
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("don't buy")),
-                              TextButton(
-                                  onPressed: () {
-                                    if (ref
-                                            .read(gameDataNotifierProvider
-                                                .notifier)
-                                            .buyAsset(cow1) ==
-                                        false) {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              title: const Text('Error'),
-                                              content: const Text(
-                                                  'Not enough cash!'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
-                                                  child: const Text('okay'),
-                                                )
-                                              ],
-                                            );
-                                          });
-                                    } else {
-                                      Navigator.pop(context);
-                                    }
-                                  },
-                                  child: Text('pay cash')),
-                              TextButton(
-                                  onPressed: () {
-                                    ref
-                                        .read(gameDataNotifierProvider.notifier)
-                                        .loanAsset(loan1, cow1);
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text('borrow')),
-                            ],
-                          );
-                        });
-                  },
-                  child: Text('NEXT PERIOD'),
-                ),
+              const Expanded(
+                child: NextPeriodButton(),
               ),
             ],
           ),
           const SizedBox(height: 10),
-          SectionCard(title: 'OVERVIEW', content: OverviewContent()),
+          const SectionCard(title: 'OVERVIEW', content: OverviewContent()),
           const SizedBox(height: 10),
-          SectionCard(title: 'PERSONAL', content: PersonalContent()),
+          const SectionCard(title: 'PERSONAL', content: PersonalContent()),
           const SizedBox(height: 10),
-          SectionCard(title: 'ASSETS', content: AssetContent()),
+          const SectionCard(title: 'ASSETS', content: AssetContent()),
           const SizedBox(height: 10),
-          SectionCard(title: 'LOANS', content: LoanContent()),
+          const SectionCard(title: 'LOANS', content: LoanContent()),
         ],
       ),
     );
+  }
+}
+
+class NextPeriodButton extends ConsumerWidget {
+  const NextPeriodButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    int period = min(ref.watch(gameDataNotifierProvider).period, maxPeriod - 1);
+    Asset currentAsset = assets[period];
+    return ElevatedButton(
+      onPressed: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Investment Option'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //Image.asset(''),
+
+                    Text(currentAsset.type.name),
+                    Image.asset(currentAsset.imagePath, height: 60.0, fit: BoxFit.cover),
+                    //imagePath: 'assets/images/cow.png',
+                    Text('Price: ${currentAsset.price}'),
+                    Text('Expected Income: ${currentAsset.income}'),
+                    Text('Life Expectancy: ${currentAsset.lifeSpan}'),
+                    //Text('Risk: ${cow1.riskLevel}'),
+                    const SizedBox(height: 10),
+                    const Text('Borrow at 25%'),
+                    const Text('Interest on cash is 5%'),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        ref.read(gameDataNotifierProvider.notifier).advance();
+                        Navigator.pop(context);
+                        checkBankruptcy(ref, context);
+                        checkGameHasEnded(ref, context);
+                      },
+                      child: const Text("don't buy")),
+                  TextButton(
+                      onPressed: () {
+                        if (ref.read(gameDataNotifierProvider.notifier).buyAsset(currentAsset) ==
+                            false) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text('Error'),
+                                  content: const Text('Not enough cash!'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('okay'),
+                                    )
+                                  ],
+                                );
+                              });
+                        } else {
+                          Navigator.pop(context);
+                          checkGameHasEnded(ref, context);
+                        }
+                      },
+                      child: const Text('pay cash')),
+                  TextButton(
+                      onPressed: () {
+                        ref
+                            .read(gameDataNotifierProvider.notifier)
+                            .loanAsset(defaultLoan, currentAsset);
+                        Navigator.pop(context);
+                        checkBankruptcy(ref, context);
+                        checkGameHasEnded(ref, context);
+                      },
+                      child: const Text('borrow')),
+                ],
+              );
+            });
+      },
+      child: const Text('NEXT PERIOD'),
+    );
+  }
+
+  void checkBankruptcy(WidgetRef ref, BuildContext context) {
+    if (ref.read(gameDataNotifierProvider).isBankrupt) {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Container(
+                height: 100,
+                width: 100,
+                color: Colors.red,
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    ref.read(gameDataNotifierProvider.notifier).resetGame();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('RESTART'),
+                ),
+              ],
+            );
+          });
+    }
+  }
+
+  void checkGameHasEnded(WidgetRef ref, BuildContext context) {
+    if (ref.read(gameDataNotifierProvider).gameIsFinished) {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Container(
+                height: 100,
+                width: 100,
+                color: Colors.green,
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    ref.read(gameDataNotifierProvider.notifier).resetGame();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('RESTART'),
+                ),
+              ],
+            );
+          });
+    }
   }
 }
 
@@ -189,8 +255,7 @@ class PeriodIndicator extends StatelessWidget {
             top: -1.0,
             child: Container(
               height: 12,
-              // TODO: REPLACE 50 WITH MAX PERIODS
-              width: constraints.maxWidth * ((period + 1) / maxPeriod),
+              width: constraints.maxWidth * (period / maxPeriod),
               decoration: BoxDecoration(
                 color: Colors.pinkAccent,
                 borderRadius: BorderRadius.circular(20.0),
@@ -226,7 +291,7 @@ class SectionCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20.0,
                 //fontWeight: FontWeight.bold,
@@ -251,31 +316,27 @@ class OverviewContent extends ConsumerWidget {
     final AutoSizeGroup valueSizeGroup = AutoSizeGroup();
 
     double cash = ref.watch(gameDataNotifierProvider).cash;
-    double income =
-        ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
-    double expenses =
-        ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
+    double income = ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
+    double expenses = ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
 
     return Row(
       children: [
         Expanded(
           child: ContentCard(
-            content: OverviewTileContent(
-                title: 'Cash', value: cash, group: valueSizeGroup),
+            content: OverviewTileContent(title: 'Cash', value: cash, group: valueSizeGroup),
           ),
         ),
         const SizedBox(width: 7.0),
         Expanded(
           child: ContentCard(
-            content: OverviewTileContent(
-                title: 'Income', value: income, group: valueSizeGroup),
+            content: OverviewTileContent(title: 'Income', value: income, group: valueSizeGroup),
           ),
         ),
         const SizedBox(width: 7.0),
         Expanded(
           child: ContentCard(
-            content: OverviewTileContent(
-                title: 'Expenses', value: -expenses, group: valueSizeGroup),
+            content:
+                OverviewTileContent(title: 'Expenses', value: -expenses, group: valueSizeGroup),
           ),
         ),
       ],
@@ -302,7 +363,7 @@ class PersonalContent extends ConsumerWidget {
           ),
         ),
         //Expanded(child: LoanCard(name: '\$8.50', payment: 6.50, group: valueSizeGroup)),
-        SizedBox(width: 7.0),
+        const SizedBox(width: 7.0),
       ],
     );
   }
@@ -412,15 +473,11 @@ class AssetContent extends ConsumerWidget {
     int chickens = ref.watch(gameDataNotifierProvider).chickens;
     int goats = ref.watch(gameDataNotifierProvider).goats;
 
-    double cowIncome = ref
-        .watch(gameDataNotifierProvider.notifier)
-        .calculateIncome(AssetType.cow);
-    double chickenIncome = ref
-        .watch(gameDataNotifierProvider.notifier)
-        .calculateIncome(AssetType.chicken);
-    double goatIncome = ref
-        .watch(gameDataNotifierProvider.notifier)
-        .calculateIncome(AssetType.goat);
+    double cowIncome = ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.cow);
+    double chickenIncome =
+        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.chicken);
+    double goatIncome =
+        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.goat);
     return Row(
       children: [
         Expanded(
@@ -597,7 +654,7 @@ class SmallAssetCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: AutoSizeText(
-                        '${count}',
+                        '$count',
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           color: Colors.grey[300],

@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:financial_literacy_game/domain/concepts/asset.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../config/constants.dart';
 import 'concepts/game_data.dart';
 import 'concepts/loan.dart';
 
@@ -11,8 +14,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier() : super(GameData());
 
   void advance() {
-    state = state.copyWith(period: state.period + 1);
-    // TODO: calculate interest on cash
+    // increase period counter
+    state = state.copyWith(period: min(state.period + 1, maxPeriod));
+    // calculate interest on cash
     state = state.copyWith(cash: state.cash * (1 + state.cashInterest));
 
     // age assets by one period
@@ -37,9 +41,17 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
     state = state.copyWith(loans: activeLoans);
 
-    // TODO: add net income to cash
     double netIncome = calculateTotalIncome() - calculateTotalExpenses();
     state = state.copyWith(cash: state.cash + netIncome);
+
+    // check if bankrupt
+    if (state.cash < 0) {
+      state = state.copyWith(isBankrupt: true);
+    }
+    // check if game has ended
+    if (state.period >= maxPeriod) {
+      state = state.copyWith(gameIsFinished: true);
+    }
   }
 
   void _addAsset(Asset newAsset) {
@@ -66,9 +78,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void loanAsset(Loan loan, Asset asset) {
     Loan issuedLoan = loan.copyWith(loanAmount: asset.price);
+    _addAsset(asset);
     // add loan
     _addLoan(issuedLoan);
-    _addAsset(asset);
     advance();
   }
 
@@ -100,5 +112,10 @@ class GameDataNotifier extends StateNotifier<GameData> {
       }
     }
     return income;
+  }
+
+  void resetGame() {
+    // TODO: TRACK / SAVE GAME DATA
+    state = GameData();
   }
 }

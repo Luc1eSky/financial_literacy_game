@@ -10,6 +10,8 @@ class GameData {
   final double personalExpenses;
   final List<Asset> assets;
   final List<Loan> loans;
+  final bool isBankrupt;
+  final bool gameIsFinished;
 
   GameData({
     this.period = 0,
@@ -19,6 +21,8 @@ class GameData {
     this.personalExpenses = initialPersonalExpenses,
     this.assets = const [],
     this.loans = const [],
+    this.isBankrupt = false,
+    this.gameIsFinished = false,
   });
 
   // method to copy custom class
@@ -30,6 +34,8 @@ class GameData {
     double? personalExpenses,
     List<Asset>? assets,
     List<Loan>? loans,
+    bool? isBankrupt,
+    bool? gameIsFinished,
   }) {
     return GameData(
       period: period ?? this.period,
@@ -39,6 +45,8 @@ class GameData {
       personalExpenses: personalExpenses ?? this.personalExpenses,
       assets: assets ?? copyAssetArray(this.assets),
       loans: loans ?? copyLoanArray(this.loans),
+      isBankrupt: isBankrupt ?? this.isBankrupt,
+      gameIsFinished: gameIsFinished ?? this.gameIsFinished,
     );
   }
 

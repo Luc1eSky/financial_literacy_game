@@ -32,5 +32,3 @@ class Loan {
     return loanAmount * (1 + interestRate) / termInPeriods;
   }
 }
-
-Loan loan1 = Loan(interestRate: 0.25, loanAmount: 0);

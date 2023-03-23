@@ -59,11 +59,3 @@ extension ReturnStrings on AssetType {
     }
   }
 }
-
-Asset cow1 = Asset(
-  type: AssetType.cow,
-  imagePath: 'test',
-  price: 10,
-  income: 4,
-  riskLevel: 0.8,
-);
