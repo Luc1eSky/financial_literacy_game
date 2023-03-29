@@ -1,8 +1,10 @@
 import '../../config/constants.dart';
+import '../utils/utils.dart';
 import 'asset.dart';
 import 'loan.dart';
 
 class GameData {
+  final int levelId;
   final int period;
   final double cash;
   final double cashInterest;
@@ -14,6 +16,7 @@ class GameData {
   final bool gameIsFinished;
 
   GameData({
+    this.levelId = 0,
     this.period = 0,
     this.cash = initialMoney,
     this.cashInterest = initialCashInterest,
@@ -27,6 +30,7 @@ class GameData {
 
   // method to copy custom class
   GameData copyWith({
+    int? levelId,
     int? period,
     double? cash,
     double? cashInterest,
@@ -38,6 +42,7 @@ class GameData {
     bool? gameIsFinished,
   }) {
     return GameData(
+      levelId: levelId ?? this.levelId,
       period: period ?? this.period,
       cash: cash ?? this.cash,
       cashInterest: cashInterest ?? this.cashInterest,
@@ -54,7 +59,7 @@ class GameData {
     int cows = 0;
     for (Asset asset in assets) {
       if (asset.type == AssetType.cow) {
-        cows++;
+        cows += asset.numberOfAnimals;
       }
     }
     return cows;
@@ -64,7 +69,7 @@ class GameData {
     int chickens = 0;
     for (Asset asset in assets) {
       if (asset.type == AssetType.chicken) {
-        chickens++;
+        chickens += asset.numberOfAnimals;
       }
     }
     return chickens;
@@ -74,27 +79,9 @@ class GameData {
     int goats = 0;
     for (Asset asset in assets) {
       if (asset.type == AssetType.goat) {
-        goats++;
+        goats += asset.numberOfAnimals;
       }
     }
     return goats;
   }
-}
-
-// helper method to copy a list of assets
-List<Asset> copyAssetArray(List<Asset> assetList) {
-  List<Asset> copiedAssetList = [];
-  for (Asset asset in assetList) {
-    copiedAssetList.add(asset.copyWith());
-  }
-  return copiedAssetList;
-}
-
-// helper method to copy a list of loans
-List<Loan> copyLoanArray(List<Loan> loanList) {
-  List<Loan> copiedLoanList = [];
-  for (Loan loan in loanList) {
-    copiedLoanList.add(loan.copyWith());
-  }
-  return copiedLoanList;
 }

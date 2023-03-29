@@ -2,6 +2,7 @@ import '../../config/constants.dart';
 
 class Asset {
   final AssetType type;
+  final int numberOfAnimals;
   final String imagePath;
   final double price;
   final double income;
@@ -11,6 +12,7 @@ class Asset {
 
   Asset({
     required this.type,
+    required this.numberOfAnimals,
     required this.imagePath,
     required this.price,
     required this.income,
@@ -22,6 +24,7 @@ class Asset {
   // method to copy custom class
   Asset copyWith({
     AssetType? type,
+    int? numberOfAnimals,
     String? imagePath,
     double? price,
     double? income,
@@ -31,6 +34,7 @@ class Asset {
   }) {
     return Asset(
       type: type ?? this.type,
+      numberOfAnimals: numberOfAnimals ?? this.numberOfAnimals,
       imagePath: imagePath ?? this.imagePath,
       price: price ?? this.price,
       income: income ?? this.income,

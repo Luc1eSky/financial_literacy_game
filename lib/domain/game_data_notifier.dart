@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:financial_literacy_game/domain/concepts/asset.dart';
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../config/constants.dart';
 import 'concepts/game_data.dart';
 import 'concepts/loan.dart';
+import 'entities/levels.dart';
 
 final gameDataNotifierProvider =
     StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
@@ -14,8 +15,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier() : super(GameData());
 
   void advance() {
+    // TODO: PERIODS STILL COUNTED?
     // increase period counter
-    state = state.copyWith(period: min(state.period + 1, maxPeriod));
+    //state = state.copyWith(period: min(state.period + 1, maxPeriod));
     // calculate interest on cash
     state = state.copyWith(cash: state.cash * (1 + state.cashInterest));
 
@@ -48,8 +50,18 @@ class GameDataNotifier extends StateNotifier<GameData> {
     if (state.cash < 0) {
       state = state.copyWith(isBankrupt: true);
     }
+
+    // check if next level was reached
+    for (int i = levels.length - 1; i > state.levelId; i--) {
+      if (state.cash >= levels[i].requiredCash) {
+        // move on to next level
+        state = state.copyWith(levelId: i);
+        break;
+      }
+    }
+
     // check if game has ended
-    if (state.period >= maxPeriod) {
+    if (state.levelId >= (levels.length - 1)) {
       state = state.copyWith(gameIsFinished: true);
     }
   }
@@ -66,21 +78,36 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = state.copyWith(loans: newLoanList);
   }
 
-  bool buyAsset(Asset asset) {
-    if (state.cash >= asset.price) {
-      state = state.copyWith(cash: state.cash - asset.price);
-      _addAsset(asset);
-      advance();
-      return true;
+  Future<bool> _animalDied(Asset asset, Function showAnimalDied) async {
+    if (asset.riskLevel > Random().nextDouble()) {
+      return await showAnimalDied(asset);
+    } else {
+      return false;
     }
-    return false;
   }
 
-  void loanAsset(Loan loan, Asset asset) {
-    Loan issuedLoan = loan.copyWith(loanAmount: asset.price);
-    _addAsset(asset);
-    // add loan
-    _addLoan(issuedLoan);
+  Future<bool> buyAsset(Asset asset, Function showNotEnoughCash, Function showAnimalDied) async {
+    if (state.cash >= asset.price) {
+      state = state.copyWith(cash: state.cash - asset.price);
+      //check if animal died based on risk level
+      if (!await _animalDied(asset, showAnimalDied)) {
+        _addAsset(asset);
+      }
+      advance();
+      return true;
+    } else {
+      showNotEnoughCash();
+      return false;
+    }
+  }
+
+  Future<void> loanAsset(Loan loan, Asset asset, Function showAnimalDied) async {
+    //check if animal died based on risk level
+    if (!await _animalDied(asset, showAnimalDied)) {
+      Loan issuedLoan = loan.copyWith(loanAmount: asset.price);
+      _addAsset(asset);
+      _addLoan(issuedLoan);
+    }
     advance();
   }
 
