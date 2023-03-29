@@ -356,80 +356,84 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
           });
     }
 
-    return AlertDialog(
-      //insetPadding: EdgeInsets.zero,
-      title: const Text(
-        'Investment Option',
-        style: TextStyle(
-          fontSize: 25.0,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      content: SizedBox(
-        width: min(MediaQuery.of(context).size.width, 400),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AspectRatio(
-              aspectRatio: 1.0,
-              child: AssetCarousel(
-                assets: levelAssets,
-                textGroup: textGroup,
-                changingIndex: setIndex,
-              ),
+    return Center(
+      child: SingleChildScrollView(
+        child: AlertDialog(
+          //insetPadding: EdgeInsets.zero,
+          title: const Text(
+            'Investment Option',
+            style: TextStyle(
+              fontSize: 25.0,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(height: 20),
-            AutoSizeText(
-              '• Borrow at 25% interest / year',
-              maxLines: 1,
-              style: const TextStyle(fontSize: 100),
-              group: textGroup,
+          ),
+          content: SizedBox(
+            width: min(MediaQuery.of(context).size.width, 400),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.0,
+                  child: AssetCarousel(
+                    assets: levelAssets,
+                    textGroup: textGroup,
+                    changingIndex: setIndex,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                AutoSizeText(
+                  '• Borrow at 25% interest / year',
+                  maxLines: 1,
+                  style: const TextStyle(fontSize: 100),
+                  group: textGroup,
+                ),
+                AutoSizeText(
+                  '• Interest rate on cash is 5% / year',
+                  maxLines: 1,
+                  style: const TextStyle(fontSize: 100),
+                  group: textGroup,
+                ),
+              ],
             ),
-            AutoSizeText(
-              '• Interest rate on cash is 5% / year',
-              maxLines: 1,
-              style: const TextStyle(fontSize: 100),
-              group: textGroup,
-            ),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  widget.ref.read(gameDataNotifierProvider.notifier).advance();
+                  Navigator.pop(context);
+                  checkBankruptcy(widget.ref, context);
+                  checkGameHasEnded(widget.ref, context);
+                },
+                child: const Text("don't buy")),
+            TextButton(
+                onPressed: () async {
+                  if (await widget.ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .buyAsset(_selectedAsset, showNotEnoughCash, showAnimalDiedWarning) ==
+                      true) {
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                      checkGameHasEnded(widget.ref, context);
+                    }
+                  }
+                },
+                child: const Text('pay cash')),
+            TextButton(
+                onPressed: () async {
+                  await widget.ref
+                      .read(gameDataNotifierProvider.notifier)
+                      .loanAsset(defaultLoan, _selectedAsset, showAnimalDiedWarning);
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    checkBankruptcy(widget.ref, context);
+                    checkGameHasEnded(widget.ref, context);
+                  }
+                },
+                child: const Text('borrow')),
           ],
         ),
       ),
-      actions: [
-        TextButton(
-            onPressed: () {
-              widget.ref.read(gameDataNotifierProvider.notifier).advance();
-              Navigator.pop(context);
-              checkBankruptcy(widget.ref, context);
-              checkGameHasEnded(widget.ref, context);
-            },
-            child: const Text("don't buy")),
-        TextButton(
-            onPressed: () async {
-              if (await widget.ref
-                      .read(gameDataNotifierProvider.notifier)
-                      .buyAsset(_selectedAsset, showNotEnoughCash, showAnimalDiedWarning) ==
-                  true) {
-                if (context.mounted) {
-                  Navigator.pop(context);
-                  checkGameHasEnded(widget.ref, context);
-                }
-              }
-            },
-            child: const Text('pay cash')),
-        TextButton(
-            onPressed: () async {
-              await widget.ref
-                  .read(gameDataNotifierProvider.notifier)
-                  .loanAsset(defaultLoan, _selectedAsset, showAnimalDiedWarning);
-              if (context.mounted) {
-                Navigator.pop(context);
-                checkBankruptcy(widget.ref, context);
-                checkGameHasEnded(widget.ref, context);
-              }
-            },
-            child: const Text('borrow')),
-      ],
     );
   }
 }
