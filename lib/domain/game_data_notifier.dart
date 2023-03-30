@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:financial_literacy_game/config/constants.dart';
 import 'package:financial_literacy_game/domain/concepts/asset.dart';
 import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,8 @@ import 'concepts/loan.dart';
 import 'entities/levels.dart';
 
 final gameDataNotifierProvider =
-    StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
+    StateNotifierProvider<GameDataNotifier, GameData>(
+        (ref) => GameDataNotifier());
 
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier() : super(GameData());
@@ -55,7 +57,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     for (int i = levels.length - 1; i > state.levelId; i--) {
       if (state.cash >= levels[i].requiredCash) {
         // move on to next level
-        state = state.copyWith(levelId: i);
+        state = state.copyWith(levelId: i, cash: initialMoney);
         break;
       }
     }
@@ -86,7 +88,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  Future<bool> buyAsset(Asset asset, Function showNotEnoughCash, Function showAnimalDied) async {
+  Future<bool> buyAsset(
+      Asset asset, Function showNotEnoughCash, Function showAnimalDied) async {
     if (state.cash >= asset.price) {
       state = state.copyWith(cash: state.cash - asset.price);
       //check if animal died based on risk level
@@ -101,13 +104,14 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  Future<void> loanAsset(Loan loan, Asset asset, Function showAnimalDied) async {
+  Future<void> loanAsset(
+      Loan loan, Asset asset, Function showAnimalDied) async {
     //check if animal died based on risk level
     if (!await _animalDied(asset, showAnimalDied)) {
-      Loan issuedLoan = loan.copyWith(loanAmount: asset.price);
       _addAsset(asset);
-      _addLoan(issuedLoan);
     }
+    Loan issuedLoan = loan.copyWith(asset: asset);
+    _addLoan(issuedLoan);
     advance();
   }
 

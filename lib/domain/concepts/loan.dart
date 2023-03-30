@@ -1,14 +1,15 @@
 import '../../config/constants.dart';
+import 'asset.dart';
 
 class Loan {
   final double interestRate;
-  final double loanAmount;
+  final Asset asset;
   final int termInPeriods;
   final int age;
 
   Loan({
     required this.interestRate,
-    required this.loanAmount,
+    required this.asset,
     this.termInPeriods = defaultLoanTerm,
     this.age = 0,
   });
@@ -16,19 +17,19 @@ class Loan {
   // method to copy custom class
   Loan copyWith({
     double? interestRate,
-    double? loanAmount,
+    Asset? asset,
     int? termInPeriods,
     int? age,
   }) {
     return Loan(
       interestRate: interestRate ?? this.interestRate,
-      loanAmount: loanAmount ?? this.loanAmount,
+      asset: asset ?? this.asset.copyWith(),
       termInPeriods: termInPeriods ?? this.termInPeriods,
       age: age ?? this.age,
     );
   }
 
   double get paymentPerPeriod {
-    return loanAmount * (1 + interestRate) / termInPeriods;
+    return asset.price * (1 + interestRate) / termInPeriods;
   }
 }
