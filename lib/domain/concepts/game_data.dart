@@ -19,7 +19,7 @@ class GameData {
     this.levelId = 0,
     this.period = 0,
     this.cash = initialMoney,
-    this.cashInterest = initialCashInterest,
+    this.cashInterest = defaultCashInterest,
     this.personalIncome = initialPersonalIncome,
     this.personalExpenses = initialPersonalExpenses,
     this.assets = const [],

@@ -16,7 +16,7 @@ class Level {
     required this.assets,
     this.assetsAreRandomized = false,
     required this.loan,
-    this.savingsRate = defaultSavingsRate,
+    this.savingsRate = defaultCashInterest,
   });
 
   // method to copy custom class
