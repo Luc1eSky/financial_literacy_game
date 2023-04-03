@@ -4,12 +4,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:financial_literacy_game/domain/concepts/asset.dart';
 import 'package:financial_literacy_game/domain/game_data_notifier.dart';
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../config/constants.dart';
+import '../../domain/concepts/level.dart';
 import '../../domain/concepts/loan.dart';
+import '../../domain/entities/assets.dart';
 import '../../domain/entities/levels.dart';
-import '../../domain/entities/loans.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -74,8 +77,7 @@ class SmallPortraitLayout extends ConsumerWidget {
               Expanded(
                 flex: 2,
                 child: SectionCard(
-                  title:
-                      'LEVEL ${levelId + 1} / ${levels.length}    $nextLevelCash',
+                  title: 'LEVEL ${levelId + 1} / ${levels.length}    $nextLevelCash',
                   content: LevelIndicator(levelId: levelId),
                 ),
               ),
@@ -149,8 +151,7 @@ class AssetCarousel extends StatelessWidget {
                       flex: 8,
                       child: Align(
                           alignment: Alignment.center,
-                          child:
-                              Image.asset(asset.imagePath, fit: BoxFit.cover))),
+                          child: Image.asset(asset.imagePath, fit: BoxFit.cover))),
                   const Spacer(),
                   Expanded(
                     flex: 2,
@@ -188,7 +189,7 @@ class AssetCarousel extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: AutoSizeText(
-                      'Risk Level: ${asset.riskLevel}',
+                      'Risk Level: ${(asset.riskLevel * 100).toStringAsFixed(0)}%',
                       style: TextStyle(
                         fontSize: 100,
                         color: Colors.grey[200],
@@ -301,13 +302,34 @@ void checkGameHasEnded(WidgetRef ref, BuildContext context) {
 class _InvestmentDialogState extends State<InvestmentDialog> {
   final AutoSizeGroup textGroup = AutoSizeGroup();
   late List<Asset> levelAssets;
+  late Loan levelLoan;
+  late Level currentLevel;
 
   int _selectedIndex = 0;
 
   @override
   void initState() {
-    levelAssets =
-        levels[widget.ref.read(gameDataNotifierProvider).levelId].assets;
+    Level defaultLevel = levels[widget.ref.read(gameDataNotifierProvider).levelId];
+    Level randomLevel = defaultLevel.copyWith(
+        loan: getRandomLoan(),
+        savingsRate: getRandomDouble(
+          start: minimumSavingsRate,
+          end: maximumSavingsRate,
+          steps: stepsSavingsRate,
+        ));
+    currentLevel = levelInterestAndSavingsRandomized ? randomLevel : defaultLevel;
+    if (currentLevel.assetsAreRandomized) {
+      List<Asset> randomizedAssets = [];
+      for (int i = 0; i < currentLevel.assets.length; i++) {
+        randomizedAssets.add(getRandomAsset());
+      }
+      currentLevel = currentLevel.copyWith(assets: randomizedAssets);
+    }
+
+    levelAssets = currentLevel.assets;
+    levelLoan = currentLevel.loan;
+
+    //widget.ref.read(gameDataNotifierProvider.notifier).setCashInterest(currentLevel.savingsRate);
     super.initState();
   }
 
@@ -386,13 +408,14 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                 ),
                 const SizedBox(height: 20),
                 AutoSizeText(
-                  '• Borrow at 25% interest / year',
+                  '• Borrow at ${(levelLoan.interestRate * 100).toStringAsFixed(decimalValuesToDisplay)}% interest / '
+                  'year',
                   maxLines: 1,
                   style: const TextStyle(fontSize: 100),
                   group: textGroup,
                 ),
                 AutoSizeText(
-                  '• Interest rate on cash is 5% / year',
+                  '• Interest rate on cash is ${(currentLevel.savingsRate * 100).toStringAsFixed(decimalValuesToDisplay)}% / year',
                   maxLines: 1,
                   style: const TextStyle(fontSize: 100),
                   group: textGroup,
@@ -403,7 +426,9 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
           actions: [
             TextButton(
                 onPressed: () {
-                  widget.ref.read(gameDataNotifierProvider.notifier).advance();
+                  widget.ref
+                      .read(gameDataNotifierProvider.notifier)
+                      .advance(currentLevel.savingsRate);
                   Navigator.pop(context);
                   checkBankruptcy(widget.ref, context);
                   checkGameHasEnded(widget.ref, context);
@@ -411,10 +436,11 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                 child: const Text("don't buy")),
             TextButton(
                 onPressed: () async {
-                  if (await widget.ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .buyAsset(_selectedAsset, showNotEnoughCash,
-                              showAnimalDiedWarning) ==
+                  if (await widget.ref.read(gameDataNotifierProvider.notifier).buyAsset(
+                          _selectedAsset,
+                          showNotEnoughCash,
+                          showAnimalDiedWarning,
+                          currentLevel.savingsRate) ==
                       true) {
                     if (context.mounted) {
                       Navigator.pop(context);
@@ -425,10 +451,8 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                 child: const Text('pay cash')),
             TextButton(
                 onPressed: () async {
-                  await widget.ref
-                      .read(gameDataNotifierProvider.notifier)
-                      .loanAsset(
-                          defaultLoan, _selectedAsset, showAnimalDiedWarning);
+                  await widget.ref.read(gameDataNotifierProvider.notifier).loanAsset(
+                      levelLoan, _selectedAsset, showAnimalDiedWarning, currentLevel.savingsRate);
                   if (context.mounted) {
                     Navigator.pop(context);
                     checkBankruptcy(widget.ref, context);
@@ -529,31 +553,27 @@ class OverviewContent extends ConsumerWidget {
     final AutoSizeGroup valueSizeGroup = AutoSizeGroup();
 
     double cash = ref.watch(gameDataNotifierProvider).cash;
-    double income =
-        ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
-    double expenses =
-        ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
+    double income = ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
+    double expenses = ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
 
     return Row(
       children: [
         Expanded(
           child: ContentCard(
-            content: OverviewTileContent(
-                title: 'Cash', value: cash, group: valueSizeGroup),
+            content: OverviewTileContent(title: 'Cash', value: cash, group: valueSizeGroup),
           ),
         ),
         const SizedBox(width: 7.0),
         Expanded(
           child: ContentCard(
-            content: OverviewTileContent(
-                title: 'Income', value: income, group: valueSizeGroup),
+            content: OverviewTileContent(title: 'Income', value: income, group: valueSizeGroup),
           ),
         ),
         const SizedBox(width: 7.0),
         Expanded(
           child: ContentCard(
-            content: OverviewTileContent(
-                title: 'Expenses', value: -expenses, group: valueSizeGroup),
+            content:
+                OverviewTileContent(title: 'Expenses', value: -expenses, group: valueSizeGroup),
           ),
         ),
       ],
@@ -690,15 +710,11 @@ class AssetContent extends ConsumerWidget {
     int chickens = ref.watch(gameDataNotifierProvider).chickens;
     int goats = ref.watch(gameDataNotifierProvider).goats;
 
-    double cowIncome = ref
-        .watch(gameDataNotifierProvider.notifier)
-        .calculateIncome(AssetType.cow);
-    double chickenIncome = ref
-        .watch(gameDataNotifierProvider.notifier)
-        .calculateIncome(AssetType.chicken);
-    double goatIncome = ref
-        .watch(gameDataNotifierProvider.notifier)
-        .calculateIncome(AssetType.goat);
+    double cowIncome = ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.cow);
+    double chickenIncome =
+        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.chicken);
+    double goatIncome =
+        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.goat);
     return Row(
       children: [
         Expanded(

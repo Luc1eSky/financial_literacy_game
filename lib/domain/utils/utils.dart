@@ -1,4 +1,6 @@
 // helper method to copy a list of assets
+import 'dart:math';
+
 import '../concepts/asset.dart';
 import '../concepts/loan.dart';
 
@@ -17,4 +19,11 @@ List<Loan> copyLoanArray(List<Loan> loanList) {
     copiedLoanList.add(loan.copyWith());
   }
   return copiedLoanList;
+}
+
+// get random double value
+double getRandomDouble({required double start, required double end, required double steps}) {
+  List<double> randomStepList =
+      List.generate((end - start) ~/ steps + 1, (index) => start + index * steps);
+  return randomStepList[Random().nextInt(randomStepList.length)];
 }

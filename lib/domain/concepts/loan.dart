@@ -1,4 +1,7 @@
+import 'package:financial_literacy_game/domain/utils/utils.dart';
+
 import '../../config/constants.dart';
+import '../entities/assets.dart';
 import 'asset.dart';
 
 class Loan {
@@ -32,4 +35,14 @@ class Loan {
   double get paymentPerPeriod {
     return asset.price * (1 + interestRate) / termInPeriods;
   }
+}
+
+Loan getRandomLoan() {
+  return Loan(
+      interestRate: getRandomDouble(
+        start: minimumInterestRate,
+        end: maximumInterestRate,
+        steps: stepsInterestRate,
+      ),
+      asset: cow);
 }

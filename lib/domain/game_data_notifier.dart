@@ -10,16 +10,22 @@ import 'concepts/loan.dart';
 import 'entities/levels.dart';
 
 final gameDataNotifierProvider =
-    StateNotifierProvider<GameDataNotifier, GameData>(
-        (ref) => GameDataNotifier());
+    StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
 
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier() : super(GameData());
 
-  void advance() {
+  void setCashInterest(double newInterest) {
+    state = state.copyWith(cashInterest: newInterest);
+  }
+
+  void advance(double newCashInterest) {
     // TODO: PERIODS STILL COUNTED?
     // increase period counter
     //state = state.copyWith(period: min(state.period + 1, maxPeriod));
+
+    // update cash interest
+    state = state.copyWith(cashInterest: newCashInterest);
     // calculate interest on cash
     state = state.copyWith(cash: state.cash * (1 + state.cashInterest));
 
@@ -88,15 +94,15 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  Future<bool> buyAsset(
-      Asset asset, Function showNotEnoughCash, Function showAnimalDied) async {
+  Future<bool> buyAsset(Asset asset, Function showNotEnoughCash, Function showAnimalDied,
+      double newCashInterest) async {
     if (state.cash >= asset.price) {
       state = state.copyWith(cash: state.cash - asset.price);
       //check if animal died based on risk level
       if (!await _animalDied(asset, showAnimalDied)) {
         _addAsset(asset);
       }
-      advance();
+      advance(newCashInterest);
       return true;
     } else {
       showNotEnoughCash();
@@ -105,14 +111,14 @@ class GameDataNotifier extends StateNotifier<GameData> {
   }
 
   Future<void> loanAsset(
-      Loan loan, Asset asset, Function showAnimalDied) async {
+      Loan loan, Asset asset, Function showAnimalDied, double newCashInterest) async {
     //check if animal died based on risk level
     if (!await _animalDied(asset, showAnimalDied)) {
       _addAsset(asset);
     }
     Loan issuedLoan = loan.copyWith(asset: asset);
     _addLoan(issuedLoan);
-    advance();
+    advance(newCashInterest);
   }
 
   double calculateTotalExpenses() {

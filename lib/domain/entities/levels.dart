@@ -1,37 +1,39 @@
 import 'package:financial_literacy_game/domain/entities/assets.dart';
-import 'package:financial_literacy_game/domain/entities/loans.dart';
 
 import '../concepts/level.dart';
+import '../concepts/loan.dart';
 
 List<Level> levels = [
   // Level 1 - initial level with no cash requirement
   Level(
     requiredCash: 0,
     assets: [goats],
-    loan: defaultLoan,
+    loan: Loan(interestRate: 0.20, asset: cow),
   ),
   // Level 2
   Level(
     requiredCash: 15,
     assets: [chickens],
-    loan: defaultLoan,
+    loan: Loan(interestRate: 0.30, asset: cow),
   ),
   // Level 3
   Level(
     requiredCash: 30,
     assets: [cow],
-    loan: defaultLoan,
+    assetsAreRandomized: true,
+    loan: Loan(interestRate: 0.40, asset: cow),
   ),
   // Level 4
   Level(
     requiredCash: 50,
     assets: [cow, chickens, goats],
-    loan: defaultLoan,
+    loan: Loan(interestRate: 0.25, asset: cow),
   ),
   // Level 5
   Level(
     requiredCash: 100,
     assets: [cow, chickens, goats],
-    loan: defaultLoan,
+    assetsAreRandomized: true,
+    loan: Loan(interestRate: 0.30, asset: cow),
   ),
 ];
