@@ -35,12 +35,14 @@ Asset chickens = Asset(
 List<Asset> allDefaultAssets = [goats, cow, chickens];
 
 Asset getRandomAsset() {
-  Asset randomDefaultAsset = allDefaultAssets[Random().nextInt(allDefaultAssets.length)];
+  Asset randomDefaultAsset =
+      allDefaultAssets[Random().nextInt(allDefaultAssets.length)];
   Asset randomAsset = randomDefaultAsset.copyWith(
-      riskLevel: getRandomDouble(
-    start: minimumRiskLevel,
-    end: maximumRiskLevel,
-    steps: stepsRiskLevel,
-  ));
+    riskLevel: getRandomDouble(
+      start: minimumRiskLevel,
+      end: maximumRiskLevel,
+      steps: stepsRiskLevel,
+    ),
+  );
   return randomAsset;
 }
