@@ -22,8 +22,10 @@ List<Loan> copyLoanArray(List<Loan> loanList) {
 }
 
 // get random double value
-double getRandomDouble({required double start, required double end, required double steps}) {
-  List<double> randomStepList =
-      List.generate((end - start) ~/ steps + 1, (index) => start + index * steps);
+double getRandomDouble(
+    {required double start, required double end, required double steps}) {
+  List<double> randomStepList = List.generate(
+      (end * 100 - start * 100) ~/ (steps * 100) + 1,
+      (index) => start + index * steps);
   return randomStepList[Random().nextInt(randomStepList.length)];
 }

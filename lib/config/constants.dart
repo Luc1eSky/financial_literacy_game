@@ -1,6 +1,6 @@
 const String appTitle = 'FinSim Game';
 // defines if interest and savings rates are random
-const bool levelInterestAndSavingsRandomized = false;
+const bool levelInterestAndSavingsRandomized = true;
 
 // decimal points for borrow and interest rates
 // on "investment options" screen
@@ -21,8 +21,8 @@ const double minimumSavingsRate = 0.0;
 const double maximumSavingsRate = 0.10;
 const double stepsSavingsRate = 0.05;
 
-const double minimumInterestRate = 0.20;
-const double maximumInterestRate = 0.40;
+const double minimumInterestRate = 0.15;
+const double maximumInterestRate = 0.30;
 const double stepsInterestRate = 0.05;
 
 const double minimumRiskLevel = 0.20;

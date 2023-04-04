@@ -19,7 +19,7 @@ List<Level> levels = [
   // Level 3
   Level(
     requiredCash: 30,
-    assets: [cow],
+    assets: [cow, chickens, goats],
     assetsAreRandomized: true,
     loan: Loan(interestRate: 0.40, asset: cow),
   ),
@@ -30,6 +30,12 @@ List<Level> levels = [
     loan: Loan(interestRate: 0.25, asset: cow),
   ),
   // Level 5
+  Level(
+    requiredCash: 60,
+    assets: [cow, chickens, goats],
+    assetsAreRandomized: true,
+    loan: Loan(interestRate: 0.30, asset: cow),
+  ),
   Level(
     requiredCash: 100,
     assets: [cow, chickens, goats],
