@@ -444,6 +444,34 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                   style: const TextStyle(fontSize: 100),
                   group: textGroup,
                 ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AutoSizeText(
+                        'S: \$${(widget.ref.read(gameDataNotifierProvider.notifier).calculateSavingsROI(cashInterest: currentLevel.savingsRate, lifeExpectancy: _selectedAsset.lifeSpan)).toStringAsFixed(2)}',
+                        maxLines: 1,
+                        style: const TextStyle(fontSize: 100),
+                        group: textGroup,
+                      ),
+                    ),
+                    Expanded(
+                      child: AutoSizeText(
+                        'C: \$${(widget.ref.read(gameDataNotifierProvider.notifier).calculateBuyCashROI(riskLevel: _selectedAsset.riskLevel, expectedIncome: _selectedAsset.income, assetPrice: _selectedAsset.price)).toStringAsFixed(2)}',
+                        maxLines: 1,
+                        style: const TextStyle(fontSize: 100),
+                        group: textGroup,
+                      ),
+                    ),
+                    Expanded(
+                      child: AutoSizeText(
+                        'B: \$${(widget.ref.read(gameDataNotifierProvider.notifier).calculateBorrowROI(riskLevel: _selectedAsset.riskLevel, expectedIncome: _selectedAsset.income, assetPrice: _selectedAsset.price, interestRate: currentLevel.loan.interestRate)).toStringAsFixed(2)}',
+                        maxLines: 1,
+                        style: const TextStyle(fontSize: 100),
+                        group: textGroup,
+                      ),
+                    )
+                  ],
+                )
               ],
             ),
           ),

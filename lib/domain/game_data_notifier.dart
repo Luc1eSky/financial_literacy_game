@@ -10,7 +10,8 @@ import 'concepts/loan.dart';
 import 'entities/levels.dart';
 
 final gameDataNotifierProvider =
-    StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
+    StateNotifierProvider<GameDataNotifier, GameData>(
+        (ref) => GameDataNotifier());
 
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier() : super(GameData());
@@ -94,8 +95,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  Future<bool> buyAsset(Asset asset, Function showNotEnoughCash, Function showAnimalDied,
-      double newCashInterest) async {
+  Future<bool> buyAsset(Asset asset, Function showNotEnoughCash,
+      Function showAnimalDied, double newCashInterest) async {
     if (state.cash >= asset.price) {
       state = state.copyWith(cash: state.cash - asset.price);
       //check if animal died based on risk level
@@ -110,8 +111,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  Future<void> loanAsset(
-      Loan loan, Asset asset, Function showAnimalDied, double newCashInterest) async {
+  Future<void> loanAsset(Loan loan, Asset asset, Function showAnimalDied,
+      double newCashInterest) async {
     //check if animal died based on risk level
     if (!await _animalDied(asset, showAnimalDied)) {
       _addAsset(asset);
@@ -154,5 +155,33 @@ class GameDataNotifier extends StateNotifier<GameData> {
   void resetGame() {
     // TODO: TRACK / SAVE GAME DATA
     state = GameData();
+  }
+
+  double calculateSavingsROI(
+      {required double cashInterest, int lifeExpectancy = 6}) {
+    return (state.cash * pow(1 + cashInterest, lifeExpectancy) - state.cash) /
+        lifeExpectancy;
+  }
+
+  double calculateBuyCashROI({
+    required double riskLevel,
+    required double expectedIncome,
+    required double assetPrice,
+    int lifeExpectancy = 6,
+  }) {
+    return (lifeExpectancy * expectedIncome * (1 - riskLevel) - assetPrice) /
+        lifeExpectancy;
+  }
+
+  double calculateBorrowROI({
+    required double riskLevel,
+    required double expectedIncome,
+    required double assetPrice,
+    required double interestRate,
+    int lifeExpectancy = 6,
+  }) {
+    return (lifeExpectancy * expectedIncome * (1 - riskLevel) -
+            (assetPrice * (1 + interestRate))) /
+        lifeExpectancy;
   }
 }
