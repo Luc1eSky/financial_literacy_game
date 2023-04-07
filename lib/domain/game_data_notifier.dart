@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:financial_literacy_game/config/constants.dart';
 import 'package:financial_literacy_game/domain/concepts/asset.dart';
 import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,11 +9,15 @@ import 'concepts/loan.dart';
 import 'entities/levels.dart';
 
 final gameDataNotifierProvider =
-    StateNotifierProvider<GameDataNotifier, GameData>(
-        (ref) => GameDataNotifier());
+    StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
 
 class GameDataNotifier extends StateNotifier<GameData> {
-  GameDataNotifier() : super(GameData());
+  GameDataNotifier()
+      : super(GameData(
+          cash: levels[0].startingCash,
+          personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
+          personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
+        ));
 
   void setCashInterest(double newInterest) {
     state = state.copyWith(cashInterest: newInterest);
@@ -61,12 +64,10 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
 
     // check if next level was reached
-    for (int i = levels.length - 1; i > state.levelId; i--) {
-      if (state.cash >= levels[i].requiredCash) {
-        // move on to next level
-        state = state.copyWith(levelId: i, cash: initialMoney);
-        break;
-      }
+    int nextLevelId = state.levelId + 1;
+    if (state.cash >= levels[state.levelId].cashGoal) {
+      // move on to next level, reset cash
+      state = state.copyWith(levelId: nextLevelId, cash: levels[nextLevelId].startingCash);
     }
 
     // check if game has ended
@@ -95,8 +96,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  Future<bool> buyAsset(Asset asset, Function showNotEnoughCash,
-      Function showAnimalDied, double newCashInterest) async {
+  Future<bool> buyAsset(Asset asset, Function showNotEnoughCash, Function showAnimalDied,
+      double newCashInterest) async {
     if (state.cash >= asset.price) {
       state = state.copyWith(cash: state.cash - asset.price);
       //check if animal died based on risk level
@@ -111,8 +112,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  Future<void> loanAsset(Loan loan, Asset asset, Function showAnimalDied,
-      double newCashInterest) async {
+  Future<void> loanAsset(
+      Loan loan, Asset asset, Function showAnimalDied, double newCashInterest) async {
     //check if animal died based on risk level
     if (!await _animalDied(asset, showAnimalDied)) {
       _addAsset(asset);
@@ -127,7 +128,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
     for (Loan loan in state.loans) {
       loanPayments += loan.paymentPerPeriod;
     }
-    double totalExpenses = state.personalExpenses + loanPayments;
+
+    double totalExpenses =
+        loanPayments + (levels[state.levelId].includePersonalIncome ? state.personalExpenses : 0);
     return totalExpenses;
   }
 
@@ -137,7 +140,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     for (Asset asset in state.assets) {
       assetIncome += asset.income;
     }
-    double totalIncome = state.personalIncome + assetIncome;
+    double totalIncome =
+        assetIncome + (levels[state.levelId].includePersonalIncome ? state.personalIncome : 0);
     return totalIncome;
   }
 
@@ -154,13 +158,15 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void resetGame() {
     // TODO: TRACK / SAVE GAME DATA
-    state = GameData();
+    state = GameData(
+      cash: levels[0].startingCash,
+      personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
+      personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
+    );
   }
 
-  double calculateSavingsROI(
-      {required double cashInterest, int lifeExpectancy = 6}) {
-    return (state.cash * pow(1 + cashInterest, lifeExpectancy) - state.cash) /
-        lifeExpectancy;
+  double calculateSavingsROI({required double cashInterest, int lifeExpectancy = 6}) {
+    return (state.cash * pow(1 + cashInterest, lifeExpectancy) - state.cash) / lifeExpectancy;
   }
 
   double calculateBuyCashROI({
@@ -169,8 +175,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     required double assetPrice,
     int lifeExpectancy = 6,
   }) {
-    return (lifeExpectancy * expectedIncome * (1 - riskLevel) - assetPrice) /
-        lifeExpectancy;
+    return (lifeExpectancy * expectedIncome * (1 - riskLevel) - assetPrice) / lifeExpectancy;
   }
 
   double calculateBorrowROI({
@@ -180,8 +185,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     required double interestRate,
     int lifeExpectancy = 6,
   }) {
-    return (lifeExpectancy * expectedIncome * (1 - riskLevel) -
-            (assetPrice * (1 + interestRate))) /
+    return (lifeExpectancy * expectedIncome * (1 - riskLevel) - (assetPrice * (1 + interestRate))) /
         lifeExpectancy;
   }
 }

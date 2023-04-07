@@ -6,38 +6,34 @@ import '../concepts/loan.dart';
 List<Level> levels = [
   // Level 1 - initial level with no cash requirement
   Level(
-    requiredCash: 0,
-    assets: [goats],
+    startingCash: 10,
+    cashGoal: 30,
+    assets: [chickens.copyWith(riskLevel: 0)],
     loan: Loan(interestRate: 0.20, asset: cow),
+    loanInterestRandomized: true,
   ),
   // Level 2
   Level(
-    requiredCash: 15,
+    cashGoal: 30,
     assets: [chickens],
     loan: Loan(interestRate: 0.30, asset: cow),
   ),
   // Level 3
   Level(
-    requiredCash: 20,
+    cashGoal: 50,
     assets: [cow],
     assetsAreRandomized: true,
     loan: Loan(interestRate: 0.40, asset: cow),
   ),
   // Level 4
   Level(
-    requiredCash: 30,
+    cashGoal: 70,
     assets: [cow, chickens, goats],
     loan: Loan(interestRate: 0.25, asset: cow),
   ),
   // Level 5
   Level(
-    requiredCash: 60,
-    assets: [cow, chickens, goats],
-    assetsAreRandomized: true,
-    loan: Loan(interestRate: 0.30, asset: cow),
-  ),
-  Level(
-    requiredCash: 100,
+    cashGoal: 100,
     assets: [cow, chickens, goats],
     assetsAreRandomized: true,
     loan: Loan(interestRate: 0.30, asset: cow),

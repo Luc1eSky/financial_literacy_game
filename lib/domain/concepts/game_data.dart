@@ -4,9 +4,9 @@ import 'asset.dart';
 import 'loan.dart';
 
 class GameData {
+  final double cash;
   final int levelId;
   final int period;
-  final double cash;
   final double cashInterest;
   final double personalIncome;
   final double personalExpenses;
@@ -16,12 +16,12 @@ class GameData {
   final bool gameIsFinished;
 
   GameData({
+    required this.cash,
+    required this.personalIncome,
+    required this.personalExpenses,
     this.levelId = 0,
     this.period = 0,
-    this.cash = initialMoney,
     this.cashInterest = defaultCashInterest,
-    this.personalIncome = initialPersonalIncome,
-    this.personalExpenses = initialPersonalExpenses,
     this.assets = const [],
     this.loans = const [],
     this.isBankrupt = false,
