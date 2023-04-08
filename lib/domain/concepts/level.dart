@@ -1,5 +1,4 @@
-import 'package:financial_literacy_game/config/constants.dart';
-
+import '../../config/constants.dart';
 import '../utils/utils.dart';
 import 'asset.dart';
 import 'loan.dart';

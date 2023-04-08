@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:financial_literacy_game/domain/concepts/asset.dart';
-import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'concepts/asset.dart';
 import 'concepts/game_data.dart';
 import 'concepts/loan.dart';
 import 'entities/levels.dart';
+import 'utils/utils.dart';
 
 final gameDataNotifierProvider =
     StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());

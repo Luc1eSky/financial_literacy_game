@@ -1,7 +1,6 @@
-import 'package:financial_literacy_game/domain/utils/utils.dart';
-
 import '../../config/constants.dart';
 import '../entities/assets.dart';
+import '../utils/utils.dart';
 import 'asset.dart';
 
 class Loan {

@@ -2,17 +2,17 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:financial_literacy_game/domain/concepts/asset.dart';
-import 'package:financial_literacy_game/domain/game_data_notifier.dart';
-import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/constants.dart';
+import '../../domain/concepts/asset.dart';
 import '../../domain/concepts/level.dart';
 import '../../domain/concepts/loan.dart';
 import '../../domain/entities/assets.dart';
 import '../../domain/entities/levels.dart';
+import '../../domain/game_data_notifier.dart';
+import '../../domain/utils/utils.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

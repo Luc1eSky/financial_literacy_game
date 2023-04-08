@@ -1,7 +1,6 @@
-import 'package:financial_literacy_game/domain/entities/assets.dart';
-
 import '../concepts/level.dart';
 import '../concepts/loan.dart';
+import 'assets.dart';
 
 List<Level> levels = [
   // Level 1 - cash only, no interest on cash, high starting cash amount
