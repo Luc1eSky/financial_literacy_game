@@ -36,7 +36,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // age assets by one period
     List<Asset> survivedAssets = [];
     for (Asset asset in state.assets) {
-      if (asset.age < asset.lifeSpan) {
+      if (asset.age < asset.lifeExpectancy) {
         // add to survived list if not too old
         Asset olderAsset = asset.copyWith(age: asset.age + 1);
         survivedAssets.add(olderAsset);
@@ -66,13 +66,17 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // check if next level was reached
     int nextLevelId = state.levelId + 1;
     if (state.cash >= levels[state.levelId].cashGoal) {
-      // move on to next level, reset cash
-      state = state.copyWith(levelId: nextLevelId, cash: levels[nextLevelId].startingCash);
-    }
-
-    // check if game has ended
-    if (state.levelId >= (levels.length - 1)) {
-      state = state.copyWith(gameIsFinished: true);
+      // check if game has ended
+      if (state.levelId + 1 >= (levels.length)) {
+        state = state.copyWith(gameIsFinished: true);
+      } else {
+        // move on to next level, reset cash
+        state = state.copyWith(
+          levelId: nextLevelId,
+          cash: levels[nextLevelId].startingCash,
+          assets: [],
+        );
+      }
     }
   }
 

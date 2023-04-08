@@ -4,38 +4,49 @@ import '../concepts/level.dart';
 import '../concepts/loan.dart';
 
 List<Level> levels = [
-  // Level 1 - initial level with no cash requirement
+  // Level 1 - cash only, no interest on cash, high starting cash amount
   Level(
-    startingCash: 10,
-    cashGoal: 30,
+    startingCash: 50,
+    cashGoal: 100,
+    assets: [chickens.copyWith(riskLevel: 0)],
+    loan: Loan(interestRate: 0.25, asset: cow),
+    assetTypeRandomized: true,
+    assetIncomeAndCostsRandomized: true,
+    showCashBuyOption: true,
+    savingsRate: 0.00,
+  ),
+  // Level 2 - cash only, no interest on cash, low starting cash amount
+  Level(
+    startingCash: 15,
+    cashGoal: 50,
+    assets: [chickens.copyWith(riskLevel: 0)],
+    loan: Loan(interestRate: 0.25, asset: cow),
+    assetTypeRandomized: true,
+    assetIncomeAndCostsRandomized: true,
+    showCashBuyOption: true,
+    savingsRate: 0.00,
+  ),
+  // Level 3 - borrow only, no interest on cash, low starting cash amount
+  Level(
+    startingCash: 15,
+    cashGoal: 50,
     assets: [chickens.copyWith(riskLevel: 0)],
     loan: Loan(interestRate: 0.20, asset: cow),
-    loanInterestRandomized: true,
+    assetTypeRandomized: true,
+    assetIncomeAndCostsRandomized: true,
+    showLoanBorrowOption: true,
+    savingsRate: 0.00,
   ),
-  // Level 2
+  // Level 4 - borrow and cash options, no interest on cash, low starting cash amount
   Level(
-    cashGoal: 30,
-    assets: [chickens],
-    loan: Loan(interestRate: 0.30, asset: cow),
-  ),
-  // Level 3
-  Level(
+    startingCash: 10,
     cashGoal: 50,
-    assets: [cow],
-    assetsAreRandomized: true,
-    loan: Loan(interestRate: 0.40, asset: cow),
-  ),
-  // Level 4
-  Level(
-    cashGoal: 70,
-    assets: [cow, chickens, goats],
-    loan: Loan(interestRate: 0.25, asset: cow),
-  ),
-  // Level 5
-  Level(
-    cashGoal: 100,
-    assets: [cow, chickens, goats],
-    assetsAreRandomized: true,
-    loan: Loan(interestRate: 0.30, asset: cow),
+    assets: [chickens.copyWith(riskLevel: 0)],
+    loan: Loan(interestRate: 0.20, asset: cow),
+    assetTypeRandomized: true,
+    assetIncomeAndCostsRandomized: true,
+    showCashBuyOption: true,
+    showLoanBorrowOption: true,
+    savingsRate: 0.00,
   ),
 ];

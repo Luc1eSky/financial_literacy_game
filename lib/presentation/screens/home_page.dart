@@ -78,7 +78,10 @@ class SmallPortraitLayout extends ConsumerWidget {
                 flex: 2,
                 child: SectionCard(
                   title: 'LEVEL ${levelId + 1} / ${levels.length}    $nextLevelCash',
-                  content: LevelIndicator(levelId: levelId),
+                  content: CashIndicator(
+                    currentCash: ref.watch(gameDataNotifierProvider).cash,
+                    cashGoal: levels[levelId].cashGoal,
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -158,7 +161,7 @@ class AssetCarousel extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: AutoSizeText(
-                      'Price: ${asset.price}',
+                      'Price: \$${asset.price}',
                       style: TextStyle(
                         fontSize: 100,
                         color: Colors.grey[200],
@@ -169,7 +172,7 @@ class AssetCarousel extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: AutoSizeText(
-                      'Expected Income: ${asset.income}',
+                      'Income: \$${asset.income} / year',
                       style: TextStyle(
                         fontSize: 100,
                         color: Colors.grey[200],
@@ -180,7 +183,7 @@ class AssetCarousel extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: AutoSizeText(
-                      'Life Expectancy: ${asset.lifeSpan}',
+                      'Life Expectancy: ${asset.lifeExpectancy} years',
                       style: TextStyle(
                         fontSize: 100,
                         color: Colors.grey[200],
@@ -188,17 +191,17 @@ class AssetCarousel extends StatelessWidget {
                       group: textGroup,
                     ),
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: AutoSizeText(
-                      'Risk Level: ${(asset.riskLevel * 100).toStringAsFixed(0)}%',
-                      style: TextStyle(
-                        fontSize: 100,
-                        color: Colors.grey[200],
-                      ),
-                      group: textGroup,
-                    ),
-                  ),
+                  // Expanded(
+                  //   flex: 2,
+                  //   child: AutoSizeText(
+                  //     'Risk Level: ${(asset.riskLevel * 100).toStringAsFixed(0)}%',
+                  //     style: TextStyle(
+                  //       fontSize: 100,
+                  //       color: Colors.grey[200],
+                  //     ),
+                  //     group: textGroup,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -231,6 +234,7 @@ class NextPeriodButton extends ConsumerWidget {
     return ElevatedButton(
       onPressed: () {
         showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (context) {
               return InvestmentDialog(ref: ref);
@@ -322,12 +326,45 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
             )
           : defaultLevel.savingsRate,
     );
-    if (currentLevel.assetsAreRandomized) {
+    if (currentLevel.assetTypeRandomized) {
       List<Asset> randomizedAssets = [];
       for (int i = 0; i < currentLevel.assets.length; i++) {
         randomizedAssets.add(getRandomAsset());
       }
       currentLevel = currentLevel.copyWith(assets: randomizedAssets);
+    }
+
+    if (currentLevel.assetRiskLevelRandomized) {
+      List<Asset> randomizedRiskAssets = [];
+      for (Asset asset in currentLevel.assets) {
+        randomizedRiskAssets.add(
+          asset.copyWith(
+            riskLevel: getRandomDouble(
+              start: minimumRiskLevel,
+              end: maximumRiskLevel,
+              steps: stepsRiskLevel,
+            ),
+          ),
+        );
+      }
+      currentLevel = currentLevel.copyWith(assets: randomizedRiskAssets);
+    }
+
+    if (currentLevel.assetIncomeAndCostsRandomized) {
+      List<Asset> randomizedIncomeAndCostsAssets = [];
+      for (Asset asset in currentLevel.assets) {
+        randomizedIncomeAndCostsAssets.add(
+          asset.copyWith(
+            price: asset.price +
+                (asset.price ~/
+                    (1 / getRandomDouble(start: 0, end: priceVariation, steps: 0.01)) *
+                    (Random().nextBool() ? -1 : 1)),
+            income: asset.income +
+                (Random().nextBool() ? -1 : 1) * (Random().nextBool() ? 0 : incomeVariation),
+          ),
+        );
+      }
+      currentLevel = currentLevel.copyWith(assets: randomizedIncomeAndCostsAssets);
     }
 
     levelAssets = currentLevel.assets;
@@ -411,19 +448,48 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                AutoSizeText(
-                  '• Borrow at ${(levelLoan.interestRate * 100).toStringAsFixed(decimalValuesToDisplay)}% interest / '
-                  'year',
-                  maxLines: 1,
-                  style: const TextStyle(fontSize: 100),
-                  group: textGroup,
-                ),
-                AutoSizeText(
-                  '• Interest rate on cash is ${(currentLevel.savingsRate * 100).toStringAsFixed(decimalValuesToDisplay)}% / year',
-                  maxLines: 1,
-                  style: const TextStyle(fontSize: 100),
-                  group: textGroup,
-                ),
+                if (currentLevel.showLoanBorrowOption)
+                  AutoSizeText(
+                    '• Borrow at ${(levelLoan.interestRate * 100).toStringAsFixed(decimalValuesToDisplay)}% interest total',
+                    maxLines: 1,
+                    style: const TextStyle(fontSize: 100),
+                    group: textGroup,
+                  ),
+                if (currentLevel.savingsRate != 0 || currentLevel.savingsInterestRandomized)
+                  AutoSizeText(
+                    '• Interest rate on cash is ${(currentLevel.savingsRate * 100).toStringAsFixed(decimalValuesToDisplay)}% / year',
+                    maxLines: 1,
+                    style: const TextStyle(fontSize: 100),
+                    group: textGroup,
+                  ),
+                if (currentLevel.savingsRate == 0 && currentLevel.showCashBuyOption)
+                  AutoSizeText(
+                    generateCashTipMessage(
+                      asset: _selectedAsset,
+                      level: currentLevel,
+                    ),
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 100,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.blueGrey,
+                    ),
+                    group: textGroup,
+                  ),
+                if (currentLevel.savingsRate == 0 && currentLevel.showLoanBorrowOption)
+                  AutoSizeText(
+                    generateLoanTipMessage(
+                      asset: _selectedAsset,
+                      level: currentLevel,
+                    ),
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 100,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.blueGrey,
+                    ),
+                    group: textGroup,
+                  ),
               ],
             ),
           ),
@@ -438,32 +504,34 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                   checkGameHasEnded(widget.ref, context);
                 },
                 child: const Text("don't buy")),
-            TextButton(
-                onPressed: () async {
-                  if (await widget.ref.read(gameDataNotifierProvider.notifier).buyAsset(
-                          _selectedAsset,
-                          showNotEnoughCash,
-                          showAnimalDiedWarning,
-                          currentLevel.savingsRate) ==
-                      true) {
+            if (currentLevel.showCashBuyOption)
+              TextButton(
+                  onPressed: () async {
+                    if (await widget.ref.read(gameDataNotifierProvider.notifier).buyAsset(
+                            _selectedAsset,
+                            showNotEnoughCash,
+                            showAnimalDiedWarning,
+                            currentLevel.savingsRate) ==
+                        true) {
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                        checkGameHasEnded(widget.ref, context);
+                      }
+                    }
+                  },
+                  child: const Text('pay cash')),
+            if (currentLevel.showLoanBorrowOption)
+              TextButton(
+                  onPressed: () async {
+                    await widget.ref.read(gameDataNotifierProvider.notifier).loanAsset(
+                        levelLoan, _selectedAsset, showAnimalDiedWarning, currentLevel.savingsRate);
                     if (context.mounted) {
                       Navigator.pop(context);
+                      checkBankruptcy(widget.ref, context);
                       checkGameHasEnded(widget.ref, context);
                     }
-                  }
-                },
-                child: const Text('pay cash')),
-            TextButton(
-                onPressed: () async {
-                  await widget.ref.read(gameDataNotifierProvider.notifier).loanAsset(
-                      levelLoan, _selectedAsset, showAnimalDiedWarning, currentLevel.savingsRate);
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                    checkBankruptcy(widget.ref, context);
-                    checkGameHasEnded(widget.ref, context);
-                  }
-                },
-                child: const Text('borrow')),
+                  },
+                  child: const Text('borrow')),
           ],
         ),
       ),
@@ -471,13 +539,15 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
   }
 }
 
-class LevelIndicator extends StatelessWidget {
-  const LevelIndicator({
-    super.key,
-    required this.levelId,
-  });
+class CashIndicator extends StatelessWidget {
+  final double currentCash;
+  final double cashGoal;
 
-  final int levelId;
+  const CashIndicator({
+    super.key,
+    required this.currentCash,
+    required this.cashGoal,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -496,7 +566,7 @@ class LevelIndicator extends StatelessWidget {
             top: -1.0,
             child: Container(
               height: 12,
-              width: constraints.maxWidth * (levelId / (levels.length - 1)),
+              width: constraints.maxWidth * currentCash / cashGoal,
               decoration: BoxDecoration(
                 color: Colors.pinkAccent,
                 borderRadius: BorderRadius.circular(20.0),
@@ -828,7 +898,7 @@ class LoanCard extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                    '\$${loan.paymentPerPeriod}',
+                    '\$${loan.paymentPerPeriod.toStringAsFixed(2)}',
                     maxLines: 1,
                     style: TextStyle(color: Colors.grey[300], fontSize: 50.0),
                   ),

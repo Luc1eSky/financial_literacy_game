@@ -11,7 +11,11 @@ class Level {
   final double personalExpenses;
   final List<Asset> assets;
   final bool includePersonalIncome;
-  final bool assetsAreRandomized;
+  final bool showCashBuyOption;
+  final bool showLoanBorrowOption;
+  final bool assetTypeRandomized;
+  final bool assetRiskLevelRandomized;
+  final bool assetIncomeAndCostsRandomized;
   final bool loanInterestRandomized;
   final bool savingsInterestRandomized;
   final Loan loan;
@@ -24,7 +28,11 @@ class Level {
     this.personalExpenses = defaultPersonalExpenses,
     required this.assets,
     this.includePersonalIncome = false,
-    this.assetsAreRandomized = false,
+    this.showCashBuyOption = false,
+    this.showLoanBorrowOption = false,
+    this.assetTypeRandomized = false,
+    this.assetRiskLevelRandomized = false,
+    this.assetIncomeAndCostsRandomized = false,
     this.loanInterestRandomized = false,
     this.savingsInterestRandomized = false,
     required this.loan,
@@ -39,7 +47,11 @@ class Level {
     double? personalExpenses,
     List<Asset>? assets,
     bool? includePersonalIncome,
-    bool? assetsAreRandomized,
+    bool? showCashBuyOption,
+    bool? showLoanBorrowOption,
+    bool? assetTypeRandomized,
+    bool? assetRiskLevelRandomized,
+    bool? assetIncomeAndCostsRandomized,
     bool? loanInterestRandomized,
     bool? savingsInterestRandomized,
     Loan? loan,
@@ -52,7 +64,12 @@ class Level {
       personalExpenses: personalExpenses ?? this.personalExpenses,
       assets: assets ?? copyAssetArray(this.assets),
       includePersonalIncome: includePersonalIncome ?? this.includePersonalIncome,
-      assetsAreRandomized: assetsAreRandomized ?? this.assetsAreRandomized,
+      showCashBuyOption: showCashBuyOption ?? this.showCashBuyOption,
+      showLoanBorrowOption: showLoanBorrowOption ?? this.showLoanBorrowOption,
+      assetTypeRandomized: assetTypeRandomized ?? this.assetTypeRandomized,
+      assetRiskLevelRandomized: assetRiskLevelRandomized ?? this.assetRiskLevelRandomized,
+      assetIncomeAndCostsRandomized:
+          assetIncomeAndCostsRandomized ?? this.assetIncomeAndCostsRandomized,
       loanInterestRandomized: loanInterestRandomized ?? this.loanInterestRandomized,
       savingsInterestRandomized: savingsInterestRandomized ?? this.savingsInterestRandomized,
       loan: loan ?? this.loan.copyWith(),

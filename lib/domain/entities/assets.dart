@@ -1,26 +1,25 @@
 import 'dart:math';
 
-import 'package:financial_literacy_game/config/constants.dart';
-import 'package:financial_literacy_game/domain/utils/utils.dart';
-
 import '../concepts/asset.dart';
 
 Asset goats = Asset(
   type: AssetType.goat,
   numberOfAnimals: 3,
   imagePath: 'assets/images/goat.png',
-  price: 10,
+  price: 13,
   income: 3,
-  riskLevel: 0.30,
+  lifeExpectancy: 5,
+  riskLevel: 0.0,
 );
 
 Asset cow = Asset(
   type: AssetType.cow,
   numberOfAnimals: 1,
   imagePath: 'assets/images/cow.png',
-  price: 10,
+  price: 14,
   income: 4,
-  riskLevel: 0.40,
+  lifeExpectancy: 4,
+  riskLevel: 0.0,
 );
 
 Asset chickens = Asset(
@@ -29,20 +28,12 @@ Asset chickens = Asset(
   imagePath: 'assets/images/chicken.png',
   price: 10,
   income: 2,
-  riskLevel: 0.20,
+  lifeExpectancy: 6,
+  riskLevel: 0.0,
 );
 
 List<Asset> allDefaultAssets = [goats, cow, chickens];
 
 Asset getRandomAsset() {
-  Asset randomDefaultAsset =
-      allDefaultAssets[Random().nextInt(allDefaultAssets.length)];
-  Asset randomAsset = randomDefaultAsset.copyWith(
-    riskLevel: getRandomDouble(
-      start: minimumRiskLevel,
-      end: maximumRiskLevel,
-      steps: stepsRiskLevel,
-    ),
-  );
-  return randomAsset;
+  return allDefaultAssets[Random().nextInt(allDefaultAssets.length)];
 }

@@ -7,7 +7,7 @@ class Asset {
   final double price;
   final double income;
   final double riskLevel;
-  final int lifeSpan;
+  final int lifeExpectancy;
   final int age;
 
   Asset({
@@ -17,7 +17,7 @@ class Asset {
     required this.price,
     required this.income,
     required this.riskLevel,
-    this.lifeSpan = defaultLifeSpan,
+    this.lifeExpectancy = defaultLifeSpan,
     this.age = 0,
   });
 
@@ -39,7 +39,7 @@ class Asset {
       price: price ?? this.price,
       income: income ?? this.income,
       riskLevel: riskLevel ?? this.riskLevel,
-      lifeSpan: lifeSpan ?? this.lifeSpan,
+      lifeExpectancy: lifeSpan ?? this.lifeExpectancy,
       age: age ?? this.age,
     );
   }
