@@ -71,13 +71,24 @@ class GameDataNotifier extends StateNotifier<GameData> {
         state = state.copyWith(gameIsFinished: true);
       } else {
         // move on to next level, reset cash
-        state = state.copyWith(
-          levelId: nextLevelId,
-          cash: levels[nextLevelId].startingCash,
-          assets: [],
-        );
+        _loadLevel(nextLevelId);
       }
     }
+  }
+
+  void restartLevel() {
+    state = state.copyWith(isBankrupt: false);
+    _loadLevel(state.levelId);
+  }
+
+  void _loadLevel(int levelID) {
+    // move to specified level, reset cash
+    state = state.copyWith(
+      levelId: levelID,
+      cash: levels[levelID].startingCash,
+      assets: [], // remove all previous assets
+      loans: [], // remove all previous loans
+    );
   }
 
   void _addAsset(Asset newAsset) {

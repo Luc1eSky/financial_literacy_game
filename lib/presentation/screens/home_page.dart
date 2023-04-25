@@ -268,10 +268,17 @@ void checkBankruptcy(WidgetRef ref, BuildContext context) {
             actions: [
               TextButton(
                 onPressed: () {
+                  ref.read(gameDataNotifierProvider.notifier).restartLevel();
+                  Navigator.pop(context);
+                },
+                child: const Text('RESTART LEVEL'),
+              ),
+              TextButton(
+                onPressed: () {
                   ref.read(gameDataNotifierProvider.notifier).resetGame();
                   Navigator.pop(context);
                 },
-                child: const Text('RESTART'),
+                child: const Text('RESTART GAME'),
               ),
             ],
           );
@@ -439,6 +446,13 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                AutoSizeText(
+                  'Your current cash: \$${widget.ref.read(gameDataNotifierProvider).cash.toStringAsFixed(2)}',
+                  maxLines: 1,
+                  style: const TextStyle(fontSize: 100),
+                  group: textGroup,
+                ),
+                const SizedBox(height: 20),
                 AspectRatio(
                   aspectRatio: 1.0,
                   child: AssetCarousel(
@@ -566,7 +580,7 @@ class CashIndicator extends StatelessWidget {
             top: -1.0,
             child: Container(
               height: 12,
-              width: constraints.maxWidth * currentCash / cashGoal,
+              width: max(0, constraints.maxWidth * currentCash / cashGoal),
               decoration: BoxDecoration(
                 color: Colors.pinkAccent,
                 borderRadius: BorderRadius.circular(20.0),

@@ -6,7 +6,7 @@ List<Level> levels = [
   // Level 1 - cash only, no interest on cash, high starting cash amount
   Level(
     startingCash: 50,
-    cashGoal: 100,
+    cashGoal: 75, //100,
     assets: [chickens.copyWith(riskLevel: 0)],
     loan: Loan(interestRate: 0.25, asset: cow),
     assetTypeRandomized: true,
@@ -15,20 +15,20 @@ List<Level> levels = [
     savingsRate: 0.00,
   ),
   // Level 2 - cash only, no interest on cash, low starting cash amount
-  Level(
-    startingCash: 15,
-    cashGoal: 50,
-    assets: [chickens.copyWith(riskLevel: 0)],
-    loan: Loan(interestRate: 0.25, asset: cow),
-    assetTypeRandomized: true,
-    assetIncomeAndCostsRandomized: true,
-    showCashBuyOption: true,
-    savingsRate: 0.00,
-  ),
+  // Level(
+  //   startingCash: 15,
+  //   cashGoal: 50,
+  //   assets: [chickens.copyWith(riskLevel: 0)],
+  //   loan: Loan(interestRate: 0.25, asset: cow),
+  //   assetTypeRandomized: true,
+  //   assetIncomeAndCostsRandomized: true,
+  //   showCashBuyOption: true,
+  //   savingsRate: 0.00,
+  // ),
   // Level 3 - borrow only, no interest on cash, low starting cash amount
   Level(
     startingCash: 15,
-    cashGoal: 50,
+    cashGoal: 30,
     assets: [chickens.copyWith(riskLevel: 0)],
     loan: Loan(interestRate: 0.20, asset: cow),
     assetTypeRandomized: true,
