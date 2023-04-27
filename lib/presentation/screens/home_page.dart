@@ -5,7 +5,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../config/color_palette.dart';
 import '../../config/constants.dart';
+import '../../config/text_styles.dart';
 import '../../domain/concepts/asset.dart';
 import '../../domain/concepts/level.dart';
 import '../../domain/concepts/loan.dart';
@@ -13,6 +15,8 @@ import '../../domain/entities/assets.dart';
 import '../../domain/entities/levels.dart';
 import '../../domain/game_data_notifier.dart';
 import '../../domain/utils/utils.dart';
+import '../widgets/content_card.dart';
+import 'portrait_layout.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,87 +24,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, //Colors.grey[800],
+      backgroundColor: ColorPalette().backgroundColor,
       //appBar: AppBar(title: const Text(appTitle)),
-      body: SafeArea(
-        child: LayoutBuilder(builder: (context, constraints) {
-          bool isPortrait = constraints.maxHeight > constraints.maxWidth;
-          return SingleChildScrollView(
-            child: constraints.maxWidth > 1000
-                ? const LargeLayout()
-                : isPortrait
-                    ? const SmallPortraitLayout()
-                    : const SmallLandscapeLayout(),
-          );
-        }),
-      ),
-    );
-  }
-}
-
-class SmallLandscapeLayout extends StatelessWidget {
-  const SmallLandscapeLayout({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: const Center(
-        child: Text('SMALL LANDSCAPE SCREEN'),
-      ),
-    );
-  }
-}
-
-class SmallPortraitLayout extends ConsumerWidget {
-  const SmallPortraitLayout({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    int levelId = ref.watch(gameDataNotifierProvider).levelId;
-    String nextLevelCash;
-    if (levelId + 1 < levels.length) {
-      nextLevelCash = '(next @ \$${levels[levelId].cashGoal})';
-    } else {
-      nextLevelCash = '';
-    }
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: SectionCard(
-                  title: 'LEVEL ${levelId + 1} / ${levels.length}    $nextLevelCash',
-                  content: CashIndicator(
-                    currentCash: ref.watch(gameDataNotifierProvider).cash,
-                    cashGoal: levels[levelId].cashGoal,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              const Expanded(
-                child: NextPeriodButton(),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          const SectionCard(title: 'OVERVIEW', content: OverviewContent()),
-          const SizedBox(height: 10),
-          if (levels[ref.read(gameDataNotifierProvider).levelId].includePersonalIncome)
-            const SectionCard(title: 'PERSONAL', content: PersonalContent()),
-          if (levels[ref.read(gameDataNotifierProvider).levelId].includePersonalIncome)
-            const SizedBox(height: 10),
-          const SectionCard(title: 'ASSETS', content: AssetContent()),
-          const SizedBox(height: 10),
-          const SectionCard(title: 'LOANS', content: LoanContent()),
-        ],
+      body: const SafeArea(
+        child: SingleChildScrollView(
+          child: PortraitLayout(),
+        ),
       ),
     );
   }
@@ -128,7 +57,7 @@ class AssetCarousel extends StatelessWidget {
             height: constraints.maxHeight,
             width: constraints.maxWidth,
             decoration: BoxDecoration(
-              color: Colors.grey[800],
+              color: ColorPalette().backgroundContentCard,
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: Padding(
@@ -143,10 +72,10 @@ class AssetCarousel extends StatelessWidget {
                       alignment: Alignment.center,
                       child: AutoSizeText(
                         '${asset.numberOfAnimals} x ${asset.type.name}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 100,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[500],
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -162,9 +91,9 @@ class AssetCarousel extends StatelessWidget {
                     flex: 2,
                     child: AutoSizeText(
                       'Price: \$${asset.price}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 100,
-                        color: Colors.grey[200],
+                        color: Colors.white,
                       ),
                       group: textGroup,
                     ),
@@ -173,9 +102,9 @@ class AssetCarousel extends StatelessWidget {
                     flex: 2,
                     child: AutoSizeText(
                       'Income: \$${asset.income} / year',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 100,
-                        color: Colors.grey[200],
+                        color: Colors.white,
                       ),
                       group: textGroup,
                     ),
@@ -184,9 +113,9 @@ class AssetCarousel extends StatelessWidget {
                     flex: 2,
                     child: AutoSizeText(
                       'Life Expectancy: ${asset.lifeExpectancy} years',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 100,
-                        color: Colors.grey[200],
+                        color: Colors.white,
                       ),
                       group: textGroup,
                     ),
@@ -220,27 +149,6 @@ class AssetCarousel extends StatelessWidget {
             changingIndex(index);
           }),
       items: widgetList,
-    );
-  }
-}
-
-class NextPeriodButton extends ConsumerWidget {
-  const NextPeriodButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ElevatedButton(
-      onPressed: () {
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) {
-              return InvestmentDialog(ref: ref);
-            });
-      },
-      child: const Text('NEXT PERIOD'),
     );
   }
 }
@@ -432,6 +340,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
     return Center(
       child: SingleChildScrollView(
         child: AlertDialog(
+          backgroundColor: ColorPalette().popUpBackground,
           //insetPadding: EdgeInsets.zero,
           title: const Text(
             'Investment Option',
@@ -486,7 +395,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     style: const TextStyle(
                       fontSize: 100,
                       fontStyle: FontStyle.italic,
-                      color: Colors.blueGrey,
+                      color: Colors.black,
                     ),
                     group: textGroup,
                   ),
@@ -500,7 +409,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     style: const TextStyle(
                       fontSize: 100,
                       fontStyle: FontStyle.italic,
-                      color: Colors.blueGrey,
+                      color: Colors.black,
                     ),
                     group: textGroup,
                   ),
@@ -508,18 +417,31 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
             ),
           ),
           actions: [
-            TextButton(
-                onPressed: () {
-                  widget.ref
-                      .read(gameDataNotifierProvider.notifier)
-                      .advance(currentLevel.savingsRate);
-                  Navigator.pop(context);
-                  checkBankruptcy(widget.ref, context);
-                  checkGameHasEnded(widget.ref, context);
-                },
-                child: const Text("don't buy")),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 8.0,
+                foregroundColor: ColorPalette().buttonForeground,
+                backgroundColor: ColorPalette().buttonBackground,
+                textStyle: const TextStyle(fontSize: 15.0),
+              ),
+              onPressed: () {
+                widget.ref
+                    .read(gameDataNotifierProvider.notifier)
+                    .advance(currentLevel.savingsRate);
+                Navigator.pop(context);
+                checkBankruptcy(widget.ref, context);
+                checkGameHasEnded(widget.ref, context);
+              },
+              child: const Text("don't buy"),
+            ),
             if (currentLevel.showCashBuyOption)
-              TextButton(
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 8.0,
+                    foregroundColor: ColorPalette().buttonForeground,
+                    backgroundColor: ColorPalette().buttonBackground,
+                    textStyle: const TextStyle(fontSize: 15.0),
+                  ),
                   onPressed: () async {
                     if (await widget.ref.read(gameDataNotifierProvider.notifier).buyAsset(
                             _selectedAsset,
@@ -535,7 +457,13 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                   },
                   child: const Text('pay cash')),
             if (currentLevel.showLoanBorrowOption)
-              TextButton(
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 8.0,
+                    foregroundColor: ColorPalette().buttonForeground,
+                    backgroundColor: ColorPalette().buttonBackground,
+                    textStyle: const TextStyle(fontSize: 15.0),
+                  ),
                   onPressed: () async {
                     await widget.ref.read(gameDataNotifierProvider.notifier).loanAsset(
                         levelLoan, _selectedAsset, showAnimalDiedWarning, currentLevel.savingsRate);
@@ -582,7 +510,7 @@ class CashIndicator extends StatelessWidget {
               height: 12,
               width: max(0, constraints.maxWidth * currentCash / cashGoal),
               decoration: BoxDecoration(
-                color: Colors.pinkAccent,
+                color: ColorPalette().cashIndicator,
                 borderRadius: BorderRadius.circular(20.0),
               ),
             ),
@@ -590,44 +518,6 @@ class CashIndicator extends StatelessWidget {
         ],
       );
     });
-  }
-}
-
-class SectionCard extends StatelessWidget {
-  const SectionCard({
-    super.key,
-    required this.title,
-    required this.content,
-  });
-  final String title;
-  final Widget content;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[400],
-        borderRadius: BorderRadius.circular(22.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                //fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            content,
-          ],
-        ),
-      ),
-    );
   }
 }
 
@@ -883,7 +773,7 @@ class LoanCard extends StatelessWidget {
       aspectRatio: 9.0,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[800],
+          color: ColorPalette().backgroundContentCard,
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: Padding(
@@ -903,7 +793,7 @@ class LoanCard extends StatelessWidget {
                   child: AutoSizeText(
                     '\$${loan.asset.price}',
                     maxLines: 1,
-                    style: TextStyle(color: Colors.grey[300], fontSize: 50.0),
+                    style: const TextStyle(color: Colors.white, fontSize: 50.0),
                   ),
                 ),
               ),
@@ -914,7 +804,7 @@ class LoanCard extends StatelessWidget {
                   child: AutoSizeText(
                     '\$${loan.paymentPerPeriod.toStringAsFixed(2)}',
                     maxLines: 1,
-                    style: TextStyle(color: Colors.grey[300], fontSize: 50.0),
+                    style: const TextStyle(color: Colors.white, fontSize: 50.0),
                   ),
                 ),
               ),
@@ -925,7 +815,7 @@ class LoanCard extends StatelessWidget {
                   child: AutoSizeText(
                     '${loan.age} / ${loan.termInPeriods}',
                     maxLines: 1,
-                    style: TextStyle(color: Colors.grey[600], fontSize: 50.0),
+                    style: const TextStyle(color: Colors.white, fontSize: 50.0),
                   ),
                 ),
               ),
@@ -958,7 +848,7 @@ class SmallAssetCard extends StatelessWidget {
       aspectRatio: 0.7,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[800],
+          color: ColorPalette().backgroundContentCard,
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: Padding(
@@ -979,19 +869,19 @@ class SmallAssetCard extends StatelessWidget {
                       child: AutoSizeText(
                         '$count',
                         textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Colors.grey[300],
+                        style: const TextStyle(
+                          color: Colors.white,
                           fontSize: 100.0,
                         ),
                       ),
                     ),
-                    Expanded(
+                    const Expanded(
                       child: AutoSizeText(
                         ' assets',
                         maxLines: 1,
                         style: TextStyle(
-                          color: Colors.grey[300],
-                          fontSize: 10.0,
+                          color: Colors.white,
+                          fontSize: 14.0,
                         ),
                       ),
                     ),
@@ -1007,20 +897,20 @@ class SmallAssetCard extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: AutoSizeText(
                           '\$$income',
-                          style: TextStyle(
-                            color: Colors.grey[300],
+                          style: const TextStyle(
+                            color: Colors.white,
                             fontSize: 100.0,
                           ),
                         ),
                       ),
                     ),
-                    Expanded(
+                    const Expanded(
                       child: AutoSizeText(
                         ' / period',
-                        minFontSize: 2,
+                        minFontSize: 4,
                         maxLines: 1,
                         style: TextStyle(
-                          color: Colors.grey[500],
+                          color: Colors.white,
                           fontSize: 100.0,
                         ),
                       ),
@@ -1030,33 +920,6 @@ class SmallAssetCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class ContentCard extends StatelessWidget {
-  const ContentCard({
-    super.key,
-    required this.content,
-    this.aspectRatio = 1.0,
-  });
-  final Widget content;
-  final double aspectRatio;
-
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: aspectRatio,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[800],
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: content,
         ),
       ),
     );
@@ -1082,11 +945,7 @@ class OverviewTileContent extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(
-            color: Colors.grey[500],
-            fontSize: 18.0,
-            //fontWeight: FontWeight.bold,
-          ),
+          style: TextStyles().contentCardTitleStyle,
         ),
         Expanded(
           flex: 5,
@@ -1098,11 +957,7 @@ class OverviewTileContent extends StatelessWidget {
                   : '\$${value.abs().toStringAsFixed(2)}',
               maxLines: 1,
               group: group,
-              style: TextStyle(
-                color: Colors.grey[300],
-                fontSize: 100.0,
-                //fontWeight: FontWeight.bold,
-              ),
+              style: TextStyles().contentCardStyle,
             ),
           ),
         ),
