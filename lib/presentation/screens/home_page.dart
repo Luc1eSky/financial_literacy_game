@@ -85,7 +85,8 @@ class AssetCarousel extends StatelessWidget {
                       flex: 8,
                       child: Align(
                           alignment: Alignment.center,
-                          child: Image.asset(asset.imagePath, fit: BoxFit.cover))),
+                          child:
+                              Image.asset(asset.imagePath, fit: BoxFit.cover))),
                   const Spacer(),
                   Expanded(
                     flex: 2,
@@ -230,9 +231,12 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
 
   @override
   void initState() {
-    Level defaultLevel = levels[widget.ref.read(gameDataNotifierProvider).levelId];
+    Level defaultLevel =
+        levels[widget.ref.read(gameDataNotifierProvider).levelId];
     currentLevel = defaultLevel.copyWith(
-      loan: defaultLevel.loanInterestRandomized ? getRandomLoan() : defaultLevel.loan,
+      loan: defaultLevel.loanInterestRandomized
+          ? getRandomLoan()
+          : defaultLevel.loan,
       savingsRate: defaultLevel.savingsInterestRandomized
           ? getRandomDouble(
               start: minimumSavingsRate,
@@ -272,14 +276,18 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
           asset.copyWith(
             price: asset.price +
                 (asset.price ~/
-                    (1 / getRandomDouble(start: 0, end: priceVariation, steps: 0.01)) *
+                    (1 /
+                        getRandomDouble(
+                            start: 0, end: priceVariation, steps: 0.01)) *
                     (Random().nextBool() ? -1 : 1)),
             income: asset.income +
-                (Random().nextBool() ? -1 : 1) * (Random().nextBool() ? 0 : incomeVariation),
+                (Random().nextBool() ? -1 : 1) *
+                    (Random().nextBool() ? 0 : incomeVariation),
           ),
         );
       }
-      currentLevel = currentLevel.copyWith(assets: randomizedIncomeAndCostsAssets);
+      currentLevel =
+          currentLevel.copyWith(assets: randomizedIncomeAndCostsAssets);
     }
 
     levelAssets = currentLevel.assets;
@@ -378,14 +386,16 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     style: const TextStyle(fontSize: 100),
                     group: textGroup,
                   ),
-                if (currentLevel.savingsRate != 0 || currentLevel.savingsInterestRandomized)
+                if (currentLevel.savingsRate != 0 ||
+                    currentLevel.savingsInterestRandomized)
                   AutoSizeText(
                     '• Interest rate on cash is ${(currentLevel.savingsRate * 100).toStringAsFixed(decimalValuesToDisplay)}% / year',
                     maxLines: 1,
                     style: const TextStyle(fontSize: 100),
                     group: textGroup,
                   ),
-                if (currentLevel.savingsRate == 0 && currentLevel.showCashBuyOption)
+                if (currentLevel.savingsRate == 0 &&
+                    currentLevel.showCashBuyOption)
                   AutoSizeText(
                     generateCashTipMessage(
                       asset: _selectedAsset,
@@ -399,7 +409,8 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     ),
                     group: textGroup,
                   ),
-                if (currentLevel.savingsRate == 0 && currentLevel.showLoanBorrowOption)
+                if (currentLevel.savingsRate == 0 &&
+                    currentLevel.showLoanBorrowOption)
                   AutoSizeText(
                     generateLoanTipMessage(
                       asset: _selectedAsset,
@@ -443,11 +454,13 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     textStyle: const TextStyle(fontSize: 15.0),
                   ),
                   onPressed: () async {
-                    if (await widget.ref.read(gameDataNotifierProvider.notifier).buyAsset(
-                            _selectedAsset,
-                            showNotEnoughCash,
-                            showAnimalDiedWarning,
-                            currentLevel.savingsRate) ==
+                    if (await widget.ref
+                            .read(gameDataNotifierProvider.notifier)
+                            .buyAsset(
+                                _selectedAsset,
+                                showNotEnoughCash,
+                                showAnimalDiedWarning,
+                                currentLevel.savingsRate) ==
                         true) {
                       if (context.mounted) {
                         Navigator.pop(context);
@@ -465,8 +478,10 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     textStyle: const TextStyle(fontSize: 15.0),
                   ),
                   onPressed: () async {
-                    await widget.ref.read(gameDataNotifierProvider.notifier).loanAsset(
-                        levelLoan, _selectedAsset, showAnimalDiedWarning, currentLevel.savingsRate);
+                    await widget.ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .loanAsset(levelLoan, _selectedAsset,
+                            showAnimalDiedWarning, currentLevel.savingsRate);
                     if (context.mounted) {
                       Navigator.pop(context);
                       checkBankruptcy(widget.ref, context);
@@ -531,27 +546,31 @@ class OverviewContent extends ConsumerWidget {
     final AutoSizeGroup valueSizeGroup = AutoSizeGroup();
 
     double cash = ref.watch(gameDataNotifierProvider).cash;
-    double income = ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
-    double expenses = ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
+    double income =
+        ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
+    double expenses =
+        ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
 
     return Row(
       children: [
         Expanded(
           child: ContentCard(
-            content: OverviewTileContent(title: 'Cash', value: cash, group: valueSizeGroup),
+            content: OverviewTileContent(
+                title: 'Cash', value: cash, group: valueSizeGroup),
           ),
         ),
         const SizedBox(width: 7.0),
         Expanded(
           child: ContentCard(
-            content: OverviewTileContent(title: 'Income', value: income, group: valueSizeGroup),
+            content: OverviewTileContent(
+                title: 'Income', value: income, group: valueSizeGroup),
           ),
         ),
         const SizedBox(width: 7.0),
         Expanded(
           child: ContentCard(
-            content:
-                OverviewTileContent(title: 'Expenses', value: -expenses, group: valueSizeGroup),
+            content: OverviewTileContent(
+                title: 'Expenses', value: -expenses, group: valueSizeGroup),
           ),
         ),
       ],
@@ -688,11 +707,15 @@ class AssetContent extends ConsumerWidget {
     int chickens = ref.watch(gameDataNotifierProvider).chickens;
     int goats = ref.watch(gameDataNotifierProvider).goats;
 
-    double cowIncome = ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.cow);
-    double chickenIncome =
-        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.chicken);
-    double goatIncome =
-        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.goat);
+    double cowIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.cow);
+    double chickenIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.chicken);
+    double goatIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.goat);
     return Row(
       children: [
         Expanded(
