@@ -1,7 +1,9 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../l10n/l10n.dart';
 import 'concepts/asset.dart';
 import 'concepts/game_data.dart';
 import 'concepts/loan.dart';
@@ -14,10 +16,15 @@ final gameDataNotifierProvider =
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
       : super(GameData(
+          locale: L10n.getSystemLocale(),
           cash: levels[0].startingCash,
           personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
           personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
         ));
+
+  void setLocale(Locale newLocale) {
+    state = state.copyWith(locale: newLocale);
+  }
 
   void setCashInterest(double newInterest) {
     state = state.copyWith(cashInterest: newInterest);
@@ -174,6 +181,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
   void resetGame() {
     // TODO: TRACK / SAVE GAME DATA
     state = GameData(
+      locale: state.locale,
       cash: levels[0].startingCash,
       personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
       personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),

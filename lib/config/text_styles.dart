@@ -6,7 +6,7 @@ class TextStyles {
         color: Colors.black87,
       );
   TextStyle get contentCardTitleStyle => const TextStyle(
-        fontSize: 20.0,
+        fontSize: 17.0,
         color: Colors.white,
       );
   TextStyle get contentCardStyle => const TextStyle(

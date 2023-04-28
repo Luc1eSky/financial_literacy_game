@@ -1,5 +1,11 @@
 const String appTitle = 'FinSim Game';
 
+// maximum Width of play area
+const double playAreaMaxWidth = 600;
+
+// aspect ratio of overview content cards (cash, income, expenses)
+const double overviewAspectRatio = 1.4;
+
 // decimal points for borrow and interest rates
 // on "investment options" screen
 const int decimalValuesToDisplay = 0;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/levels.dart';
-import '../screens/home_page.dart';
-import '../widgets/section_card.dart';
+import 'cash_indicator.dart';
 import 'next_period_button.dart';
+import 'section_card.dart';
 
 class LevelInfoCard extends StatelessWidget {
   const LevelInfoCard({

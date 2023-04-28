@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import '../../config/constants.dart';
 import '../utils/utils.dart';
 import 'asset.dart';
 import 'loan.dart';
 
 class GameData {
+  final Locale locale;
   final double cash;
   final int levelId;
   final int period;
@@ -16,6 +19,7 @@ class GameData {
   final bool gameIsFinished;
 
   GameData({
+    required this.locale,
     required this.cash,
     required this.personalIncome,
     required this.personalExpenses,
@@ -30,6 +34,7 @@ class GameData {
 
   // method to copy custom class
   GameData copyWith({
+    Locale? locale,
     int? levelId,
     int? period,
     double? cash,
@@ -42,6 +47,7 @@ class GameData {
     bool? gameIsFinished,
   }) {
     return GameData(
+      locale: locale ?? this.locale,
       levelId: levelId ?? this.levelId,
       period: period ?? this.period,
       cash: cash ?? this.cash,
