@@ -172,7 +172,16 @@ void checkBankruptcy(WidgetRef ref, BuildContext context) {
             content: Container(
               height: 100,
               width: 100,
-              color: Colors.red,
+              child: const AutoSizeText(
+                'Unfortunately you ran out of cash. You can either restart '
+                'this level or start a new game.',
+                style: TextStyle(
+                    fontSize: 20,
+                    height:
+                        2, //line height 200%, 1= 100%, were 0.9 = 90% of actual line height
+                    color: Colors.red, //font color
+                    fontStyle: FontStyle.normal),
+              ),
             ),
             actions: [
               TextButton(
@@ -187,7 +196,7 @@ void checkBankruptcy(WidgetRef ref, BuildContext context) {
                   ref.read(gameDataNotifierProvider.notifier).resetGame();
                   Navigator.pop(context);
                 },
-                child: const Text('RESTART GAME'),
+                child: const Text('NEW GAME'),
               ),
             ],
           );
@@ -205,7 +214,15 @@ void checkGameHasEnded(WidgetRef ref, BuildContext context) {
             content: Container(
               height: 100,
               width: 100,
-              color: Colors.green,
+              child: const AutoSizeText(
+                'Congratulations you finished the game successfully!',
+                style: TextStyle(
+                    fontSize: 20,
+                    height:
+                        2, //line height 200%, 1= 100%, were 0.9 = 90% of actual line height
+                    color: Colors.green, //font color
+                    fontStyle: FontStyle.normal),
+              ),
             ),
             actions: [
               TextButton(
@@ -213,7 +230,7 @@ void checkGameHasEnded(WidgetRef ref, BuildContext context) {
                   ref.read(gameDataNotifierProvider.notifier).resetGame();
                   Navigator.pop(context);
                 },
-                child: const Text('RESTART'),
+                child: const Text('PLAY AGAIN'),
               ),
             ],
           );
