@@ -23,7 +23,10 @@ class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.only(left: 5.0),
         child: AutoSizeText(
           '$appTitle - ${AppLocalizations.of(context)!.country}',
-          style: const TextStyle(fontSize: 100, color: Colors.black87),
+          style: TextStyle(
+            fontSize: 100,
+            color: ColorPalette().darkText,
+          ),
           maxFontSize: 22,
           maxLines: 1,
         ),
@@ -39,9 +42,9 @@ class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
               },
             );
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.settings,
-            color: Colors.black87,
+            color: ColorPalette().darkText,
           ),
         ),
         const SizedBox(width: 5.0),

@@ -49,57 +49,69 @@ class LoanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 9.0,
-      child: Container(
-        decoration: BoxDecoration(
-          color: ColorPalette().backgroundContentCard,
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Image.asset(loan.asset.imagePath),
-                ),
-              ),
-              const SizedBox(width: 10.0),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: AutoSizeText(
-                    '\$${loan.asset.price}',
-                    maxLines: 1,
-                    style: const TextStyle(color: Colors.white, fontSize: 50.0),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: AspectRatio(
+        aspectRatio: 9.0,
+        child: Container(
+          decoration: BoxDecoration(
+            color: ColorPalette().backgroundContentCard,
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Image.asset(loan.asset.imagePath),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10.0),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: AutoSizeText(
-                    '\$${loan.paymentPerPeriod.toStringAsFixed(2)}',
-                    maxLines: 1,
-                    style: const TextStyle(color: Colors.white, fontSize: 50.0),
+                const SizedBox(width: 10.0),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: AutoSizeText(
+                      '\$${loan.asset.price}',
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: ColorPalette().lightText,
+                        fontSize: 50.0,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10.0),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: AutoSizeText(
-                    '${loan.age} / ${loan.termInPeriods}',
-                    maxLines: 1,
-                    style: const TextStyle(color: Colors.white, fontSize: 50.0),
+                const SizedBox(width: 10.0),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: AutoSizeText(
+                      '\$${loan.paymentPerPeriod.toStringAsFixed(2)}',
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: ColorPalette().lightText,
+                        fontSize: 50.0,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 10.0),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: AutoSizeText(
+                      '${loan.age} / ${loan.termInPeriods}',
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: ColorPalette().lightText,
+                        fontSize: 50.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

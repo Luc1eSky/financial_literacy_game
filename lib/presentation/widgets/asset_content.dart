@@ -99,18 +99,18 @@ class SmallAssetCard extends StatelessWidget {
                       child: AutoSizeText(
                         '$count',
                         textAlign: TextAlign.right,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: ColorPalette().lightText,
                           fontSize: 100.0,
                         ),
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: AutoSizeText(
                         ' assets',
                         maxLines: 1,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: ColorPalette().lightText,
                           fontSize: 14.0,
                         ),
                       ),
@@ -127,20 +127,20 @@ class SmallAssetCard extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: AutoSizeText(
                           '\$$income',
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: ColorPalette().lightText,
                             fontSize: 100.0,
                           ),
                         ),
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: AutoSizeText(
                         ' / period',
                         minFontSize: 4,
                         maxLines: 1,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: ColorPalette().lightText,
                           fontSize: 100.0,
                         ),
                       ),

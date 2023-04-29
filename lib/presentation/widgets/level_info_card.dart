@@ -1,3 +1,4 @@
+import 'package:financial_literacy_game/config/color_palette.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/levels.dart';
@@ -27,9 +28,9 @@ class LevelInfoCard extends StatelessWidget {
             children: [
               Text(
                 'Cash goal: \$${nextLevelCash.toStringAsFixed(2)}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17.0,
-                  color: Colors.black,
+                  color: ColorPalette().darkText,
                 ),
               ),
               const SizedBox(height: 7.5),

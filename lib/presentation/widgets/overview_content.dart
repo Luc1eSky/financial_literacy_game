@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:financial_literacy_game/config/color_palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/constants.dart';
-import '../../config/text_styles.dart';
 import '../../domain/game_data_notifier.dart';
 import 'content_card.dart';
 
@@ -78,7 +78,10 @@ class OverviewTileContent extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyles().contentCardTitleStyle,
+          style: TextStyle(
+            fontSize: 17.0,
+            color: ColorPalette().lightText,
+          ),
         ),
         Expanded(
           flex: 5,
@@ -90,7 +93,10 @@ class OverviewTileContent extends StatelessWidget {
                   : '\$${value.abs().toStringAsFixed(2)}',
               maxLines: 1,
               group: group,
-              style: TextStyles().contentCardStyle,
+              style: TextStyle(
+                fontSize: 100.0,
+                color: ColorPalette().lightText,
+              ),
             ),
           ),
         ),

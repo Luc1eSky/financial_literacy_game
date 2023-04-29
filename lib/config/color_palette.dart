@@ -9,4 +9,7 @@ class ColorPalette {
   Color get popUpBackground => const Color.fromRGBO(224, 247, 250, 1.0);
   Color get buttonBackground => const Color.fromRGBO(0, 131, 143, 1.0);
   Color get buttonForeground => const Color.fromRGBO(255, 255, 255, 1.0);
+
+  Color get darkText => const Color.fromRGBO(0, 0, 0, 0.85);
+  Color get lightText => const Color.fromRGBO(255, 255, 255, 1.0);
 }

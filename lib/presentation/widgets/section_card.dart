@@ -1,8 +1,6 @@
 import 'package:financial_literacy_game/config/color_palette.dart';
 import 'package:flutter/material.dart';
 
-import '../../config/text_styles.dart';
-
 class SectionCard extends StatelessWidget {
   const SectionCard({
     super.key,
@@ -26,7 +24,10 @@ class SectionCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyles().sectionCardStyle,
+              style: TextStyle(
+                fontSize: 20.0,
+                color: ColorPalette().darkText,
+              ),
             ),
             const SizedBox(height: 10),
             content,

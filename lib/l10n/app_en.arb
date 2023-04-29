@@ -1,11 +1,11 @@
 {
   "language": "English",
   "@language": {
-    "description": "The current language"
+    "description": "the currently selected language"
   },
   "country": "USA",
   "@country": {
-    "description": "Description of country for app title."
+    "description": "description of locale country for app title"
   },
   "cash": "cash",
   "@cash": {
