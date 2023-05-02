@@ -1,5 +1,13 @@
 {
-  "language": "OluGanda",
-  "country": "BuGanda",
-  "cash": "sente"
+  "language": "Deutsch",
+  "localeSelectionTitle": "Sprachen und Währungen",
+  "level": "Level",
+  "levelGoal": "Bargeldziel",
+  "next": "weiter",
+  "overview": "Überblick",
+  "cash": "Bargeld",
+  "income": "Einkommen",
+  "expenses": "Ausgaben",
+  "assets": "Inventar",
+  "loans": "Darlehen"
 }

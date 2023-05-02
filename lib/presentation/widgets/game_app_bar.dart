@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:financial_literacy_game/presentation/widgets/settings_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../config/color_palette.dart';
 import '../../config/constants.dart';
@@ -22,7 +21,7 @@ class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Padding(
         padding: const EdgeInsets.only(left: 5.0),
         child: AutoSizeText(
-          '$appTitle - ${AppLocalizations.of(context)!.country}',
+          appTitle,
           style: TextStyle(
             fontSize: 100,
             color: ColorPalette().darkText,

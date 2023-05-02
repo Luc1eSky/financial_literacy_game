@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -19,12 +23,12 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     int levelId = ref.watch(gameDataNotifierProvider).levelId;
-    return Scaffold(
-      backgroundColor: ColorPalette().background,
-      appBar: const GameAppBar(),
-      body: Stack(
-        children: [
-          SafeArea(
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: ColorPalette().background,
+          appBar: const GameAppBar(),
+          body: SafeArea(
             child: SingleChildScrollView(
               child: Center(
                 child: ConstrainedBox(
@@ -39,7 +43,10 @@ class HomePage extends ConsumerWidget {
                           nextLevelCash: levels[levelId].cashGoal,
                         ),
                         const SizedBox(height: 10),
-                        const SectionCard(title: 'OVERVIEW', content: OverviewContent()),
+                        SectionCard(
+                          title: AppLocalizations.of(context)!.overview.toUpperCase(),
+                          content: const OverviewContent(),
+                        ),
                         const SizedBox(height: 10),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
@@ -47,9 +54,15 @@ class HomePage extends ConsumerWidget {
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
                           const SizedBox(height: 10),
-                        const SectionCard(title: 'ASSETS', content: AssetContent()),
+                        SectionCard(
+                          title: AppLocalizations.of(context)!.assets.toUpperCase(),
+                          content: const AssetContent(),
+                        ),
                         const SizedBox(height: 10),
-                        const SectionCard(title: 'LOANS', content: LoanContent()),
+                        SectionCard(
+                          title: AppLocalizations.of(context)!.loans.toUpperCase(),
+                          content: const LoanContent(),
+                        ),
                       ],
                     ),
                   ),
@@ -57,8 +70,28 @@ class HomePage extends ConsumerWidget {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: ConfettiWidget(
+            confettiController: ref.read(gameDataNotifierProvider).confettiController,
+            shouldLoop: true,
+            emissionFrequency: 0.03,
+            numberOfParticles: 25,
+            maxBlastForce: 25,
+            minBlastForce: 7,
+            // colors: [
+            //   ColorPalette().lightText,
+            //   ColorPalette().cashIndicator,
+            //   ColorPalette().backgroundContentCard,
+            // ],
+            gravity: 0.2,
+            particleDrag: 0.05,
+            blastDirection: pi,
+            blastDirectionality: BlastDirectionality.explosive,
+          ),
+        ),
+      ],
     );
   }
 }

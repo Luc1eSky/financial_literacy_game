@@ -41,6 +41,8 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_riverpod: ^2.3.2
   carousel_slider: ^4.2.1
+  defer_pointer: ^0.0.2
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_test:

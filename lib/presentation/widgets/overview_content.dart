@@ -1,8 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:financial_literacy_game/config/color_palette.dart';
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
+import '../../config/color_palette.dart';
 import '../../config/constants.dart';
 import '../../domain/game_data_notifier.dart';
 import 'content_card.dart';
@@ -26,7 +29,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: 'Cash',
+              title: AppLocalizations.of(context)!.cash.capitalize(),
               value: cash,
               group: valueSizeGroup,
             ),
@@ -37,7 +40,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: 'Income',
+              title: AppLocalizations.of(context)!.income.capitalize(),
               value: income,
               group: valueSizeGroup,
             ),
@@ -48,7 +51,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: 'Expenses',
+              title: AppLocalizations.of(context)!.expenses.capitalize(),
               value: -expenses,
               group: valueSizeGroup,
             ),
@@ -59,7 +62,7 @@ class OverviewContent extends ConsumerWidget {
   }
 }
 
-class OverviewTileContent extends StatelessWidget {
+class OverviewTileContent extends ConsumerWidget {
   const OverviewTileContent({
     super.key,
     required this.title,
@@ -72,14 +75,15 @@ class OverviewTileContent extends StatelessWidget {
   final AutoSizeGroup group;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    NumberFormat currencyFormat = ref.watch(gameDataNotifierProvider).currencyFormat;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
           style: TextStyle(
-            fontSize: 17.0,
+            fontSize: 16.0,
             color: ColorPalette().lightText,
           ),
         ),
@@ -88,9 +92,7 @@ class OverviewTileContent extends StatelessWidget {
           child: Align(
             alignment: Alignment.bottomRight,
             child: AutoSizeText(
-              value.isNegative
-                  ? '- \$${value.abs().toStringAsFixed(2)}'
-                  : '\$${value.abs().toStringAsFixed(2)}',
+              currencyFormat.format(value),
               maxLines: 1,
               group: group,
               style: TextStyle(
@@ -100,19 +102,6 @@ class OverviewTileContent extends StatelessWidget {
             ),
           ),
         ),
-        // Expanded(
-        //   child: Align(
-        //     alignment: Alignment.bottomRight,
-        //     child: AutoSizeText(
-        //       '+3.20',
-        //       style: TextStyle(
-        //         color: Colors.grey[300],
-        //         fontSize: 100.0,
-        //         //fontWeight: FontWeight.bold,
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }

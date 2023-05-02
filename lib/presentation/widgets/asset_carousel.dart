@@ -52,10 +52,12 @@ class AssetCarousel extends StatelessWidget {
                   ),
                   const Spacer(),
                   Expanded(
-                      flex: 8,
-                      child: Align(
-                          alignment: Alignment.center,
-                          child: Image.asset(asset.imagePath, fit: BoxFit.cover))),
+                    flex: 8,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Image.asset(asset.imagePath, fit: BoxFit.cover),
+                    ),
+                  ),
                   const Spacer(),
                   Expanded(
                     flex: 2,

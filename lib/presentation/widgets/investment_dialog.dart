@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:financial_literacy_game/presentation/widgets/next_level_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -45,6 +47,19 @@ void checkGameHasEnded(WidgetRef ref, BuildContext context) {
       context: context,
       builder: (context) {
         return WonGameDialog(ref: ref);
+      },
+    );
+  }
+}
+
+void checkNextLevelReached(WidgetRef ref, BuildContext context) {
+  if (ref.read(gameDataNotifierProvider).currentLevelSolved) {
+    ref.read(gameDataNotifierProvider.notifier).showConfetti();
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return NextLevelDialog(ref: ref);
       },
     );
   }
@@ -163,9 +178,9 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
         child: AlertDialog(
           backgroundColor: ColorPalette().popUpBackground,
           //insetPadding: EdgeInsets.zero,
-          title: const Text(
-            'Investment Option',
-            style: TextStyle(
+          title: Text(
+            AppLocalizations.of(context)!.investDialogTitle,
+            style: const TextStyle(
               fontSize: 25.0,
               fontWeight: FontWeight.bold,
             ),
@@ -192,6 +207,15 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                AutoSizeText(
+                  'Tip:',
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 100,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  group: textGroup,
+                ),
                 if (currentLevel.showLoanBorrowOption)
                   AutoSizeText(
                     '• Borrow at ${(levelLoan.interestRate * 100).toStringAsFixed(decimalValuesToDisplay)}% interest total',
@@ -241,7 +265,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
-                foregroundColor: ColorPalette().buttonForeground,
+                foregroundColor: ColorPalette().lightText,
                 backgroundColor: ColorPalette().buttonBackground,
                 textStyle: const TextStyle(fontSize: 13.0),
               ),
@@ -252,6 +276,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                 Navigator.pop(context);
                 checkBankruptcy(widget.ref, context);
                 checkGameHasEnded(widget.ref, context);
+                checkNextLevelReached(widget.ref, context);
               },
               child: const Text("don't buy"),
             ),
@@ -259,7 +284,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 8.0,
-                    foregroundColor: ColorPalette().buttonForeground,
+                    foregroundColor: ColorPalette().lightText,
                     backgroundColor: ColorPalette().buttonBackground,
                     textStyle: const TextStyle(fontSize: 13.0),
                   ),
@@ -273,6 +298,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                       if (context.mounted) {
                         Navigator.pop(context);
                         checkGameHasEnded(widget.ref, context);
+                        checkNextLevelReached(widget.ref, context);
                       }
                     }
                   },
@@ -281,7 +307,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 8.0,
-                    foregroundColor: ColorPalette().buttonForeground,
+                    foregroundColor: ColorPalette().lightText,
                     backgroundColor: ColorPalette().buttonBackground,
                     textStyle: const TextStyle(fontSize: 13.0),
                   ),

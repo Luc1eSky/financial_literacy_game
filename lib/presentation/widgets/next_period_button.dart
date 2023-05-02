@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -6,27 +7,35 @@ import 'investment_dialog.dart';
 
 class NextPeriodButton extends ConsumerWidget {
   const NextPeriodButton({
+    this.isDemonstrationMode = false,
     super.key,
   });
+  final bool isDemonstrationMode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 8.0,
-        foregroundColor: ColorPalette().buttonForeground,
-        backgroundColor: ColorPalette().buttonBackground,
-        textStyle: const TextStyle(fontSize: 20.0),
+    return SizedBox(
+      width: 120,
+      height: 30,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 5.0,
+          foregroundColor: ColorPalette().darkText,
+          backgroundColor: ColorPalette().cashIndicator,
+          textStyle: const TextStyle(fontSize: 20.0),
+        ),
+        onPressed: () {
+          if (!isDemonstrationMode) {
+            showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) {
+                  return InvestmentDialog(ref: ref);
+                });
+          }
+        },
+        child: Text(AppLocalizations.of(context)!.next.toUpperCase()),
       ),
-      onPressed: () {
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) {
-              return InvestmentDialog(ref: ref);
-            });
-      },
-      child: const Text('NEXT'),
     );
   }
 }

@@ -1,5 +1,17 @@
 {
   "language": "Français",
-  "country": "France",
-  "cash": "argent"
+  "localeSelectionTitle": "Langues et Devises",
+  "level": "niveau",
+  "levelGoal": "Objectif en espèces",
+  "next": "suivant",
+  "overview": "aperçu",
+  "cash": "espèces",
+  "income": "revenu",
+  "expenses": "dépenses",
+  "assets": "actifs",
+  "chicken": "poulette",
+  "cow": "vache",
+  "goat": "chèvre",
+  "loans": "prêts",
+  "investDialogTitle": "Options d'investissement"
 }

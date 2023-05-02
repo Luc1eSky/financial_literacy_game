@@ -52,3 +52,10 @@ String generateLoanTipMessage({
       '$profitString';
   return tipString;
 }
+
+// extension to allow capitalization of first letter in strings
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}

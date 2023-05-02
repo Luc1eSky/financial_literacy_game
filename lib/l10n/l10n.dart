@@ -9,7 +9,9 @@ class L10n {
     defaultLocale,
     const Locale('de', 'DE'),
     const Locale('fr', 'FR'),
-    const Locale('lg', 'UG'),
+    const Locale('kn', 'IN'),
+    const Locale('en', 'GB'),
+    //const Locale('lg', 'UG'),
   ];
 
   static Locale getSystemLocale() {

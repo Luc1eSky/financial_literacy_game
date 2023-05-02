@@ -1,10 +1,16 @@
 const String appTitle = 'FinSim Game';
 
+// confetti duration in seconds
+const int showConfettiSeconds = 3;
+
 // maximum Width of play area
 const double playAreaMaxWidth = 600;
 
 // aspect ratio of overview content cards (cash, income, expenses)
 const double overviewAspectRatio = 1.4;
+
+// aspect ratio of asset content cards (cows, chickens, goats)
+const double assetsAspectRatio = 0.8;
 
 // decimal points for borrow and interest rates
 // on "investment options" screen
