@@ -7,8 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
 import '../../config/constants.dart';
+import '../../domain/concepts/person.dart';
 import '../../domain/entities/levels.dart';
 import '../../domain/game_data_notifier.dart';
+import '../../domain/utils/utils.dart';
 import '../widgets/asset_content.dart';
 import '../widgets/game_app_bar.dart';
 import '../widgets/how_to_play_dialog.dart';
@@ -46,29 +48,23 @@ class HomePage extends ConsumerWidget {
                         ),
                         const SizedBox(height: 10),
                         SectionCard(
-                          title: AppLocalizations.of(context)!
-                              .overview
-                              .toUpperCase(),
+                          title: AppLocalizations.of(context)!.overview.toUpperCase(),
                           content: const OverviewContent(),
                         ),
                         const SizedBox(height: 10),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
-                          const SectionCard(
-                              title: 'PERSONAL', content: PersonalContent()),
+                          const SectionCard(title: 'PERSONAL', content: PersonalContent()),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
                           const SizedBox(height: 10),
                         SectionCard(
-                          title: AppLocalizations.of(context)!
-                              .assets
-                              .toUpperCase(),
+                          title: AppLocalizations.of(context)!.assets.toUpperCase(),
                           content: const AssetContent(),
                         ),
                         const SizedBox(height: 10),
                         SectionCard(
-                          title:
-                              AppLocalizations.of(context)!.loans.toUpperCase(),
+                          title: AppLocalizations.of(context)!.loans.toUpperCase(),
                           content: const LoanContent(),
                         ),
                         Container(
@@ -86,8 +82,7 @@ class HomePage extends ConsumerWidget {
         Align(
           alignment: Alignment.topCenter,
           child: ConfettiWidget(
-            confettiController:
-                ref.read(gameDataNotifierProvider).confettiController,
+            confettiController: ref.read(gameDataNotifierProvider).confettiController,
             shouldLoop: true,
             emissionFrequency: 0.03,
             numberOfParticles: 25,
@@ -117,8 +112,30 @@ class HomepageNew extends ConsumerStatefulWidget {
 }
 
 class _HomepageNewState extends ConsumerState<HomepageNew> {
+  late TextEditingController firstNameTextController;
+  late TextEditingController lastNameTextController;
+
+  bool setPersonData() {
+    if (firstNameTextController.text == '' || lastNameTextController.text == '') {
+      showErrorSnackBar(
+        context: context,
+        errorMessage: 'Please enter first and last name.',
+      );
+      return false;
+    }
+    Person newPerson = Person(
+      firstName: firstNameTextController.text,
+      lastName: lastNameTextController.text,
+    );
+    ref.read(gameDataNotifierProvider.notifier).setPerson(newPerson);
+    return true;
+  }
+
   @override
   void initState() {
+    firstNameTextController = TextEditingController();
+    lastNameTextController = TextEditingController();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       print("Open for the first time");
       showDialog(
@@ -130,8 +147,8 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
               title: 'Welcome to the FinSim Game',
               content: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text("Dear participants, thank you for "
+                children: [
+                  const Text("Dear participants, thank you for "
                       "participating. This game is meant to "
                       "mimic financial investment decisions and to teach "
                       "financial skills. It will only be used for this "
@@ -139,12 +156,14 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
                       "exercise affects the relationship with your bank.\n\n"
                       "Please enter your contact info below:"),
                   TextField(
-                    decoration: InputDecoration(hintText: "First name"),
+                    controller: firstNameTextController,
+                    decoration: const InputDecoration(hintText: "First name"),
                   ),
                   TextField(
-                    decoration: InputDecoration(hintText: "Last name"),
+                    controller: lastNameTextController,
+                    decoration: const InputDecoration(hintText: "Last name"),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],
@@ -157,7 +176,7 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
                     foregroundColor: ColorPalette().lightText,
                   ),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    if (setPersonData()) Navigator.of(context).pop();
                   },
                   child: const Text('Start game'),
                 ),
@@ -168,22 +187,30 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
                     foregroundColor: ColorPalette().lightText,
                   ),
                   onPressed: () {
-                    Navigator.of(context).pop();
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const HowToPlayDialog();
-                      },
-                    );
+                    if (setPersonData()) {
+                      Navigator.of(context).pop();
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const HowToPlayDialog();
+                        },
+                      );
+                    }
                   },
                   child: const Text('How to play'),
                 ),
               ],
-              // TODO: Login for users and welcome message
             );
           });
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    firstNameTextController.dispose();
+    lastNameTextController.dispose();
   }
 
   @override
@@ -211,29 +238,23 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
                         ),
                         const SizedBox(height: 10),
                         SectionCard(
-                          title: AppLocalizations.of(context)!
-                              .overview
-                              .toUpperCase(),
+                          title: AppLocalizations.of(context)!.overview.toUpperCase(),
                           content: const OverviewContent(),
                         ),
                         const SizedBox(height: 10),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
-                          const SectionCard(
-                              title: 'PERSONAL', content: PersonalContent()),
+                          const SectionCard(title: 'PERSONAL', content: PersonalContent()),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
                           const SizedBox(height: 10),
                         SectionCard(
-                          title: AppLocalizations.of(context)!
-                              .assets
-                              .toUpperCase(),
+                          title: AppLocalizations.of(context)!.assets.toUpperCase(),
                           content: const AssetContent(),
                         ),
                         const SizedBox(height: 10),
                         SectionCard(
-                          title:
-                              AppLocalizations.of(context)!.loans.toUpperCase(),
+                          title: AppLocalizations.of(context)!.loans.toUpperCase(),
                           content: const LoanContent(),
                         ),
                       ],
@@ -247,8 +268,7 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
         Align(
           alignment: Alignment.topCenter,
           child: ConfettiWidget(
-            confettiController:
-                ref.read(gameDataNotifierProvider).confettiController,
+            confettiController: ref.read(gameDataNotifierProvider).confettiController,
             shouldLoop: true,
             emissionFrequency: 0.03,
             numberOfParticles: 25,

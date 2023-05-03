@@ -1,11 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:financial_literacy_game/presentation/widgets/settings_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
 import '../../config/constants.dart';
+import '../../domain/game_data_notifier.dart';
+import '../../presentation/widgets/settings_dialog.dart';
 
-class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
+class GameAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const GameAppBar({
     Key? key,
   })  : preferredSize = const Size.fromHeight(kToolbarHeight),
@@ -15,13 +17,16 @@ class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size preferredSize;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
       backgroundColor: ColorPalette().appBarBackground,
       title: Padding(
         padding: const EdgeInsets.only(left: 5.0),
         child: AutoSizeText(
-          appTitle,
+          ref.watch(gameDataNotifierProvider).person.exists()
+              ? '$appTitle - ${ref.watch(gameDataNotifierProvider).person.firstName} '
+                  '${ref.watch(gameDataNotifierProvider).person.lastName}'
+              : appTitle,
           style: TextStyle(
             fontSize: 100,
             color: ColorPalette().darkText,

@@ -10,6 +10,7 @@ import '../l10n/l10n.dart';
 import 'concepts/asset.dart';
 import 'concepts/game_data.dart';
 import 'concepts/loan.dart';
+import 'concepts/person.dart';
 import 'entities/levels.dart';
 import 'utils/utils.dart';
 
@@ -19,6 +20,7 @@ final gameDataNotifierProvider =
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
       : super(GameData(
+          person: Person(),
           locale: L10n.getSystemLocale(),
           currencyFormat: NumberFormat.simpleCurrency(locale: L10n.getSystemLocale().toString()),
           cash: levels[0].startingCash,
@@ -26,6 +28,11 @@ class GameDataNotifier extends StateNotifier<GameData> {
           personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
           confettiController: ConfettiController(),
         ));
+
+  void setPerson(Person newPerson) {
+    state = state.copyWith(person: newPerson);
+    debugPrint('Person set to ${newPerson.firstName} ${newPerson.lastName}, ${newPerson.uid}');
+  }
 
   // setting new locale (language and format)
   void setLocale(Locale newLocale) {
@@ -203,6 +210,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
   void resetGame() {
     // TODO: TRACK / SAVE GAME DATA
     state = GameData(
+      person: state.person,
       locale: state.locale,
       currencyFormat: state.currencyFormat,
       cash: levels[0].startingCash,

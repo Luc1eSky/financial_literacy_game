@@ -1,6 +1,9 @@
 // helper method to copy a list of assets
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
+import '../../config/color_palette.dart';
 import '../concepts/asset.dart';
 import '../concepts/level.dart';
 import '../concepts/loan.dart';
@@ -58,4 +61,17 @@ extension StringExtension on String {
   String capitalize() {
     return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
   }
+}
+
+void showErrorSnackBar({required BuildContext context, required String errorMessage}) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      duration: const Duration(seconds: 2),
+      backgroundColor: ColorPalette().errorSnackBarBackground,
+      content: Text(
+        errorMessage,
+        style: TextStyle(color: ColorPalette().darkText),
+      ),
+    ),
+  );
 }

@@ -16,4 +16,6 @@ class ColorPalette {
 
   Color get lifeBarForeground => const Color.fromRGBO(76, 175, 80, 1.0);
   Color get lifeBarBackground => const Color.fromRGBO(70, 68, 68, 0.85);
+
+  Color get errorSnackBarBackground => const Color.fromRGBO(244, 67, 54, 1.0);
 }
