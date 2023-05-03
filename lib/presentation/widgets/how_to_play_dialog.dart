@@ -23,13 +23,11 @@ class HowToPlayDialog extends ConsumerWidget {
         width: 500, // max width of dialog
         child: CarouselSlider(
           options: CarouselOptions(
-              aspectRatio: 1.0,
-              //viewportFraction: 0.8,
-              enlargeCenterPage: true,
-              enableInfiniteScroll: false,
-              onPageChanged: (index, reason) {
-                print('changed to index $index');
-              }),
+            aspectRatio: 1.0,
+            //viewportFraction: 0.8,
+            enlargeCenterPage: true,
+            enableInfiniteScroll: false,
+          ),
           items: [
             HowToPlayCard(
               content: Column(

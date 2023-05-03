@@ -43,6 +43,8 @@ dependencies:
   carousel_slider: ^4.2.1
   defer_pointer: ^0.0.2
   confetti: ^0.7.0
+  shared_preferences: ^2.1.0
+  device_info_plus: ^8.2.2
 
 dev_dependencies:
   flutter_test:
