@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:confetti/confetti.dart';
-import 'package:intl/intl.dart';
 
 import '../../config/constants.dart';
 import '../concepts/person.dart';
@@ -11,8 +8,6 @@ import 'loan.dart';
 
 class GameData {
   final Person person;
-  final Locale locale;
-  final NumberFormat currencyFormat;
   final double cash;
   final int levelId;
   final int period;
@@ -28,8 +23,6 @@ class GameData {
 
   GameData({
     required this.person,
-    required this.locale,
-    required this.currencyFormat,
     required this.cash,
     required this.personalIncome,
     required this.personalExpenses,
@@ -47,8 +40,6 @@ class GameData {
   // method to copy custom class
   GameData copyWith({
     Person? person,
-    Locale? locale,
-    NumberFormat? currencyFormat,
     int? levelId,
     int? period,
     double? cash,
@@ -64,8 +55,6 @@ class GameData {
   }) {
     return GameData(
       person: person ?? this.person.copyWith(),
-      locale: locale ?? this.locale,
-      currencyFormat: currencyFormat ?? this.currencyFormat,
       levelId: levelId ?? this.levelId,
       period: period ?? this.period,
       cash: cash ?? this.cash,

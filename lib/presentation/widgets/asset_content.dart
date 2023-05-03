@@ -1,8 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../config/color_palette.dart';
 import '../../config/constants.dart';
@@ -40,7 +38,7 @@ class AssetContent extends ConsumerWidget {
         children: [
           Expanded(
               child: SmallAssetCard(
-            title: AppLocalizations.of(context)!.cow,
+            title: 'cow',
             count: cows,
             income: cowIncome,
             group: valueSizeGroup,
@@ -49,7 +47,7 @@ class AssetContent extends ConsumerWidget {
           const SizedBox(width: 7.0),
           Expanded(
               child: SmallAssetCard(
-            title: AppLocalizations.of(context)!.chicken,
+            title: 'chicken',
             count: chickens,
             income: chickenIncome,
             group: valueSizeGroup,
@@ -58,7 +56,7 @@ class AssetContent extends ConsumerWidget {
           const SizedBox(width: 7.0),
           Expanded(
               child: SmallAssetCard(
-            title: AppLocalizations.of(context)!.goat,
+            title: 'goat',
             count: goats,
             income: goatIncome,
             group: valueSizeGroup,
@@ -87,7 +85,6 @@ class SmallAssetCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    NumberFormat currencyFormat = ref.watch(gameDataNotifierProvider).currencyFormat;
     return AspectRatio(
       aspectRatio: assetsAspectRatio,
       child: Container(
@@ -163,7 +160,7 @@ class SmallAssetCard extends ConsumerWidget {
                     Expanded(
                       flex: 1,
                       child: AutoSizeText(
-                        currencyFormat.format(income),
+                        income.toStringAsFixed(2),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: ColorPalette().lightText,

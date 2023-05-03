@@ -1,18 +1,15 @@
 import 'dart:math';
 
 import 'package:confetti/confetti.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/color_palette.dart';
 import '../../config/constants.dart';
 import '../../domain/concepts/person.dart';
 import '../../domain/entities/levels.dart';
 import '../../domain/game_data_notifier.dart';
+import '../../domain/utils/device_and_personal_data.dart';
 import '../../domain/utils/utils.dart';
 import '../widgets/asset_content.dart';
 import '../widgets/game_app_bar.dart';
@@ -24,97 +21,14 @@ import '../widgets/overview_content.dart';
 import '../widgets/personal_content.dart';
 import '../widgets/section_card.dart';
 
-// class HomePage extends ConsumerWidget {
-//   const HomePage({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     int levelId = ref.watch(gameDataNotifierProvider).levelId;
-//     return Stack(
-//       children: [
-//         Scaffold(
-//           backgroundColor: ColorPalette().background,
-//           appBar: const GameAppBar(),
-//           body: SafeArea(
-//             child: SingleChildScrollView(
-//               child: Center(
-//                 child: ConstrainedBox(
-//                   constraints: const BoxConstraints(maxWidth: playAreaMaxWidth),
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(15.0),
-//                     child: Column(
-//                       children: [
-//                         LevelInfoCard(
-//                           currentCash: ref.watch(gameDataNotifierProvider).cash,
-//                           levelId: levelId,
-//                           nextLevelCash: levels[levelId].cashGoal,
-//                         ),
-//                         const SizedBox(height: 10),
-//                         SectionCard(
-//                           title: AppLocalizations.of(context)!.overview.toUpperCase(),
-//                           content: const OverviewContent(),
-//                         ),
-//                         const SizedBox(height: 10),
-//                         if (levels[ref.read(gameDataNotifierProvider).levelId]
-//                             .includePersonalIncome)
-//                           const SectionCard(title: 'PERSONAL', content: PersonalContent()),
-//                         if (levels[ref.read(gameDataNotifierProvider).levelId]
-//                             .includePersonalIncome)
-//                           const SizedBox(height: 10),
-//                         SectionCard(
-//                           title: AppLocalizations.of(context)!.assets.toUpperCase(),
-//                           content: const AssetContent(),
-//                         ),
-//                         const SizedBox(height: 10),
-//                         SectionCard(
-//                           title: AppLocalizations.of(context)!.loans.toUpperCase(),
-//                           content: const LoanContent(),
-//                         ),
-//                         Container(
-//                           height: 100,
-//                           color: Colors.red,
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//         Align(
-//           alignment: Alignment.topCenter,
-//           child: ConfettiWidget(
-//             confettiController: ref.read(gameDataNotifierProvider).confettiController,
-//             shouldLoop: true,
-//             emissionFrequency: 0.03,
-//             numberOfParticles: 25,
-//             maxBlastForce: 25,
-//             minBlastForce: 7,
-//             // colors: [
-//             //   ColorPalette().lightText,
-//             //   ColorPalette().cashIndicator,
-//             //   ColorPalette().backgroundContentCard,
-//             // ],
-//             gravity: 0.2,
-//             particleDrag: 0.05,
-//             blastDirection: pi,
-//             blastDirectionality: BlastDirectionality.explosive,
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
-class HomepageNew extends ConsumerStatefulWidget {
-  const HomepageNew({Key? key}) : super(key: key);
+class Homepage extends ConsumerStatefulWidget {
+  const Homepage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<HomepageNew> createState() => _HomepageNewState();
+  ConsumerState<Homepage> createState() => _HomepageState();
 }
 
-class _HomepageNewState extends ConsumerState<HomepageNew> {
+class _HomepageState extends ConsumerState<Homepage> {
   late TextEditingController firstNameTextController;
   late TextEditingController lastNameTextController;
 
@@ -127,37 +41,9 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
       return false;
     }
 
-    _savePerson(enteredPerson);
+    savePerson(enteredPerson);
     ref.read(gameDataNotifierProvider.notifier).setPerson(enteredPerson);
     return true;
-  }
-
-  Future<void> getDeviceInfo() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (kIsWeb) {
-      WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
-      debugPrint('Running on ${webBrowserInfo.userAgent}');
-    }
-  }
-
-  Future<bool> _loadPerson() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? savedFirstName = prefs.getString('firstName');
-    String? savedLastName = prefs.getString('lastName');
-
-    if (savedFirstName == null || savedLastName == null) return false;
-
-    Person loadedPerson = Person(firstName: savedFirstName, lastName: savedLastName);
-    ref.read(gameDataNotifierProvider.notifier).setPerson(loadedPerson);
-    return true;
-  }
-
-  void _savePerson(Person person) async {
-    if (person.exists()) {
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('firstName', person.firstName!);
-      prefs.setString('lastName', person.lastName!);
-    }
   }
 
   @override
@@ -167,7 +53,7 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await getDeviceInfo();
-      _loadPerson().then((personLoaded) {
+      loadPerson(ref: ref).then((personLoaded) {
         if (!personLoaded) {
           showDialog(
               barrierDismissible: false,
@@ -279,9 +165,9 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
                           nextLevelCash: levels[levelId].cashGoal,
                         ),
                         const SizedBox(height: 10),
-                        SectionCard(
-                          title: AppLocalizations.of(context)!.overview.toUpperCase(),
-                          content: const OverviewContent(),
+                        const SectionCard(
+                          title: 'OVERVIEW',
+                          content: OverviewContent(),
                         ),
                         const SizedBox(height: 10),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
@@ -290,14 +176,14 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
                           const SizedBox(height: 10),
-                        SectionCard(
-                          title: AppLocalizations.of(context)!.assets.toUpperCase(),
-                          content: const AssetContent(),
+                        const SectionCard(
+                          title: 'ASSETS',
+                          content: AssetContent(),
                         ),
                         const SizedBox(height: 10),
-                        SectionCard(
-                          title: AppLocalizations.of(context)!.loans.toUpperCase(),
-                          content: const LoanContent(),
+                        const SectionCard(
+                          title: 'LOANS',
+                          content: LoanContent(),
                         ),
                       ],
                     ),

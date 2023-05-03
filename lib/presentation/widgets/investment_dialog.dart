@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:financial_literacy_game/presentation/widgets/next_level_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -178,9 +177,9 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
         child: AlertDialog(
           backgroundColor: ColorPalette().popUpBackground,
           //insetPadding: EdgeInsets.zero,
-          title: Text(
-            AppLocalizations.of(context)!.investDialogTitle,
-            style: const TextStyle(
+          title: const Text(
+            'Investment Options',
+            style: TextStyle(
               fontSize: 25.0,
               fontWeight: FontWeight.bold,
             ),

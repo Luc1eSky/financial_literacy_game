@@ -3,10 +3,8 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../config/constants.dart';
-import '../l10n/l10n.dart';
 import 'concepts/asset.dart';
 import 'concepts/game_data.dart';
 import 'concepts/loan.dart';
@@ -21,8 +19,6 @@ class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
       : super(GameData(
           person: Person(),
-          locale: L10n.getSystemLocale(),
-          currencyFormat: NumberFormat.simpleCurrency(locale: L10n.getSystemLocale().toString()),
           cash: levels[0].startingCash,
           personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
           personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
@@ -32,15 +28,6 @@ class GameDataNotifier extends StateNotifier<GameData> {
   void setPerson(Person newPerson) {
     state = state.copyWith(person: newPerson);
     debugPrint('Person set to ${newPerson.firstName} ${newPerson.lastName}, ${newPerson.uid}');
-  }
-
-  // setting new locale (language and format)
-  void setLocale(Locale newLocale) {
-    state = state.copyWith(
-      locale: newLocale,
-      currencyFormat: NumberFormat.simpleCurrency(locale: newLocale.toString()),
-    );
-    debugPrint('New locale set to $newLocale');
   }
 
   // show confetti animation for a certain amount of time
@@ -211,8 +198,6 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // TODO: TRACK / SAVE GAME DATA
     state = GameData(
       person: state.person,
-      locale: state.locale,
-      currencyFormat: state.currencyFormat,
       cash: levels[0].startingCash,
       personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
       personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),

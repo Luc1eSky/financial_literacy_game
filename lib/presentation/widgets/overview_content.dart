@@ -1,9 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../config/color_palette.dart';
 import '../../config/constants.dart';
@@ -29,7 +26,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: AppLocalizations.of(context)!.cash.capitalize(),
+              title: 'Cash',
               value: cash,
               group: valueSizeGroup,
             ),
@@ -40,7 +37,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: AppLocalizations.of(context)!.income.capitalize(),
+              title: 'Income',
               value: income,
               group: valueSizeGroup,
             ),
@@ -51,7 +48,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: AppLocalizations.of(context)!.expenses.capitalize(),
+              title: 'Expenses',
               value: -expenses,
               group: valueSizeGroup,
             ),
@@ -76,7 +73,6 @@ class OverviewTileContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    NumberFormat currencyFormat = ref.watch(gameDataNotifierProvider).currencyFormat;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -92,7 +88,7 @@ class OverviewTileContent extends ConsumerWidget {
           child: Align(
             alignment: Alignment.bottomRight,
             child: AutoSizeText(
-              currencyFormat.format(value),
+              value.toStringAsFixed(2),
               maxLines: 1,
               group: group,
               style: TextStyle(

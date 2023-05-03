@@ -2,11 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:financial_literacy_game/config/color_palette.dart';
 import 'package:financial_literacy_game/presentation/widgets/menu_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
-import '../../domain/game_data_notifier.dart';
 import 'cash_indicator.dart';
 import 'next_period_button.dart';
 
@@ -15,7 +12,6 @@ class HowToPlayDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    NumberFormat currencyFormat = ref.watch(gameDataNotifierProvider).currencyFormat;
     return MenuDialog(
       title: 'How to play',
       content: SizedBox(
@@ -71,8 +67,8 @@ class HowToPlayDialog extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    '${AppLocalizations.of(context)!.levelGoal}: '
-                    '${currencyFormat.format(75)}', // TODO: LOCALIZE CASH GOAL AMOUNT
+                    'cash goal: '
+                    '${75.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontSize: 17.0,
                       color: ColorPalette().darkText,

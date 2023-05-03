@@ -1,12 +1,8 @@
-import 'package:financial_literacy_game/domain/game_data_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config/constants.dart';
 import 'config/themes.dart';
-import 'l10n/l10n.dart';
 import 'presentation/screens/home_page.dart';
 
 void main() {
@@ -38,15 +34,7 @@ class MaterialAppConsumerWidget extends ConsumerWidget {
       themeMode: ThemeMode.system,
       theme: lightTheme,
       darkTheme: darkTheme,
-      locale: ref.watch(gameDataNotifierProvider).locale,
-      supportedLocales: L10n.all,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      home: const HomepageNew(),
+      home: const Homepage(),
     );
   }
 }

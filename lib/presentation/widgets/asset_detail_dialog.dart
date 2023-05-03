@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../config/color_palette.dart';
 import '../../domain/game_data_notifier.dart';
@@ -13,9 +11,8 @@ class AssetDetailDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    NumberFormat currencyFormat = ref.watch(gameDataNotifierProvider).currencyFormat;
     return AlertDialog(
-      title: Text(AppLocalizations.of(context)!.assets.toUpperCase()),
+      title: Text('Assets'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -78,7 +75,7 @@ class AssetDetailDialog extends ConsumerWidget {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          currencyFormat.format(asset.income),
+                          asset.income.toStringAsFixed(2),
                           style: TextStyle(
                             fontSize: 16.0,
                             color: ColorPalette().darkText,
@@ -95,8 +92,10 @@ class AssetDetailDialog extends ConsumerWidget {
             child: Container(
               //color: Colors.green,
               child: Text(
-                currencyFormat
-                    .format(ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome()),
+                ref
+                    .watch(gameDataNotifierProvider.notifier)
+                    .calculateTotalIncome()
+                    .toStringAsFixed(2),
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontSize: 16.0,
