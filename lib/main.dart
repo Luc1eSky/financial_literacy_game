@@ -46,7 +46,7 @@ class MaterialAppConsumerWidget extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      home: const HomePage(),
+      home: const HomepageNew(),
     );
   }
 }
