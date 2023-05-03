@@ -130,49 +130,59 @@ class _HomepageNewState extends ConsumerState<HomepageNew> {
               title: 'Welcome to the FinSim Game',
               content: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text("Dear participants, thank you for "
+                children: const [
+                  Text("Dear participants, thank you for "
                       "participating. This game is meant to "
                       "mimic financial investment decisions and to teach "
                       "financial skills. It will only be used for this "
                       "purpose. We emphasize that no part of this game "
                       "exercise affects the relationship with your bank.\n\n"
                       "Please enter your contact info below:"),
-                  const TextField(
-                    decoration:
-                        InputDecoration(hintText: "First and last name"),
+                  TextField(
+                    decoration: InputDecoration(hintText: "First name"),
                   ),
-                  const TextField(
-                    decoration: InputDecoration(hintText: "Your unique ID"),
+                  TextField(
+                    decoration: InputDecoration(hintText: "Last name"),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 20,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 5.0,
-                      backgroundColor: ColorPalette().buttonBackground,
-                      foregroundColor: ColorPalette().lightText,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const HowToPlayDialog();
-                        },
-                      );
-                    },
-                    child: const Text('How to play'),
                   ),
                 ],
               ),
-
+              actions: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 5.0,
+                    backgroundColor: ColorPalette().buttonBackground,
+                    foregroundColor: ColorPalette().lightText,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Start game'),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 5.0,
+                    backgroundColor: ColorPalette().buttonBackground,
+                    foregroundColor: ColorPalette().lightText,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const HowToPlayDialog();
+                      },
+                    );
+                  },
+                  child: const Text('How to play'),
+                ),
+              ],
               // TODO: Login for users and welcome message
             );
           });
     });
-    // TODO: implement initState
     super.initState();
   }
 
