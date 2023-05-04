@@ -74,11 +74,13 @@ class _HomepageState extends ConsumerState<Homepage> {
                           "Please enter your contact info below:"),
                       TextField(
                         controller: firstNameTextController,
-                        decoration: const InputDecoration(hintText: "First name"),
+                        decoration:
+                            const InputDecoration(hintText: "First name"),
                       ),
                       TextField(
                         controller: lastNameTextController,
-                        decoration: const InputDecoration(hintText: "Last name"),
+                        decoration:
+                            const InputDecoration(hintText: "Last name"),
                       ),
                       const SizedBox(
                         height: 20,
@@ -149,6 +151,7 @@ class _HomepageState extends ConsumerState<Homepage> {
       children: [
         Scaffold(
           backgroundColor: ColorPalette().background,
+          resizeToAvoidBottomInset: false,
           appBar: const GameAppBar(),
           body: SafeArea(
             child: SingleChildScrollView(
@@ -172,7 +175,8 @@ class _HomepageState extends ConsumerState<Homepage> {
                         const SizedBox(height: 10),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
-                          const SectionCard(title: 'PERSONAL', content: PersonalContent()),
+                          const SectionCard(
+                              title: 'PERSONAL', content: PersonalContent()),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
                           const SizedBox(height: 10),
@@ -196,7 +200,8 @@ class _HomepageState extends ConsumerState<Homepage> {
         Align(
           alignment: Alignment.topCenter,
           child: ConfettiWidget(
-            confettiController: ref.read(gameDataNotifierProvider).confettiController,
+            confettiController:
+                ref.read(gameDataNotifierProvider).confettiController,
             shouldLoop: true,
             emissionFrequency: 0.03,
             numberOfParticles: 20,

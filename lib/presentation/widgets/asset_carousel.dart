@@ -96,7 +96,7 @@ class AssetCarousel extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: AutoSizeText(
-                        'Risk Level: ${(asset.riskLevel * 100).toStringAsFixed(0)}%',
+                        'Risk: 1 out of ${(100 / (asset.riskLevel * 100)).toStringAsFixed(0)} will not survive',
                         style: TextStyle(
                           fontSize: 100,
                           color: Colors.grey[200],
