@@ -92,17 +92,18 @@ class AssetCarousel extends StatelessWidget {
                       group: textGroup,
                     ),
                   ),
-                  // Expanded(
-                  //   flex: 2,
-                  //   child: AutoSizeText(
-                  //     'Risk Level: ${(asset.riskLevel * 100).toStringAsFixed(0)}%',
-                  //     style: TextStyle(
-                  //       fontSize: 100,
-                  //       color: Colors.grey[200],
-                  //     ),
-                  //     group: textGroup,
-                  //   ),
-                  // ),
+                  if (asset.riskLevel > 0)
+                    Expanded(
+                      flex: 2,
+                      child: AutoSizeText(
+                        'Risk Level: ${(asset.riskLevel * 100).toStringAsFixed(0)}%',
+                        style: TextStyle(
+                          fontSize: 100,
+                          color: Colors.grey[200],
+                        ),
+                        group: textGroup,
+                      ),
+                    ),
                 ],
               ),
             ),

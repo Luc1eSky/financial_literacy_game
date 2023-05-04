@@ -13,6 +13,7 @@ class Level {
   final bool showCashBuyOption;
   final bool showLoanBorrowOption;
   final bool assetTypeRandomized;
+  final bool assetRiskLevelActive;
   final bool assetRiskLevelRandomized;
   final bool assetIncomeAndCostsRandomized;
   final bool loanInterestRandomized;
@@ -30,6 +31,7 @@ class Level {
     this.showCashBuyOption = false,
     this.showLoanBorrowOption = false,
     this.assetTypeRandomized = false,
+    this.assetRiskLevelActive = false,
     this.assetRiskLevelRandomized = false,
     this.assetIncomeAndCostsRandomized = false,
     this.loanInterestRandomized = false,
@@ -49,6 +51,7 @@ class Level {
     bool? showCashBuyOption,
     bool? showLoanBorrowOption,
     bool? assetTypeRandomized,
+    bool? assetRiskLevelActive,
     bool? assetRiskLevelRandomized,
     bool? assetIncomeAndCostsRandomized,
     bool? loanInterestRandomized,
@@ -66,6 +69,7 @@ class Level {
       showCashBuyOption: showCashBuyOption ?? this.showCashBuyOption,
       showLoanBorrowOption: showLoanBorrowOption ?? this.showLoanBorrowOption,
       assetTypeRandomized: assetTypeRandomized ?? this.assetTypeRandomized,
+      assetRiskLevelActive: assetRiskLevelActive ?? this.assetRiskLevelActive,
       assetRiskLevelRandomized: assetRiskLevelRandomized ?? this.assetRiskLevelRandomized,
       assetIncomeAndCostsRandomized:
           assetIncomeAndCostsRandomized ?? this.assetIncomeAndCostsRandomized,

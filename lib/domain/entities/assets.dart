@@ -9,7 +9,7 @@ Asset goats = Asset(
   price: 13,
   income: 3,
   lifeExpectancy: 5,
-  riskLevel: 0.0,
+  riskLevel: 0.15,
 );
 
 Asset cow = Asset(
@@ -19,7 +19,7 @@ Asset cow = Asset(
   price: 14,
   income: 4,
   lifeExpectancy: 4,
-  riskLevel: 0.0,
+  riskLevel: 0.20,
 );
 
 Asset chickens = Asset(
@@ -29,7 +29,7 @@ Asset chickens = Asset(
   price: 10,
   income: 2,
   lifeExpectancy: 6,
-  riskLevel: 0.0,
+  riskLevel: 0.10,
 );
 
 List<Asset> allDefaultAssets = [goats, cow, chickens];

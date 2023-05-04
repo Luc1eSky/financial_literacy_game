@@ -88,12 +88,14 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
     if (currentLevel.assetTypeRandomized) {
       List<Asset> randomizedAssets = [];
       for (int i = 0; i < currentLevel.assets.length; i++) {
-        randomizedAssets.add(getRandomAsset());
+        randomizedAssets.add(currentLevel.assetRiskLevelActive
+            ? getRandomAsset()
+            : getRandomAsset().copyWith(riskLevel: 0));
       }
       currentLevel = currentLevel.copyWith(assets: randomizedAssets);
     }
 
-    if (currentLevel.assetRiskLevelRandomized) {
+    if (currentLevel.assetRiskLevelActive && currentLevel.assetRiskLevelRandomized) {
       List<Asset> randomizedRiskAssets = [];
       for (Asset asset in currentLevel.assets) {
         randomizedRiskAssets.add(
@@ -289,10 +291,11 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                   ),
                   onPressed: () async {
                     if (await widget.ref.read(gameDataNotifierProvider.notifier).buyAsset(
-                            _selectedAsset,
-                            showNotEnoughCash,
-                            showAnimalDiedWarning,
-                            currentLevel.savingsRate) ==
+                              _selectedAsset,
+                              showNotEnoughCash,
+                              showAnimalDiedWarning,
+                              currentLevel.savingsRate,
+                            ) ==
                         true) {
                       if (context.mounted) {
                         Navigator.pop(context);

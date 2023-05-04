@@ -28,17 +28,34 @@ class LevelInfoCard extends ConsumerWidget {
           content: Column(
             children: [
               Text(
-                'Cash Goal: '
-                '${nextLevelCash.toStringAsFixed(2)}',
+                'Cash Goal: reach '
+                '\$${nextLevelCash.toStringAsFixed(2)}',
                 style: TextStyle(
-                  fontSize: 17.0,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
                   color: ColorPalette().darkText,
                 ),
               ),
               const SizedBox(height: 7.5),
-              CashIndicator(
-                currentCash: currentCash,
-                cashGoal: levels[levelId].cashGoal,
+              Row(
+                children: [
+                  const Text(
+                    '\$0.00',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: CashIndicator(
+                      currentCash: currentCash,
+                      cashGoal: levels[levelId].cashGoal,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '\$${nextLevelCash.toStringAsFixed(2)}',
+                    style: const TextStyle(fontSize: 16.0),
+                  ),
+                ],
               ),
             ],
           ),

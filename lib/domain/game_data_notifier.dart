@@ -104,14 +104,16 @@ class GameDataNotifier extends StateNotifier<GameData> {
   }
 
   void _loadLevel(int levelID) {
-    // move to specified level, reset cash
-    state = state.copyWith(
-      levelId: levelID,
-      cash: levels[levelID].startingCash,
-      assets: [], // remove all previous assets
-      loans: [], // remove all previous loans
-      currentLevelSolved: false, // resetLevelSolved flag
-    );
+    if (levelID >= 0 && levelID < levels.length) {
+      // move to specified level, reset cash
+      state = state.copyWith(
+        levelId: levelID,
+        cash: levels[levelID].startingCash,
+        assets: [], // remove all previous assets
+        loans: [], // remove all previous loans
+        currentLevelSolved: false, // resetLevelSolved flag
+      );
+    }
   }
 
   void _addAsset(Asset newAsset) {

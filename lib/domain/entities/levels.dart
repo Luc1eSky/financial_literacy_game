@@ -48,4 +48,41 @@ List<Level> levels = [
     showLoanBorrowOption: true,
     savingsRate: 0.00,
   ),
+
+  // Level 5 - borrow and cash option, low starting cash amount, default risk per asset
+  Level(
+    startingCash: 15,
+    cashGoal: 50,
+    assets: [
+      chickens.copyWith(riskLevel: 0),
+    ],
+    loan: Loan(interestRate: 0.20, asset: cow),
+    assetTypeRandomized: true,
+    assetIncomeAndCostsRandomized: true,
+    assetRiskLevelActive: true,
+    assetRiskLevelRandomized: false,
+    showCashBuyOption: true,
+    showLoanBorrowOption: true,
+    savingsRate: 0.00,
+  ),
+
+  // Level 6 - borrow and cash option, low starting cash amount,
+  // multiple assets, randomized risk
+  Level(
+    startingCash: 15,
+    cashGoal: 50,
+    assets: [
+      chickens.copyWith(riskLevel: 0),
+      chickens.copyWith(riskLevel: 0),
+      chickens.copyWith(riskLevel: 0),
+    ],
+    loan: Loan(interestRate: 0.20, asset: cow),
+    assetTypeRandomized: true,
+    assetIncomeAndCostsRandomized: true,
+    assetRiskLevelActive: true,
+    assetRiskLevelRandomized: true,
+    showCashBuyOption: true,
+    showLoanBorrowOption: true,
+    savingsRate: 0.00,
+  ),
 ];
