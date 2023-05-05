@@ -65,25 +65,25 @@ class _HomepageState extends ConsumerState<Homepage> {
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text("Dear participants, thank you for "
-                          "participating. This game is meant to "
-                          "mimic financial investment decisions and to teach "
-                          "financial skills. It will only be used for this "
-                          "purpose. We emphasize that no part of this game "
-                          "exercise affects the relationship with your bank.\n\n"
-                          "Please enter your contact info below:"),
+                      SizedBox(
+                        height: MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
+                        child: const SingleChildScrollView(
+                          child: Text(
+                            "Dear participants,"
+                            "This game is meant to mimic financial investments."
+                            " It will only be used for the purpose of teaching. "
+                            "This game will not affect the relationship with your bank.\n\n"
+                            "Please enter your contact info below:",
+                          ),
+                        ),
+                      ),
                       TextField(
                         controller: firstNameTextController,
-                        decoration:
-                            const InputDecoration(hintText: "First name"),
+                        decoration: const InputDecoration(hintText: "First name"),
                       ),
                       TextField(
                         controller: lastNameTextController,
-                        decoration:
-                            const InputDecoration(hintText: "Last name"),
-                      ),
-                      const SizedBox(
-                        height: 20,
+                        decoration: const InputDecoration(hintText: "Last name"),
                       ),
                     ],
                   ),
@@ -175,8 +175,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                         const SizedBox(height: 10),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
-                          const SectionCard(
-                              title: 'PERSONAL', content: PersonalContent()),
+                          const SectionCard(title: 'PERSONAL', content: PersonalContent()),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
                           const SizedBox(height: 10),
@@ -200,8 +199,7 @@ class _HomepageState extends ConsumerState<Homepage> {
         Align(
           alignment: Alignment.topCenter,
           child: ConfettiWidget(
-            confettiController:
-                ref.read(gameDataNotifierProvider).confettiController,
+            confettiController: ref.read(gameDataNotifierProvider).confettiController,
             shouldLoop: true,
             emissionFrequency: 0.03,
             numberOfParticles: 20,

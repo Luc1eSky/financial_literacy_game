@@ -20,10 +20,9 @@ class MenuDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DeferredPointerHandler(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom), // adjust
-        // values
+      child: AnimatedContainer(
+        padding: MediaQuery.of(context).padding,
+        duration: const Duration(milliseconds: 300),
         child: AlertDialog(
           backgroundColor: ColorPalette().background,
           title: Stack(
