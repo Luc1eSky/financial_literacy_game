@@ -1,6 +1,7 @@
 import 'package:confetti/confetti.dart';
 
 import '../../config/constants.dart';
+import '../../domain/concepts/recorded_data.dart';
 import '../concepts/person.dart';
 import '../utils/utils.dart';
 import 'asset.dart';
@@ -20,6 +21,7 @@ class GameData {
   final bool isBankrupt;
   final bool currentLevelSolved;
   final bool gameIsFinished;
+  final List<RecordedData> recordedDataList;
 
   GameData({
     required this.person,
@@ -35,6 +37,7 @@ class GameData {
     this.isBankrupt = false,
     this.currentLevelSolved = false,
     this.gameIsFinished = false,
+    this.recordedDataList = const [],
   });
 
   // method to copy custom class
@@ -52,6 +55,7 @@ class GameData {
     bool? isBankrupt,
     bool? currentLevelSolved,
     bool? gameIsFinished,
+    List<RecordedData>? recordedDataList,
   }) {
     return GameData(
       person: person ?? this.person.copyWith(),
@@ -67,6 +71,7 @@ class GameData {
       isBankrupt: isBankrupt ?? this.isBankrupt,
       currentLevelSolved: currentLevelSolved ?? this.currentLevelSolved,
       gameIsFinished: gameIsFinished ?? this.gameIsFinished,
+      recordedDataList: recordedDataList ?? copyRecordedDataArray(this.recordedDataList),
     );
   }
 

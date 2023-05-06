@@ -4,9 +4,26 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../config/color_palette.dart';
+import '../../domain/concepts/recorded_data.dart';
 import '../concepts/asset.dart';
 import '../concepts/level.dart';
 import '../concepts/loan.dart';
+
+List<RecordedData> copyRecordedDataArray(List<RecordedData> recordedDataList) {
+  List<RecordedData> copiedRecordedDataList = [];
+  for (RecordedData recordedData in recordedDataList) {
+    copiedRecordedDataList.add(recordedData);
+  }
+  return copiedRecordedDataList;
+}
+
+List<double> copyCashArray(List<double> cashList) {
+  List<double> copiedCashList = [];
+  for (double cashValue in cashList) {
+    copiedCashList.add(cashValue);
+  }
+  return copiedCashList;
+}
 
 List<Asset> copyAssetArray(List<Asset> assetList) {
   List<Asset> copiedAssetList = [];

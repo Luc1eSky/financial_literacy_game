@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -80,10 +81,12 @@ class _HomepageState extends ConsumerState<Homepage> {
                       TextField(
                         controller: firstNameTextController,
                         decoration: const InputDecoration(hintText: "First name"),
+                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]'))],
                       ),
                       TextField(
                         controller: lastNameTextController,
                         decoration: const InputDecoration(hintText: "Last name"),
+                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]'))],
                       ),
                     ],
                   ),

@@ -299,6 +299,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                         true) {
                       if (context.mounted) {
                         Navigator.pop(context);
+                        checkBankruptcy(widget.ref, context);
                         checkGameHasEnded(widget.ref, context);
                         checkNextLevelReached(widget.ref, context);
                       }
@@ -320,6 +321,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                       Navigator.pop(context);
                       checkBankruptcy(widget.ref, context);
                       checkGameHasEnded(widget.ref, context);
+                      checkNextLevelReached(widget.ref, context);
                     }
                   },
                   child: const Text('borrow')),

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:confetti/confetti.dart';
+import 'package:financial_literacy_game/domain/concepts/recorded_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,6 +24,12 @@ class GameDataNotifier extends StateNotifier<GameData> {
           personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
           personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
           confettiController: ConfettiController(),
+          recordedDataList: [
+            RecordedData(
+              levelId: 0,
+              cashValues: [levels[0].startingCash],
+            ),
+          ],
         ));
 
   void setPerson(Person newPerson) {
@@ -88,8 +95,16 @@ class GameDataNotifier extends StateNotifier<GameData> {
       if (state.levelId + 1 >= (levels.length)) {
         state = state.copyWith(gameIsFinished: true);
       } else {
+        // TODO: ADD NEW RECORDED DATA OBJECT TO LIST
         state = state.copyWith(currentLevelSolved: true);
       }
+    }
+
+    // record data
+    state.recordedDataList.last.cashValues.add(state.cash);
+    print('CASH RECORD FOR LEVEL ${state.recordedDataList.last.levelId}: ');
+    for (double cash in state.recordedDataList.last.cashValues) {
+      print('$cash, ');
     }
   }
 
@@ -100,6 +115,14 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   // move on to next level, reset cash, loans, and assets, reset level solved flag
   void moveToNextLevel() {
+    // TODO: ADD NEW RECORDDATA OBJECT
+
+    state.recordedDataList.add(
+      RecordedData(
+        levelId: state.levelId + 1,
+        cashValues: [levels[state.levelId + 1].startingCash],
+      ),
+    );
     _loadLevel(state.levelId + 1);
   }
 
@@ -154,7 +177,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   Future<void> loanAsset(
       Loan loan, Asset asset, Function showAnimalDied, double newCashInterest) async {
-    //check if animal died based on risk level
+    // check if animal died based on risk level
     if (!await _animalDied(asset, showAnimalDied)) {
       _addAsset(asset);
     }
