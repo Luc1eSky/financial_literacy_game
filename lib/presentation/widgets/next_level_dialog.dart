@@ -1,9 +1,9 @@
-import 'package:financial_literacy_game/config/color_palette.dart';
-import 'package:financial_literacy_game/presentation/widgets/menu_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../config/color_palette.dart';
 import '../../domain/game_data_notifier.dart';
+import 'menu_dialog.dart';
 
 class NextLevelDialog extends StatelessWidget {
   final WidgetRef ref;

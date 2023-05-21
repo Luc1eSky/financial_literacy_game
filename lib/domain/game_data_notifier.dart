@@ -1,9 +1,6 @@
 import 'dart:math';
 
 import 'package:confetti/confetti.dart';
-import 'package:financial_literacy_game/domain/concepts/recorded_data.dart';
-import 'package:financial_literacy_game/domain/utils/database.dart';
-import 'package:financial_literacy_game/domain/utils/device_and_personal_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,7 +9,10 @@ import 'concepts/asset.dart';
 import 'concepts/game_data.dart';
 import 'concepts/loan.dart';
 import 'concepts/person.dart';
+import 'concepts/recorded_data.dart';
 import 'entities/levels.dart';
+import 'utils/database.dart';
+import 'utils/device_and_personal_data.dart';
 import 'utils/utils.dart';
 
 final gameDataNotifierProvider =

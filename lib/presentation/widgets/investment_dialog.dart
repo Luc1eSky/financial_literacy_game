@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:financial_literacy_game/presentation/widgets/next_level_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,6 +16,7 @@ import '../../domain/utils/utils.dart';
 import 'asset_carousel.dart';
 import 'cash_alert_dialog.dart';
 import 'lost_game_dialog.dart';
+import 'next_level_dialog.dart';
 import 'won_game_dialog.dart';
 
 class InvestmentDialog extends StatefulWidget {
