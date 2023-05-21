@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/game_data_notifier.dart';
+import '../../domain/utils/database.dart';
 
 class WonGameDialog extends StatelessWidget {
   final WidgetRef ref;
@@ -31,6 +32,7 @@ class WonGameDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
+            endCurrentGameSession(status: Status.won);
             ref.read(gameDataNotifierProvider.notifier).resetGame();
             Navigator.pop(context);
           },

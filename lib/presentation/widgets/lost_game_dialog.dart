@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
 import '../../domain/game_data_notifier.dart';
+import '../../domain/utils/database.dart';
 
 class LostGameDialog extends StatelessWidget {
   final WidgetRef ref;
@@ -39,6 +40,7 @@ class LostGameDialog extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
+            endCurrentGameSession(status: Status.lost);
             ref.read(gameDataNotifierProvider.notifier).resetGame();
             Navigator.pop(context);
           },

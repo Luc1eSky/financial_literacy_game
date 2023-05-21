@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:confetti/confetti.dart';
 import 'package:financial_literacy_game/domain/concepts/recorded_data.dart';
+import 'package:financial_literacy_game/domain/utils/database.dart';
+import 'package:financial_literacy_game/domain/utils/device_and_personal_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -34,7 +36,12 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void setPerson(Person newPerson) {
     state = state.copyWith(person: newPerson);
-    debugPrint('Person set to ${newPerson.firstName} ${newPerson.lastName}, ${newPerson.uid}');
+    debugPrint('Person set to ${newPerson.firstName} ${newPerson.lastName} in game data.');
+  }
+
+  void loadLevel(int levelID) {
+    _loadLevel(levelID);
+    debugPrint('Level ${levelID + 1} loaded from locally saved data.');
   }
 
   // show confetti animation for a certain amount of time
@@ -48,11 +55,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = state.copyWith(cashInterest: newInterest);
   }
 
-  void advance(double newCashInterest) {
-    // TODO: PERIODS STILL COUNTED?
-    // increase period counter
-    //state = state.copyWith(period: min(state.period + 1, maxPeriod));
-
+  void advance(double newCashInterest) async {
     // update cash interest
     state = state.copyWith(cashInterest: newCashInterest);
     // calculate interest on cash
@@ -81,7 +84,10 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = state.copyWith(loans: activeLoans);
 
     double netIncome = calculateTotalIncome() - calculateTotalExpenses();
-    state = state.copyWith(cash: state.cash + netIncome);
+    double newCash = state.cash + netIncome;
+    state = state.copyWith(cash: newCash);
+
+    advancePeriodFirestore(newCashValue: newCash);
 
     // check if bankrupt
     if (state.cash < 0) {
@@ -101,29 +107,38 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
 
     // record data
-    state.recordedDataList.last.cashValues.add(state.cash);
-    print('CASH RECORD FOR LEVEL ${state.recordedDataList.last.levelId}: ');
-    for (double cash in state.recordedDataList.last.cashValues) {
-      print('$cash, ');
-    }
+    //state.recordedDataList.last.cashValues.add(state.cash);
+    // print('CASH RECORD FOR LEVEL ${state.recordedDataList.last.levelId}: ');
+    // for (double cash in state.recordedDataList.last.cashValues) {
+    //   print('$cash, ');
+    // }
   }
 
   void restartLevel() {
+    restartLevelFirebase(
+      level: state.levelId + 1,
+      startingCash: levels[state.levelId].startingCash,
+    );
     state = state.copyWith(isBankrupt: false);
     _loadLevel(state.levelId);
   }
 
   // move on to next level, reset cash, loans, and assets, reset level solved flag
   void moveToNextLevel() {
-    // TODO: ADD NEW RECORDDATA OBJECT
+    // TODO: ADD NEW RECORDED DATA OBJECT
 
-    state.recordedDataList.add(
-      RecordedData(
-        levelId: state.levelId + 1,
-        cashValues: [levels[state.levelId + 1].startingCash],
-      ),
+    // state.recordedDataList.add(
+    //   RecordedData(
+    //     levelId: state.levelId + 1,
+    //     cashValues: [levels[state.levelId + 1].startingCash],
+    //   ),
+    // );
+    int nextLevelID = state.levelId + 1;
+    _loadLevel(nextLevelID);
+    newLevelFirestore(
+      levelID: nextLevelID,
+      startingCash: levels[nextLevelID].startingCash,
     );
-    _loadLevel(state.levelId + 1);
   }
 
   void _loadLevel(int levelID) {
@@ -136,6 +151,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
         loans: [], // remove all previous loans
         currentLevelSolved: false, // resetLevelSolved flag
       );
+      // save current level locally
+      saveLevelIDLocally(levelID);
     }
   }
 
@@ -220,7 +237,6 @@ class GameDataNotifier extends StateNotifier<GameData> {
   }
 
   void resetGame() {
-    // TODO: TRACK / SAVE GAME DATA
     state = GameData(
       person: state.person,
       cash: levels[0].startingCash,
@@ -228,6 +244,10 @@ class GameDataNotifier extends StateNotifier<GameData> {
       personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
       confettiController: ConfettiController(),
     );
+    // save current level locally
+    saveLevelIDLocally(0);
+
+    startGameSession(person: state.person, startingCash: levels[0].startingCash);
   }
 
   double calculateSavingsROI({required double cashInterest, int lifeExpectancy = 6}) {

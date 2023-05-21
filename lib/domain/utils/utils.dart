@@ -1,4 +1,3 @@
-// helper method to copy a list of assets
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -91,4 +90,22 @@ void showErrorSnackBar({required BuildContext context, required String errorMess
       ),
     ),
   );
+}
+
+String removeTrailing(String pattern, String from) {
+  if (pattern.isEmpty) return from;
+  var i = from.length;
+  while (from.startsWith(pattern, i - pattern.length)) {
+    i -= pattern.length;
+  }
+  return from.substring(0, i);
+}
+
+String removeLeading(String pattern, String from) {
+  if (pattern.isEmpty) return from;
+  var i = 0;
+  while (from.startsWith(pattern, i)) {
+    i += pattern.length;
+  }
+  return from.substring(i);
 }

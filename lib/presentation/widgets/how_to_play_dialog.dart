@@ -88,6 +88,28 @@ class HowToPlayDialog extends ConsumerWidget {
                 ],
               ),
             ),
+            HowToPlayCard(
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    iconSize: 40.0,
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.settings,
+                      color: ColorPalette().darkText,
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  const Text(
+                    '6. You can find these game instructions in the settings menu.',
+                    style: TextStyle(fontSize: 20.0),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
