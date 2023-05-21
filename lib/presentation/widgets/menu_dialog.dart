@@ -64,7 +64,10 @@ class MenuDialog extends StatelessWidget {
                 ),
             ],
           ),
-          content: content,
+          content: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 500),
+            child: content,
+          ),
           actions: actions,
         ),
       ),
