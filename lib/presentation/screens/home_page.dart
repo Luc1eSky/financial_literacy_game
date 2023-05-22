@@ -23,41 +23,39 @@ class Homepage extends ConsumerStatefulWidget {
   const Homepage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<Homepage> createState() => _HomepageState();
+  ConsumerState<Homepage> createState() => _Homepage1State();
 }
 
-class _HomepageState extends ConsumerState<Homepage> {
+class _Homepage1State extends ConsumerState<Homepage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await getDeviceInfo();
-      loadPerson(ref: ref).then((personLoaded) {
-        if (!personLoaded) {
-          showDialog(
+      bool personLoaded = await loadPerson(ref: ref);
+      if (personLoaded) {
+        bool levelLoaded = await loadLevelIDFromLocal(ref: ref);
+        if (levelLoaded) {
+          if (context.mounted) {
+            showDialog(
               barrierDismissible: false,
               context: context,
               builder: (context) {
-                return const SignInDialog();
-              });
-        } else {
-          loadLevelIDFromLocal(ref: ref).then(
-            (levelLoaded) {
-              if (!levelLoaded) {
-                print('HERE');
-                ref.read(gameDataNotifierProvider.notifier).resetGame();
-              }
-              return showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (context) {
-                    return WelcomeBackDialog(
-                      person: ref.read(gameDataNotifierProvider).person,
-                    );
-                  });
+                return const WelcomeBackDialog();
+              },
+            );
+          }
+        }
+      } else {
+        if (context.mounted) {
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return const SignInDialog();
             },
           );
         }
-      });
+      }
     });
     super.initState();
   }
@@ -122,7 +120,7 @@ class _HomepageState extends ConsumerState<Homepage> {
         Align(
           alignment: Alignment.topCenter,
           child: ConfettiWidget(
-            confettiController: ref.read(gameDataNotifierProvider).confettiController,
+            confettiController: ref.watch(gameDataNotifierProvider).confettiController,
             shouldLoop: true,
             emissionFrequency: 0.03,
             numberOfParticles: 20,

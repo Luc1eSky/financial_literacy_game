@@ -46,6 +46,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   // show confetti animation for a certain amount of time
   void showConfetti() async {
+    debugPrint('Show confetti.');
     state.confettiController.play();
     await Future.delayed(const Duration(seconds: showConfettiSeconds));
     state.confettiController.stop();
@@ -242,7 +243,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       cash: levels[0].startingCash,
       personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
       personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
-      confettiController: ConfettiController(),
+      confettiController: state.confettiController,
     );
     // save current level locally
     saveLevelIDLocally(0);

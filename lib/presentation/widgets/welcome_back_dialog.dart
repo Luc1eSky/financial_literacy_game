@@ -9,11 +9,11 @@ import '../../domain/utils/database.dart';
 import 'menu_dialog.dart';
 
 class WelcomeBackDialog extends ConsumerWidget {
-  final Person person;
-  const WelcomeBackDialog({required this.person, Key? key}) : super(key: key);
+  const WelcomeBackDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Person person = ref.read(gameDataNotifierProvider).person;
     return MenuDialog(
       showCloseButton: false,
       title: 'Welcome back, ${person.firstName} ${person.lastName}!',
@@ -76,7 +76,6 @@ class WelcomeBackDialog extends ConsumerWidget {
               foregroundColor: ColorPalette().lightText,
             ),
             onPressed: () {
-              //ref.read(gameDataNotifierProvider.notifier).resetGame();
               Navigator.of(context).pop();
               showDialog(
                 barrierDismissible: false,

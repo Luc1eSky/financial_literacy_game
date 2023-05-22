@@ -40,10 +40,12 @@ Future<bool> loadLevelIDFromLocal({required WidgetRef ref}) async {
   final prefs = await SharedPreferences.getInstance();
   int? savedLastPlayedLevelID = prefs.getInt('lastPlayedLevelID');
 
-  if (savedLastPlayedLevelID == null) return false;
-
-  ref.read(gameDataNotifierProvider.notifier).loadLevel(savedLastPlayedLevelID);
-  return true;
+  if (savedLastPlayedLevelID == null) {
+    return false;
+  } else {
+    ref.read(gameDataNotifierProvider.notifier).loadLevel(savedLastPlayedLevelID);
+    return true;
+  }
 }
 
 void saveLevelIDLocally(int levelID) async {
