@@ -46,7 +46,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   // show confetti animation for a certain amount of time
   void showConfetti() async {
-    debugPrint('Show confetti.');
+    debugPrint('Showing confetti.');
     state.confettiController.play();
     await Future.delayed(const Duration(seconds: showConfettiSeconds));
     state.confettiController.stop();

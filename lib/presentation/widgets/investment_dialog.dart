@@ -41,6 +41,7 @@ void checkBankruptcy(WidgetRef ref, BuildContext context) {
 
 void checkGameHasEnded(WidgetRef ref, BuildContext context) {
   if (ref.read(gameDataNotifierProvider).gameIsFinished) {
+    ref.read(gameDataNotifierProvider.notifier).showConfetti();
     showDialog(
       barrierDismissible: false,
       context: context,
