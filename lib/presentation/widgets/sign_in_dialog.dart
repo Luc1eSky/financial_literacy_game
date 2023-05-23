@@ -21,6 +21,7 @@ class SignInDialog extends ConsumerStatefulWidget {
 class _SignInDialogState extends ConsumerState<SignInDialog> {
   late TextEditingController firstNameTextController;
   late TextEditingController lastNameTextController;
+  bool isProcessing = false;
 
   Future<bool> setPersonData(Person enteredPerson) async {
     if (enteredPerson.firstName == '' || enteredPerson.lastName == '') {
@@ -41,7 +42,7 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
     String cleanedLastName = removeTrailing("-", trimmedLastName);
     cleanedLastName = removeLeading("-", cleanedLastName);
 
-    // Capitalize first letter and lowe case all other letters
+    // Capitalize first letter and lower case all other letters
     cleanedFirstName =
         "${cleanedFirstName[0].toUpperCase()}${cleanedFirstName.substring(1).toLowerCase()}";
     cleanedLastName =
@@ -77,85 +78,89 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return MenuDialog(
-      showCloseButton: false,
-      title: 'Welcome to the FinSim Game',
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
-            child: const SingleChildScrollView(
-              child: Text(
-                "Dear participants,"
-                "This game is meant to mimic financial investments."
-                " It will only be used for the purpose of teaching. "
-                "This game will not affect the relationship with your bank.\n\n"
-                "Please enter your contact info below:",
+    return Stack(
+      children: [
+        MenuDialog(
+          showCloseButton: false,
+          title: 'Welcome to the FinSim Game',
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
+                child: const SingleChildScrollView(
+                  child: Text(
+                    "Dear participants,"
+                    "This game is meant to mimic financial investments."
+                    " It will only be used for the purpose of teaching. "
+                    "This game will not affect the relationship with your bank.\n\n"
+                    "Please enter your contact info below:",
+                  ),
+                ),
               ),
+              TextField(
+                enabled: !isProcessing,
+                controller: firstNameTextController,
+                decoration: const InputDecoration(hintText: "First name"),
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))],
+              ),
+              TextField(
+                enabled: !isProcessing,
+                controller: lastNameTextController,
+                decoration: const InputDecoration(hintText: "Last name"),
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))],
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 5.0,
+                backgroundColor: ColorPalette().buttonBackground,
+                foregroundColor: ColorPalette().lightText,
+              ),
+              onPressed: isProcessing
+                  ? null
+                  : () async {
+                      setState(() {
+                        isProcessing = true;
+                      });
+
+                      bool personWasCreated = await setPersonData(
+                        Person(
+                          firstName: firstNameTextController.text,
+                          lastName: lastNameTextController.text,
+                        ),
+                      );
+
+                      await Future.delayed(const Duration(seconds: 2));
+
+                      if (personWasCreated) {
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return const HowToPlayDialog();
+                            },
+                          );
+                        }
+                      } else {
+                        setState(() {
+                          isProcessing = false;
+                        });
+                      }
+                    },
+              child: const Text('Continue'),
             ),
-          ),
-          TextField(
-            controller: firstNameTextController,
-            decoration: const InputDecoration(hintText: "First name"),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))
-            ],
-          ),
-          TextField(
-            controller: lastNameTextController,
-            decoration: const InputDecoration(hintText: "Last name"),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))
-            ],
-          ),
-        ],
-      ),
-      actions: [
-        // ElevatedButton(
-        //   style: ElevatedButton.styleFrom(
-        //     elevation: 5.0,
-        //     backgroundColor: ColorPalette().buttonBackground,
-        //     foregroundColor: ColorPalette().lightText,
-        //   ),
-        //   onPressed: () {
-        //     if (setPersonData(
-        //       Person(
-        //         firstName: firstNameTextController.text,
-        //         lastName: lastNameTextController.text,
-        //       ),
-        //     )) Navigator.of(context).pop();
-        //   },
-        //   child: const Text('Start game'),
-        // ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            elevation: 5.0,
-            backgroundColor: ColorPalette().buttonBackground,
-            foregroundColor: ColorPalette().lightText,
-          ),
-          onPressed: () async {
-            if (await setPersonData(
-              Person(
-                firstName: firstNameTextController.text,
-                lastName: lastNameTextController.text,
-              ),
-            )) {
-              //ref.read(gameDataNotifierProvider.notifier).resetGame();
-              if (context.mounted) {
-                Navigator.of(context).pop();
-                showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (context) {
-                    return const HowToPlayDialog();
-                  },
-                );
-              }
-            }
-          },
-          child: const Text('Continue'),
+          ],
         ),
+        if (isProcessing)
+          const Align(
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
+          ),
       ],
     );
   }
