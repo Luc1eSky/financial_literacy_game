@@ -133,7 +133,7 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
                         ),
                       );
 
-                      await Future.delayed(const Duration(seconds: 2));
+                      //await Future.delayed(const Duration(seconds: 2));
 
                       if (personWasCreated) {
                         if (context.mounted) {
