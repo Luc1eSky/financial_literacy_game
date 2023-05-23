@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../domain/game_data_notifier.dart';
 import 'how_to_play_dialog.dart';
 import 'menu_dialog.dart';
 
@@ -50,19 +49,19 @@ class SettingsDialog extends ConsumerWidget {
             child: const Text('Clear Cache'),
           ),
 
-          const SizedBox(height: 10),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              elevation: 5.0,
-              backgroundColor: ColorPalette().buttonBackground,
-              foregroundColor: ColorPalette().lightText,
-            ),
-            onPressed: () {
-              ref.read(gameDataNotifierProvider.notifier).moveToNextLevel();
-              Navigator.of(context).pop();
-            },
-            child: const Text('Next Level'),
-          ),
+          // const SizedBox(height: 10),
+          // ElevatedButton(
+          //   style: ElevatedButton.styleFrom(
+          //     elevation: 5.0,
+          //     backgroundColor: ColorPalette().buttonBackground,
+          //     foregroundColor: ColorPalette().lightText,
+          //   ),
+          //   onPressed: () {
+          //     ref.read(gameDataNotifierProvider.notifier).moveToNextLevel();
+          //     Navigator.of(context).pop();
+          //   },
+          //   child: const Text('Next Level'),
+          // ),
 
           // ElevatedButton(
           //   style: ElevatedButton.styleFrom(

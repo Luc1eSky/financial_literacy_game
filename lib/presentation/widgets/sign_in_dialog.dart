@@ -41,6 +41,12 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
     String cleanedLastName = removeTrailing("-", trimmedLastName);
     cleanedLastName = removeLeading("-", cleanedLastName);
 
+    // Capitalize first letter and lowe case all other letters
+    cleanedFirstName =
+        "${cleanedFirstName[0].toUpperCase()}${cleanedFirstName.substring(1).toLowerCase()}";
+    cleanedLastName =
+        "${cleanedLastName[0].toUpperCase()}${cleanedLastName.substring(1).toLowerCase()}";
+
     Person cleanedPerson = Person(
       firstName: cleanedFirstName,
       lastName: cleanedLastName,
@@ -92,12 +98,16 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
           TextField(
             controller: firstNameTextController,
             decoration: const InputDecoration(hintText: "First name"),
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))
+            ],
           ),
           TextField(
             controller: lastNameTextController,
             decoration: const InputDecoration(hintText: "Last name"),
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))
+            ],
           ),
         ],
       ),
