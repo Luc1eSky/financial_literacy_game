@@ -32,11 +32,11 @@
         "description": "Title for overview section of personal expenses. Currently not used in app"
     },
     "assets": "assets",
-    "@personal":{
+    "@assets":{
         "description": "Title for overview section of assets"
     },
     "loans": "loans",
-    "@personal":{
+    "@loans":{
         "description": "Title for overview section of loans"
     },
     "cow": "cow",
@@ -123,9 +123,9 @@
     "@restartLevel":{
         "description": "start level again after losing"
     },
-    "restartGame": "restart game",
+    "restartGame": "Restart game",
     "@restartGame":{
-        "description": "start game again after losing"
+        "description": "start game again after restarting app"
     },
     "settings": "Settings",
     "@settings":{

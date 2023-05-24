@@ -10,6 +10,7 @@ import '../../config/constants.dart';
 import '../../domain/entities/levels.dart';
 import '../../domain/game_data_notifier.dart';
 import '../../domain/utils/device_and_personal_data.dart';
+import '../../l10n/l10n.dart';
 import '../widgets/asset_content.dart';
 import '../widgets/game_app_bar.dart';
 import '../widgets/level_info_card.dart';
@@ -24,15 +25,17 @@ class Homepage extends ConsumerStatefulWidget {
   const Homepage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<Homepage> createState() => _Homepage1State();
+  ConsumerState<Homepage> createState() => _HomepageState();
 }
 
-class _Homepage1State extends ConsumerState<Homepage> {
+class _HomepageState extends ConsumerState<Homepage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await getDeviceInfo();
       bool personLoaded = await loadPerson(ref: ref);
+      Locale locale = await L10n.getSystemLocale();
+      ref.read(gameDataNotifierProvider.notifier).setLocale(locale);
       if (personLoaded) {
         bool levelLoaded = await loadLevelIDFromLocal(ref: ref);
         if (levelLoaded) {
@@ -91,32 +94,25 @@ class _Homepage1State extends ConsumerState<Homepage> {
                         ),
                         const SizedBox(height: 10),
                         SectionCard(
-                          title: AppLocalizations.of(context)!
-                              .overview
-                              .toUpperCase(),
+                          title: AppLocalizations.of(context)!.overview.toUpperCase(),
                           content: const OverviewContent(),
                         ),
                         const SizedBox(height: 10),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
                           SectionCard(
-                              title: AppLocalizations.of(context)!
-                                  .personal
-                                  .toUpperCase(),
+                              title: AppLocalizations.of(context)!.personal.toUpperCase(),
                               content: const PersonalContent()),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
                           const SizedBox(height: 10),
                         SectionCard(
-                          title: AppLocalizations.of(context)!
-                              .assets
-                              .toUpperCase(),
+                          title: AppLocalizations.of(context)!.assets.toUpperCase(),
                           content: const AssetContent(),
                         ),
                         const SizedBox(height: 10),
                         SectionCard(
-                          title:
-                              AppLocalizations.of(context)!.loans.toUpperCase(),
+                          title: AppLocalizations.of(context)!.loans.toUpperCase(),
                           content: const LoanContent(),
                         ),
                       ],
@@ -130,8 +126,7 @@ class _Homepage1State extends ConsumerState<Homepage> {
         Align(
           alignment: Alignment.topCenter,
           child: ConfettiWidget(
-            confettiController:
-                ref.watch(gameDataNotifierProvider).confettiController,
+            confettiController: ref.watch(gameDataNotifierProvider).confettiController,
             shouldLoop: true,
             emissionFrequency: 0.03,
             numberOfParticles: 20,

@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/game_data_notifier.dart';
 import 'how_to_play_dialog.dart';
+import 'language_selection_dialog.dart';
 import 'menu_dialog.dart';
 
 class SettingsDialog extends ConsumerWidget {
@@ -50,7 +51,6 @@ class SettingsDialog extends ConsumerWidget {
             },
             child: Text(AppLocalizations.of(context)!.clearCache),
           ),
-
           const SizedBox(height: 10),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -64,24 +64,24 @@ class SettingsDialog extends ConsumerWidget {
             },
             child: Text(AppLocalizations.of(context)!.nextLevel),
           ),
-
-          // ElevatedButton(
-          //   style: ElevatedButton.styleFrom(
-          //     elevation: 5.0,
-          //     backgroundColor: ColorPalette().buttonBackground,
-          //     foregroundColor: ColorPalette().lightText,
-          //   ),
-          //   onPressed: () {
-          //     Navigator.of(context).pop();
-          //     showDialog(
-          //       context: context,
-          //       builder: (context) {
-          //         return const LanguageSelectionDialog();
-          //       },
-          //     );
-          //   },
-          //   child: const Text('Languages'),
-          // ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              elevation: 5.0,
+              backgroundColor: ColorPalette().buttonBackground,
+              foregroundColor: ColorPalette().lightText,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return const LanguageSelectionDialog();
+                },
+              );
+            },
+            child: const Text('Languages'),
+          ),
           // ElevatedButton(
           //   style: ElevatedButton.styleFrom(
           //     elevation: 5.0,

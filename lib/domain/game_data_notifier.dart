@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../config/constants.dart';
+import '../l10n/l10n.dart';
 import 'concepts/asset.dart';
 import 'concepts/game_data.dart';
 import 'concepts/loan.dart';
@@ -20,23 +21,39 @@ final gameDataNotifierProvider =
 
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
-      : super(GameData(
-          person: Person(),
-          cash: levels[0].startingCash,
-          personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
-          personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
-          confettiController: ConfettiController(),
-          recordedDataList: [
-            RecordedData(
-              levelId: 0,
-              cashValues: [levels[0].startingCash],
-            ),
-          ],
-        ));
+      : super(
+          GameData(
+            person: Person(),
+            locale: L10n.defaultLocale,
+            cash: levels[0].startingCash,
+            personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
+            personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
+            confettiController: ConfettiController(),
+            recordedDataList: [
+              RecordedData(
+                levelId: 0,
+                cashValues: [levels[0].startingCash],
+              ),
+            ],
+          ),
+        );
 
   void setPerson(Person newPerson) {
     state = state.copyWith(person: newPerson);
     debugPrint('Person set to ${newPerson.firstName} ${newPerson.lastName} in game data.');
+  }
+
+  // setting new locale (language and format)
+  void setLocale(Locale newLocale) {
+    if (L10n.all.contains(newLocale)) {
+      state = state.copyWith(
+        locale: newLocale,
+        //currencyFormat: NumberFormat.simpleCurrency(locale: newLocale.toString()),
+      );
+      debugPrint('New locale set to $newLocale');
+    } else {
+      debugPrint('Locale $newLocale not supported');
+    }
   }
 
   void loadLevel(int levelID) {
@@ -240,6 +257,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
   void resetGame() {
     state = GameData(
       person: state.person,
+      locale: state.locale,
       cash: levels[0].startingCash,
       personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
       personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,4 +53,25 @@ Future<bool> loadLevelIDFromLocal({required WidgetRef ref}) async {
 void saveLevelIDLocally(int levelID) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.setInt('lastPlayedLevelID', levelID);
+}
+
+void saveLocalLocally(Locale locale) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setString('languageCode', locale.languageCode);
+  if (locale.countryCode != null) {
+    prefs.setString('countryCode', locale.countryCode!);
+  }
+}
+
+Future<Locale?> loadLocaleFromLocal() async {
+  final prefs = await SharedPreferences.getInstance();
+  String? languageCode = prefs.getString('languageCode');
+  String? countryCode = prefs.getString('countryCode');
+
+  if (languageCode == null || countryCode == null) {
+    return null;
+  } else {
+    Locale loadedLocale = Locale(languageCode, countryCode);
+    return loadedLocale;
+  }
 }
