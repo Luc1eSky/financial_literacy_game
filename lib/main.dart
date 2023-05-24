@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config/constants.dart';
 import 'config/themes.dart';
 import 'firebase_options.dart';
+import 'l10n/l10n.dart';
 import 'presentation/screens/home_page.dart';
 
 void main() async {
@@ -39,6 +41,8 @@ class MaterialAppConsumerWidget extends ConsumerWidget {
       themeMode: ThemeMode.system,
       theme: lightTheme,
       darkTheme: darkTheme,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: L10n.all,
       home: const Homepage(),
     );
   }

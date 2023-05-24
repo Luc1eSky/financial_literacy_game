@@ -1,6 +1,7 @@
 import 'package:financial_literacy_game/domain/game_data_notifier.dart';
 import 'package:financial_literacy_game/presentation/widgets/sign_in_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -36,7 +37,8 @@ class WelcomeBackDialog extends ConsumerWidget {
                     foregroundColor: ColorPalette().lightText,
                   ),
                   onPressed: () async {
-                    bool couldReconnect = await reconnectToGameSession(person: person);
+                    bool couldReconnect =
+                        await reconnectToGameSession(person: person);
                     if (!couldReconnect) {
                       ref.read(gameDataNotifierProvider.notifier).resetGame();
                     }
@@ -44,9 +46,11 @@ class WelcomeBackDialog extends ConsumerWidget {
                       Navigator.of(context).pop();
                     }
                   },
-                  child: Text('Start at level ${ref.read(gameDataNotifierProvider).levelId + 1}'),
+                  child: Text(
+                      'Start at level ${ref.read(gameDataNotifierProvider).levelId + 1}'),
                 ),
-              if (ref.read(gameDataNotifierProvider).levelId != 0) const SizedBox(width: 20),
+              if (ref.read(gameDataNotifierProvider).levelId != 0)
+                const SizedBox(width: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 5.0,
@@ -54,19 +58,20 @@ class WelcomeBackDialog extends ConsumerWidget {
                   foregroundColor: ColorPalette().lightText,
                 ),
                 onPressed: () async {
-                  await endCurrentGameSession(status: Status.abandoned, person: person);
+                  await endCurrentGameSession(
+                      status: Status.abandoned, person: person);
                   ref.read(gameDataNotifierProvider.notifier).resetGame();
                   if (context.mounted) {
                     Navigator.of(context).pop();
                   }
                 },
-                child: const Text('Start new game'),
+                child: Text(AppLocalizations.of(context)!.restartGame),
               ),
             ],
           ),
           const SizedBox(height: 25.0),
-          const Text(
-            "If that is not you, please sign in as a different person.",
+          Text(
+            AppLocalizations.of(context)!.signInDifferentPerson,
           ),
           const SizedBox(height: 10.0),
           ElevatedButton(
@@ -85,7 +90,7 @@ class WelcomeBackDialog extends ConsumerWidget {
                 },
               );
             },
-            child: const Text("That's not me"),
+            child: Text(AppLocalizations.of(context)!.notMe),
           ),
         ],
       ),

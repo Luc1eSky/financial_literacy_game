@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -17,8 +18,10 @@ class OverviewContent extends ConsumerWidget {
     final AutoSizeGroup valueSizeGroup = AutoSizeGroup();
 
     double cash = ref.watch(gameDataNotifierProvider).cash;
-    double income = ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
-    double expenses = ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
+    double income =
+        ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
+    double expenses =
+        ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
 
     return Row(
       children: [
@@ -26,7 +29,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: 'Cash',
+              title: AppLocalizations.of(context)!.cash,
               value: cash,
               group: valueSizeGroup,
             ),
@@ -37,7 +40,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: 'Income',
+              title: AppLocalizations.of(context)!.income,
               value: income,
               group: valueSizeGroup,
             ),
@@ -48,7 +51,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: 'Expenses',
+              title: AppLocalizations.of(context)!.expenses,
               value: -expenses,
               group: valueSizeGroup,
             ),

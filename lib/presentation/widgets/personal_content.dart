@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/game_data_notifier.dart';
@@ -60,7 +61,7 @@ class PersonalTileContent extends StatelessWidget {
                 ),
                 Expanded(
                   child: AutoSizeText(
-                    'income',
+                    AppLocalizations.of(context)!.income,
                     maxLines: 1,
                     minFontSize: 2,
                     style: TextStyle(
@@ -90,7 +91,7 @@ class PersonalTileContent extends StatelessWidget {
                 ),
                 Expanded(
                   child: AutoSizeText(
-                    'expenses',
+                    AppLocalizations.of(context)!.expenses,
                     maxLines: 1,
                     minFontSize: 2,
                     style: TextStyle(

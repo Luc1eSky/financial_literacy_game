@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -89,25 +90,34 @@ class _Homepage1State extends ConsumerState<Homepage> {
                           nextLevelCash: levels[levelId].cashGoal,
                         ),
                         const SizedBox(height: 10),
-                        const SectionCard(
-                          title: 'OVERVIEW',
-                          content: OverviewContent(),
+                        SectionCard(
+                          title: AppLocalizations.of(context)!
+                              .overview
+                              .toUpperCase(),
+                          content: const OverviewContent(),
                         ),
                         const SizedBox(height: 10),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
-                          const SectionCard(title: 'PERSONAL', content: PersonalContent()),
+                          SectionCard(
+                              title: AppLocalizations.of(context)!
+                                  .personal
+                                  .toUpperCase(),
+                              content: const PersonalContent()),
                         if (levels[ref.read(gameDataNotifierProvider).levelId]
                             .includePersonalIncome)
                           const SizedBox(height: 10),
-                        const SectionCard(
-                          title: 'ASSETS',
-                          content: AssetContent(),
+                        SectionCard(
+                          title: AppLocalizations.of(context)!
+                              .assets
+                              .toUpperCase(),
+                          content: const AssetContent(),
                         ),
                         const SizedBox(height: 10),
-                        const SectionCard(
-                          title: 'LOANS',
-                          content: LoanContent(),
+                        SectionCard(
+                          title:
+                              AppLocalizations.of(context)!.loans.toUpperCase(),
+                          content: const LoanContent(),
                         ),
                       ],
                     ),
@@ -120,7 +130,8 @@ class _Homepage1State extends ConsumerState<Homepage> {
         Align(
           alignment: Alignment.topCenter,
           child: ConfettiWidget(
-            confettiController: ref.watch(gameDataNotifierProvider).confettiController,
+            confettiController:
+                ref.watch(gameDataNotifierProvider).confettiController,
             shouldLoop: true,
             emissionFrequency: 0.03,
             numberOfParticles: 20,

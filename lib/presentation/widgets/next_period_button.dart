@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -33,7 +34,7 @@ class NextPeriodButton extends ConsumerWidget {
                 });
           }
         },
-        child: const Text('NEXT'),
+        child: Text(AppLocalizations.of(context)!.next),
       ),
     );
   }

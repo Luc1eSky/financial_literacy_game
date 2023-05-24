@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -27,7 +28,7 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
     if (enteredPerson.firstName == '' || enteredPerson.lastName == '') {
       showErrorSnackBar(
         context: context,
-        errorMessage: 'Please enter first and last name.',
+        errorMessage: AppLocalizations.of(context)!.enterName,
       );
       return false;
     }
@@ -82,33 +83,34 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
       children: [
         MenuDialog(
           showCloseButton: false,
-          title: 'Welcome to the FinSim Game',
+          title: AppLocalizations.of(context)!.titleSignIn,
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
-                child: const SingleChildScrollView(
-                  child: Text(
-                    "Dear participants,"
-                    "This game is meant to mimic financial investments."
-                    " It will only be used for the purpose of teaching. "
-                    "This game will not affect the relationship with your bank.\n\n"
-                    "Please enter your contact info below:",
-                  ),
+                height:
+                    MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
+                child: SingleChildScrollView(
+                  child: Text(AppLocalizations.of(context)!.welcomeText),
                 ),
               ),
               TextField(
                 enabled: !isProcessing,
                 controller: firstNameTextController,
-                decoration: const InputDecoration(hintText: "First name"),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))],
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.hintFirstName),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))
+                ],
               ),
               TextField(
                 enabled: !isProcessing,
                 controller: lastNameTextController,
-                decoration: const InputDecoration(hintText: "Last name"),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))],
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.hintLastName),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))
+                ],
               ),
             ],
           ),
@@ -152,7 +154,7 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
                         });
                       }
                     },
-              child: const Text('Continue'),
+              child: Text(AppLocalizations.of(context)!.continueButton),
             ),
           ],
         ),

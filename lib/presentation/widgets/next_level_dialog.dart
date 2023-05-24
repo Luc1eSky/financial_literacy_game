@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -16,9 +17,9 @@ class NextLevelDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return MenuDialog(
       showCloseButton: false,
-      title: 'Congratulations',
+      title: AppLocalizations.of(context)!.congratulations,
       content: Text(
-        'You have reached the next level!',
+        AppLocalizations.of(context)!.reachedNextLevel,
         style: TextStyle(
           fontSize: 20,
           color: ColorPalette().darkText,
@@ -31,7 +32,7 @@ class NextLevelDialog extends StatelessWidget {
             Navigator.pop(context);
             ref.read(gameDataNotifierProvider.notifier).moveToNextLevel();
           },
-          child: const Text('NEXT'),
+          child: Text(AppLocalizations.of(context)!.next),
         ),
       ],
     );

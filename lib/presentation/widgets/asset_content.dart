@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -20,11 +21,15 @@ class AssetContent extends ConsumerWidget {
     int chickens = ref.watch(gameDataNotifierProvider).chickens;
     int goats = ref.watch(gameDataNotifierProvider).goats;
 
-    double cowIncome = ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.cow);
-    double chickenIncome =
-        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.chicken);
-    double goatIncome =
-        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.goat);
+    double cowIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.cow);
+    double chickenIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.chicken);
+    double goatIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.goat);
     return GestureDetector(
       onTap: () {
         // showDialog(
@@ -38,7 +43,7 @@ class AssetContent extends ConsumerWidget {
         children: [
           Expanded(
               child: SmallAssetCard(
-            title: 'cow',
+            title: AppLocalizations.of(context)!.cow,
             count: cows,
             income: cowIncome,
             group: valueSizeGroup,
@@ -47,7 +52,7 @@ class AssetContent extends ConsumerWidget {
           const SizedBox(width: 7.0),
           Expanded(
               child: SmallAssetCard(
-            title: 'chicken',
+            title: AppLocalizations.of(context)!.chicken,
             count: chickens,
             income: chickenIncome,
             group: valueSizeGroup,
@@ -56,7 +61,7 @@ class AssetContent extends ConsumerWidget {
           const SizedBox(width: 7.0),
           Expanded(
               child: SmallAssetCard(
-            title: 'goat',
+            title: AppLocalizations.of(context)!.goat,
             count: goats,
             income: goatIncome,
             group: valueSizeGroup,

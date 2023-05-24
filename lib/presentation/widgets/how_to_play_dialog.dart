@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:financial_literacy_game/config/color_palette.dart';
 import 'package:financial_literacy_game/presentation/widgets/menu_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'cash_indicator.dart';
@@ -13,7 +14,7 @@ class HowToPlayDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MenuDialog(
-      title: 'How to play',
+      title: AppLocalizations.of(context)!.howToPlay,
       content: SizedBox(
         height: 300,
         width: 500, // max width of dialog
@@ -29,36 +30,35 @@ class HowToPlayDialog extends ConsumerWidget {
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
-                children: const [
-                  NextPeriodButton(isDemonstrationMode: true),
-                  SizedBox(height: 20.0),
+                children: [
+                  const NextPeriodButton(isDemonstrationMode: true),
+                  const SizedBox(height: 20.0),
                   Text(
-                    '1. To start the game click the “NEXT” button'
-                    ' in the top right corner.',
-                    style: TextStyle(fontSize: 20.0),
+                    AppLocalizations.of(context)!.instructionText1,
+                    style: const TextStyle(fontSize: 20.0),
                     textAlign: TextAlign.center,
                   ),
                 ],
               ),
             ),
-            const HowToPlayCard(
+            HowToPlayCard(
               content: Text(
-                '2. You can buy an animal with cash, take a loan or decide not to buy the asset.',
-                style: TextStyle(fontSize: 20.0),
+                AppLocalizations.of(context)!.instructionText2,
+                style: const TextStyle(fontSize: 20.0),
                 textAlign: TextAlign.center,
               ),
             ),
-            const HowToPlayCard(
+            HowToPlayCard(
               content: Text(
-                '3. Each round animals vary in price, income and life expectancy.',
-                style: TextStyle(fontSize: 20.0),
+                AppLocalizations.of(context)!.instructionText3,
+                style: const TextStyle(fontSize: 20.0),
                 textAlign: TextAlign.center,
               ),
             ),
-            const HowToPlayCard(
+            HowToPlayCard(
               content: Text(
-                '4. You might find the calculations underneath the animal card helpful.',
-                style: TextStyle(fontSize: 20.0),
+                AppLocalizations.of(context)!.instructionText4,
+                style: const TextStyle(fontSize: 20.0),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -80,9 +80,9 @@ class HowToPlayDialog extends ConsumerWidget {
                     cashGoal: 100,
                   ),
                   const SizedBox(height: 20.0),
-                  const Text(
-                    '5. You have to reach a certain cash amount to make it to the next level.',
-                    style: TextStyle(fontSize: 20.0),
+                  Text(
+                    AppLocalizations.of(context)!.instructionText5,
+                    style: const TextStyle(fontSize: 20.0),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -102,9 +102,9 @@ class HowToPlayDialog extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  const Text(
-                    '6. You can find these game instructions in the settings menu.',
-                    style: TextStyle(fontSize: 20.0),
+                  Text(
+                    AppLocalizations.of(context)!.instructionText6,
+                    style: const TextStyle(fontSize: 20.0),
                     textAlign: TextAlign.center,
                   ),
                 ],

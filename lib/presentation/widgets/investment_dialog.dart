@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -75,9 +76,12 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
 
   @override
   void initState() {
-    Level defaultLevel = levels[widget.ref.read(gameDataNotifierProvider).levelId];
+    Level defaultLevel =
+        levels[widget.ref.read(gameDataNotifierProvider).levelId];
     currentLevel = defaultLevel.copyWith(
-      loan: defaultLevel.loanInterestRandomized ? getRandomLoan() : defaultLevel.loan,
+      loan: defaultLevel.loanInterestRandomized
+          ? getRandomLoan()
+          : defaultLevel.loan,
       savingsRate: defaultLevel.savingsInterestRandomized
           ? getRandomDouble(
               start: minimumSavingsRate,
@@ -96,7 +100,8 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
       currentLevel = currentLevel.copyWith(assets: randomizedAssets);
     }
 
-    if (currentLevel.assetRiskLevelActive && currentLevel.assetRiskLevelRandomized) {
+    if (currentLevel.assetRiskLevelActive &&
+        currentLevel.assetRiskLevelRandomized) {
       List<Asset> randomizedRiskAssets = [];
       for (Asset asset in currentLevel.assets) {
         randomizedRiskAssets.add(
@@ -119,14 +124,18 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
           asset.copyWith(
             price: asset.price +
                 (asset.price ~/
-                    (1 / getRandomDouble(start: 0, end: priceVariation, steps: 0.01)) *
+                    (1 /
+                        getRandomDouble(
+                            start: 0, end: priceVariation, steps: 0.01)) *
                     (Random().nextBool() ? -1 : 1)),
             income: asset.income +
-                (Random().nextBool() ? -1 : 1) * (Random().nextBool() ? 0 : incomeVariation),
+                (Random().nextBool() ? -1 : 1) *
+                    (Random().nextBool() ? 0 : incomeVariation),
           ),
         );
       }
-      currentLevel = currentLevel.copyWith(assets: randomizedIncomeAndCostsAssets);
+      currentLevel =
+          currentLevel.copyWith(assets: randomizedIncomeAndCostsAssets);
     }
 
     levelAssets = currentLevel.assets;
@@ -161,14 +170,14 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              title: const Text('Warning'),
+              title: Text(AppLocalizations.of(context)!.warning),
               content: asset.numberOfAnimals > 1
                   ? Text('${asset.type.name}s have died!')
                   : Text('${asset.type.name} has died!'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context, true),
-                  child: const Text('okay'),
+                  child: Text(AppLocalizations.of(context)!.confirm),
                 )
               ],
             );
@@ -180,9 +189,9 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
         child: AlertDialog(
           backgroundColor: ColorPalette().popUpBackground,
           //insetPadding: EdgeInsets.zero,
-          title: const Text(
-            'Investment Options',
-            style: TextStyle(
+          title: Text(
+            AppLocalizations.of(context)!.investmentOptions,
+            style: const TextStyle(
               fontSize: 25.0,
               fontWeight: FontWeight.bold,
             ),
@@ -210,7 +219,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                 ),
                 const SizedBox(height: 20),
                 AutoSizeText(
-                  'Tip:',
+                  AppLocalizations.of(context)!.tip,
                   maxLines: 1,
                   style: const TextStyle(
                     fontSize: 100,
@@ -225,14 +234,16 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     style: const TextStyle(fontSize: 100),
                     group: textGroup,
                   ),
-                if (currentLevel.savingsRate != 0 || currentLevel.savingsInterestRandomized)
+                if (currentLevel.savingsRate != 0 ||
+                    currentLevel.savingsInterestRandomized)
                   AutoSizeText(
                     '• Interest rate on cash is ${(currentLevel.savingsRate * 100).toStringAsFixed(decimalValuesToDisplay)}% / year',
                     maxLines: 1,
                     style: const TextStyle(fontSize: 100),
                     group: textGroup,
                   ),
-                if (currentLevel.savingsRate == 0 && currentLevel.showCashBuyOption)
+                if (currentLevel.savingsRate == 0 &&
+                    currentLevel.showCashBuyOption)
                   AutoSizeText(
                     generateCashTipMessage(
                       asset: _selectedAsset,
@@ -246,7 +257,8 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     ),
                     group: textGroup,
                   ),
-                if (currentLevel.savingsRate == 0 && currentLevel.showLoanBorrowOption)
+                if (currentLevel.savingsRate == 0 &&
+                    currentLevel.showLoanBorrowOption)
                   AutoSizeText(
                     generateLoanTipMessage(
                       asset: _selectedAsset,
@@ -280,7 +292,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                 checkGameHasEnded(widget.ref, context);
                 checkNextLevelReached(widget.ref, context);
               },
-              child: const Text("don't buy"),
+              child: Text(AppLocalizations.of(context)!.dontBuy),
             ),
             if (currentLevel.showCashBuyOption)
               ElevatedButton(
@@ -291,7 +303,9 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     textStyle: const TextStyle(fontSize: 13.0),
                   ),
                   onPressed: () async {
-                    if (await widget.ref.read(gameDataNotifierProvider.notifier).buyAsset(
+                    if (await widget.ref
+                            .read(gameDataNotifierProvider.notifier)
+                            .buyAsset(
                               _selectedAsset,
                               showNotEnoughCash,
                               showAnimalDiedWarning,
@@ -306,7 +320,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                       }
                     }
                   },
-                  child: const Text('pay cash')),
+                  child: Text(AppLocalizations.of(context)!.payCash)),
             if (currentLevel.showLoanBorrowOption)
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -316,8 +330,10 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     textStyle: const TextStyle(fontSize: 13.0),
                   ),
                   onPressed: () async {
-                    await widget.ref.read(gameDataNotifierProvider.notifier).loanAsset(
-                        levelLoan, _selectedAsset, showAnimalDiedWarning, currentLevel.savingsRate);
+                    await widget.ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .loanAsset(levelLoan, _selectedAsset,
+                            showAnimalDiedWarning, currentLevel.savingsRate);
                     if (context.mounted) {
                       Navigator.pop(context);
                       checkBankruptcy(widget.ref, context);
@@ -325,7 +341,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                       checkNextLevelReached(widget.ref, context);
                     }
                   },
-                  child: const Text('borrow')),
+                  child: Text(AppLocalizations.of(context)!.borrow)),
           ],
         ),
       ),

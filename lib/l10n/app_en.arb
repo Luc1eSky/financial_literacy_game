@@ -1,0 +1,186 @@
+{
+    "language": "English",
+    "@language":{
+        "description": "The current Language"
+    },
+    "titleSignIn": "Welcome to the FinSim Game",
+    "@titleSignIn":{
+        "description": "Welcoming users to the Game"
+    },
+    "welcomeText": "Dear participants,\n\nthis game is meant to mimic financial investments. It will only be used for the purpose of teaching. This game will not affect the relationship with your bank.\n\n Please enter your contact info below:",
+    "@welcomeText":{
+        "description": "welcome instructions for users when opening the app"
+    },
+    "hintFirstName": "First name",
+    "@hintFirstName":{
+        "description": "Hint text for user to enter the first name"
+    },
+    "hintLastName": "Last name",
+    "@hintLastName":{
+        "description": "Hint text for user to enter the last name"
+    },
+    "continueButton": "Continue",
+    "@continueButton":{
+        "description": "Button after user entered name to continue to play"
+    },
+    "overview": "overview",
+    "@overview":{
+        "description": "Title for overview section of financial situation"
+    },
+    "personal": "personal",
+    "@personal":{
+        "description": "Title for overview section of personal expenses. Currently not used in app"
+    },
+    "assets": "assets",
+    "@personal":{
+        "description": "Title for overview section of assets"
+    },
+    "loans": "loans",
+    "@personal":{
+        "description": "Title for overview section of loans"
+    },
+    "cow": "cow",
+    "@cow":{
+        "description": "Asset cow that user can buy"
+    },
+    "chicken": "chicken",
+    "@chicken":{
+        "description": "Asset chicken that user can buy"
+    },
+    "goat": "goat",
+    "@goat":{
+        "description": "Asset goat that user can buy"
+    },
+    "error": "error",
+    "@error":{
+        "description": "error alert when user does not have enough cash"
+    },
+    "cashAlert": "Not enough cash!",
+    "@cashAlert":{
+        "description": "warning message that user does not have enough cash"
+    },
+    "confirm": "okay",
+    "@confirm":{
+        "description": "asks user to confirm with okay"
+    },
+    "howToPlay": "How to Play",
+    "@howToPlay":{
+        "description": "Title that tells people how to play the game"
+    },
+    "instructionText1": "1. To start the game click the “NEXT” button in the top right corner.",
+    "@instructionText1":{
+        "description": "First instruction on how to play the game"
+    },
+    "instructionText2": "2. You can buy an animal with cash, take a loan or decide not to buy the asset.",
+    "@instructionText2":{
+        "description": "Second instruction on how to play the game"
+    },
+    "instructionText3": "3. Each round animals vary in price, income and life expectancy.",
+    "@instructionText3":{
+        "description": "Third instruction on how to play the game"
+    },
+    "instructionText4": "4. You might find the calculations underneath the animal card helpful.",
+    "@instructionText4":{
+        "description": "Fourth instruction on how to play the game"
+    },
+    "instructionText5": "5. You have to reach a certain cash amount to make it to the next level.",
+    "@instructionText5":{
+        "description": "Fifth instruction on how to play the game"
+    },
+    "instructionText6": "6. You can find these game instructions in the settings menu.",
+    "@instructionText6":{
+        "description": "Sixth instruction on how to play the game"
+    },
+    "warning": "Warning",
+    "@warning":{
+        "description": "title of warning dialog"
+    },
+    "investmentOptions": "Investment Options",
+    "@investmentOptions":{
+        "description": "title to show investment options"
+    },
+    "tip": "Tip",
+    "@tip":{
+        "description": "tip that is displayed for users"
+    },
+    "dontBuy": "don't buy",
+    "@dontBuy":{
+        "description": "option for user to not buy asset"
+    },
+    "payCash": "pay cash",
+    "@payCash":{
+        "description": "option for user to buy asset in cash"
+    },
+    "borrow": "borrow",
+    "@borrow":{
+        "description": "option for user to buy asset via loan"
+    },
+    "lostGame": "Unfortunately you ran out of cash. You can either restart this level or start a new game.",
+    "@lostGame":{
+        "description": "warning message when the user lost because they ran out of cash"
+    },
+    "restartLevel": "restart level",
+    "@restartLevel":{
+        "description": "start level again after losing"
+    },
+    "restartGame": "restart game",
+    "@restartGame":{
+        "description": "start game again after losing"
+    },
+    "settings": "Settings",
+    "@settings":{
+        "description": "settings option for user"
+    },
+    "clearCache": "Clear Cache",
+    "@clearCache":{
+        "description": "clearing cache from local device"
+    },
+    "nextLevel": "Next Level",
+    "@nextLevel":{
+        "description": "allows user to advance to next level. Only used for testing"
+    },
+    "enterName": "Please enter first and last name.",
+    "@enterName":{
+        "description": "Hint text for user to enter their first and last name"
+    },
+    "congratulations": "Congratulations",
+    "@congratulations":{
+        "description": "Congratualation dialog after user completed level"
+    },
+    "reachedNextLevel": "You have reached the next level!",
+    "@reachedNextLevel":{
+        "description": "Message when user completed level"
+    },
+    "next": "Next",
+    "@next":{
+        "description": "next button text"
+    },
+    "income": "Income",
+    "@income":{
+        "description": "income generated from asset"
+    },
+    "cash": "Cash",
+    "@cash":{
+        "description": "pay with cash"
+    },
+    "expenses": "Expenses",
+    "@expenses":{
+        "description": "expenses per period"
+    },
+    "gameFinished": "Congratulations you finished the game successfully!",
+    "@gameFinished":{
+        "description": "dialog when user finished the game"
+    },
+    "restart": "Restart",
+    "@restart":{
+        "description": "restart the game button"
+    },
+    "notMe": "That's not me",
+    "@notMe":{
+        "description": "indicating that it's another user playing the game"
+    },
+    "signInDifferentPerson": "If that is not you, please sign in as a different person.",
+    "@signInDifferentPerson":{
+        "description": "Text in welcome back screen indicating if another user plays the game"
+    }
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CashAlertDialog extends StatelessWidget {
   const CashAlertDialog({
@@ -8,12 +9,12 @@ class CashAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Error'),
-      content: const Text('Not enough cash!'),
+      title: Text(AppLocalizations.of(context)!.error),
+      content: Text(AppLocalizations.of(context)!.cashAlert),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('okay'),
+          child: Text(AppLocalizations.of(context)!.confirm),
         )
       ],
     );
