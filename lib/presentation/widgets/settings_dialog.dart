@@ -1,4 +1,5 @@
 import 'package:financial_literacy_game/config/color_palette.dart';
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +16,7 @@ class SettingsDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MenuDialog(
-      title: AppLocalizations.of(context)!.settings,
+      title: AppLocalizations.of(context)!.settings.capitalize(),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,7 +50,7 @@ class SettingsDialog extends ConsumerWidget {
               await prefs.clear();
               Navigator.of(context).pop();
             },
-            child: Text(AppLocalizations.of(context)!.clearCache),
+            child: Text(AppLocalizations.of(context)!.clearCache.capitalize()),
           ),
           const SizedBox(height: 10),
           ElevatedButton(
@@ -62,7 +63,7 @@ class SettingsDialog extends ConsumerWidget {
               ref.read(gameDataNotifierProvider.notifier).moveToNextLevel();
               Navigator.of(context).pop();
             },
-            child: Text(AppLocalizations.of(context)!.nextLevel),
+            child: Text(AppLocalizations.of(context)!.nextLevel.capitalize()),
           ),
           const SizedBox(height: 10),
           ElevatedButton(
@@ -80,7 +81,7 @@ class SettingsDialog extends ConsumerWidget {
                 },
               );
             },
-            child: const Text('Languages'),
+            child: Text(AppLocalizations.of(context)!.languagesTitle),
           ),
           // ElevatedButton(
           //   style: ElevatedButton.styleFrom(

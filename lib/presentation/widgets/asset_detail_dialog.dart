@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -12,7 +13,7 @@ class AssetDetailDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
-      title: Text('Assets'),
+      title: Text(AppLocalizations.of(context)!.assets[0].toUpperCase()),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -51,7 +52,8 @@ class AssetDetailDialog extends ConsumerWidget {
                         Expanded(
                           flex: 4,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Container(
                               height: 10.0,
                               decoration: BoxDecoration(

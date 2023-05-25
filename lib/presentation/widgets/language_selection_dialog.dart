@@ -1,5 +1,6 @@
 import 'package:defer_pointer/defer_pointer.dart';
 import 'package:financial_literacy_game/config/color_palette.dart';
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,10 +21,10 @@ class LanguageSelectionDialog extends ConsumerWidget {
         title: Stack(
           clipBehavior: Clip.none,
           children: [
-            const Text(
-              'TITLE',
+            Text(
+              AppLocalizations.of(context)!.languagesTitle.capitalize(),
               //AppLocalizations.of(context)!.localeSelectionTitle,
-              style: TextStyle(fontSize: 23.0),
+              style: const TextStyle(fontSize: 23.0),
             ),
             Positioned(
               top: -30.0,
@@ -71,7 +72,9 @@ class LanguageSelectionDialog extends ConsumerWidget {
                       foregroundColor: ColorPalette().lightText,
                     ),
                     onPressed: () {
-                      ref.read(gameDataNotifierProvider.notifier).setLocale(locale);
+                      ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .setLocale(locale);
                       saveLocalLocally(locale);
                       //Navigator.of(context).pop();
                     },

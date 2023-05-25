@@ -91,7 +91,7 @@ class PersonalTileContent extends StatelessWidget {
                 ),
                 Expanded(
                   child: AutoSizeText(
-                    AppLocalizations.of(context)!.expenses,
+                    'expenses',
                     maxLines: 1,
                     minFontSize: 2,
                     style: TextStyle(

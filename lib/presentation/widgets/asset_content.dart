@@ -104,7 +104,7 @@ class SmallAssetCard extends ConsumerWidget {
               Expanded(
                 flex: 1,
                 child: AutoSizeText(
-                  '$count',
+                  '$count x',
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     color: ColorPalette().lightText,
@@ -165,7 +165,7 @@ class SmallAssetCard extends ConsumerWidget {
                     Expanded(
                       flex: 1,
                       child: AutoSizeText(
-                        income.toStringAsFixed(2),
+                        AppLocalizations.of(context)!.cashValue(income),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: ColorPalette().lightText,

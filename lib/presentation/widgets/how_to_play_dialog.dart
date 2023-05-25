@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:financial_literacy_game/config/color_palette.dart';
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:financial_literacy_game/presentation/widgets/menu_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,7 +15,7 @@ class HowToPlayDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MenuDialog(
-      title: AppLocalizations.of(context)!.howToPlay,
+      title: AppLocalizations.of(context)!.howToPlay.capitalize(),
       content: SizedBox(
         height: 300,
         width: 500, // max width of dialog
@@ -67,7 +68,7 @@ class HowToPlayDialog extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'cash goal: '
+                    '${AppLocalizations.of(context)!.cashGoal}: '
                     '${75.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontSize: 17.0,

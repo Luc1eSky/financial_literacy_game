@@ -172,8 +172,9 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
             return AlertDialog(
               title: Text(AppLocalizations.of(context)!.warning),
               content: asset.numberOfAnimals > 1
-                  ? Text('${asset.type.name}s have died!')
-                  : Text('${asset.type.name} has died!'),
+                  ? Text(AppLocalizations.of(context)!.assetsDied.capitalize())
+                  : Text(
+                      AppLocalizations.of(context)!.assetDied(asset.type.name)),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context, true),
@@ -203,7 +204,10 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  'Your current cash: \$${widget.ref.read(gameDataNotifierProvider).cash.toStringAsFixed(2)}',
+                  AppLocalizations.of(context)!
+                      .currentCash(
+                          widget.ref.read(gameDataNotifierProvider).cash)
+                      .capitalize(),
                   maxLines: 1,
                   style: const TextStyle(fontSize: 100),
                   group: textGroup,
@@ -219,7 +223,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                 ),
                 const SizedBox(height: 20),
                 AutoSizeText(
-                  AppLocalizations.of(context)!.tip,
+                  AppLocalizations.of(context)!.tip.capitalize(),
                   maxLines: 1,
                   style: const TextStyle(
                     fontSize: 100,
@@ -229,7 +233,10 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                 ),
                 if (currentLevel.showLoanBorrowOption)
                   AutoSizeText(
-                    '• Borrow at ${(levelLoan.interestRate * 100).toStringAsFixed(decimalValuesToDisplay)}% interest total',
+                    AppLocalizations.of(context)!
+                        .borrowAt((levelLoan.interestRate * 100)
+                            .toStringAsFixed(decimalValuesToDisplay))
+                        .capitalize(),
                     maxLines: 1,
                     style: const TextStyle(fontSize: 100),
                     group: textGroup,
@@ -237,7 +244,9 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                 if (currentLevel.savingsRate != 0 ||
                     currentLevel.savingsInterestRandomized)
                   AutoSizeText(
-                    '• Interest rate on cash is ${(currentLevel.savingsRate * 100).toStringAsFixed(decimalValuesToDisplay)}% / year',
+                    AppLocalizations.of(context)!.interestCash(
+                        (currentLevel.savingsRate * 100)
+                            .toStringAsFixed(decimalValuesToDisplay)),
                     maxLines: 1,
                     style: const TextStyle(fontSize: 100),
                     group: textGroup,
@@ -246,6 +255,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     currentLevel.showCashBuyOption)
                   AutoSizeText(
                     generateCashTipMessage(
+                      context: context,
                       asset: _selectedAsset,
                       level: currentLevel,
                     ),
@@ -261,6 +271,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     currentLevel.showLoanBorrowOption)
                   AutoSizeText(
                     generateLoanTipMessage(
+                      context: context,
                       asset: _selectedAsset,
                       level: currentLevel,
                     ),

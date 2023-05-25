@@ -1,3 +1,4 @@
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,9 +18,9 @@ class NextLevelDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return MenuDialog(
       showCloseButton: false,
-      title: AppLocalizations.of(context)!.congratulations,
+      title: AppLocalizations.of(context)!.congratulations.capitalize(),
       content: Text(
-        AppLocalizations.of(context)!.reachedNextLevel,
+        AppLocalizations.of(context)!.reachedNextLevel.capitalize(),
         style: TextStyle(
           fontSize: 20,
           color: ColorPalette().darkText,
@@ -32,7 +33,7 @@ class NextLevelDialog extends StatelessWidget {
             Navigator.pop(context);
             ref.read(gameDataNotifierProvider.notifier).moveToNextLevel();
           },
-          child: Text(AppLocalizations.of(context)!.next),
+          child: Text(AppLocalizations.of(context)!.next.capitalize()),
         ),
       ],
     );

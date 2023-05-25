@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +30,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: AppLocalizations.of(context)!.cash,
+              title: AppLocalizations.of(context)!.cash.capitalize(),
               value: cash,
               group: valueSizeGroup,
             ),
@@ -40,7 +41,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: AppLocalizations.of(context)!.income,
+              title: AppLocalizations.of(context)!.income.capitalize(),
               value: income,
               group: valueSizeGroup,
             ),
@@ -51,7 +52,7 @@ class OverviewContent extends ConsumerWidget {
           child: ContentCard(
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
-              title: AppLocalizations.of(context)!.expenses,
+              title: AppLocalizations.of(context)!.expenses.capitalize(),
               value: -expenses,
               group: valueSizeGroup,
             ),
@@ -91,7 +92,7 @@ class OverviewTileContent extends ConsumerWidget {
           child: Align(
             alignment: Alignment.bottomRight,
             child: AutoSizeText(
-              value.toStringAsFixed(2),
+              AppLocalizations.of(context)!.cashValue(value),
               maxLines: 1,
               group: group,
               style: TextStyle(

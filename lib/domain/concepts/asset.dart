@@ -51,15 +51,15 @@ enum AssetType {
   goat,
 }
 
-extension ReturnStrings on AssetType {
-  String get name {
-    switch (this) {
-      case AssetType.cow:
-        return "Cow";
-      case AssetType.chicken:
-        return "Chicken";
-      case AssetType.goat:
-        return "Goat";
-    }
-  }
-}
+// extension ReturnStrings on AssetType {
+//   String get name {
+//     switch (this) {
+//       case AssetType.cow:
+//         return AppLocalizations.of(context)!.cow;
+//       case AssetType.chicken:
+//         return AppLocalizations.of(context)!.chicken;
+//       case AssetType.goat:
+//         return AppLocalizations.of(context)!.goat;
+//     }
+//   }
+// }

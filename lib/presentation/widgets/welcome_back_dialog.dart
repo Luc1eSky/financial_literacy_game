@@ -1,4 +1,5 @@
 import 'package:financial_literacy_game/domain/game_data_notifier.dart';
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:financial_literacy_game/presentation/widgets/sign_in_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,12 +26,14 @@ class _WelcomeBackDialogState extends ConsumerState<WelcomeBackDialog> {
       children: [
         MenuDialog(
           showCloseButton: false,
-          title: 'Welcome back, ${person.firstName} ${person.lastName}!',
+          title: AppLocalizations.of(context)!.welcomeBack(
+              person.firstName!.capitalize(), person.lastName!.capitalize()),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "If you are ${person.firstName}, simply start the game.",
+                AppLocalizations.of(context)!
+                    .sameUser(person.firstName!.capitalize()),
               ),
               const SizedBox(height: 10.0),
               Row(
@@ -50,18 +53,25 @@ class _WelcomeBackDialogState extends ConsumerState<WelcomeBackDialog> {
                               setState(() {
                                 isClicked = true;
                               });
-                              bool couldReconnect = await reconnectToGameSession(person: person);
+                              bool couldReconnect =
+                                  await reconnectToGameSession(person: person);
                               if (!couldReconnect) {
-                                ref.read(gameDataNotifierProvider.notifier).resetGame();
+                                ref
+                                    .read(gameDataNotifierProvider.notifier)
+                                    .resetGame();
                               }
                               if (context.mounted) {
                                 Navigator.of(context).pop();
                               }
                             },
-                      child:
-                          Text('Start at level ${ref.read(gameDataNotifierProvider).levelId + 1}'),
+                      child: Text(AppLocalizations.of(context)!
+                          .startAtLevel(
+                              (ref.read(gameDataNotifierProvider).levelId + 1)
+                                  .toStringAsFixed(0))
+                          .capitalize()),
                     ),
-                  if (ref.read(gameDataNotifierProvider).levelId != 0) const SizedBox(width: 20),
+                  if (ref.read(gameDataNotifierProvider).levelId != 0)
+                    const SizedBox(width: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 5.0,
@@ -74,19 +84,25 @@ class _WelcomeBackDialogState extends ConsumerState<WelcomeBackDialog> {
                             setState(() {
                               isClicked = true;
                             });
-                            await endCurrentGameSession(status: Status.abandoned, person: person);
-                            ref.read(gameDataNotifierProvider.notifier).resetGame();
+                            await endCurrentGameSession(
+                                status: Status.abandoned, person: person);
+                            ref
+                                .read(gameDataNotifierProvider.notifier)
+                                .resetGame();
                             if (context.mounted) {
                               Navigator.of(context).pop();
                             }
                           },
-                    child: Text(AppLocalizations.of(context)!.restartGame),
+                    child: Text(
+                        AppLocalizations.of(context)!.restartGame.capitalize()),
                   ),
                 ],
               ),
               const SizedBox(height: 25.0),
               Text(
-                AppLocalizations.of(context)!.signInDifferentPerson,
+                AppLocalizations.of(context)!
+                    .signInDifferentPerson
+                    .capitalize(),
               ),
               const SizedBox(height: 10.0),
               ElevatedButton(
@@ -110,7 +126,7 @@ class _WelcomeBackDialogState extends ConsumerState<WelcomeBackDialog> {
                           },
                         );
                       },
-                child: Text(AppLocalizations.of(context)!.notMe),
+                child: Text(AppLocalizations.of(context)!.notMe.capitalize()),
               ),
             ],
           ),

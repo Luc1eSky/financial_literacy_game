@@ -1,5 +1,7 @@
 import 'package:financial_literacy_game/config/color_palette.dart';
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/levels.dart';
@@ -24,12 +26,15 @@ class LevelInfoCard extends ConsumerWidget {
     return Stack(
       children: [
         SectionCard(
-          title: 'Level ${levelId + 1} / ${levels.length}',
+          title: AppLocalizations.of(context)!
+              .level((levelId + 1), levels.length)
+              .capitalize(),
           content: Column(
             children: [
               Text(
-                'Cash Goal: reach '
-                '\$${nextLevelCash.toStringAsFixed(2)}',
+                AppLocalizations.of(context)!
+                    .cashGoalReach(nextLevelCash)
+                    .capitalize(),
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
@@ -39,9 +44,9 @@ class LevelInfoCard extends ConsumerWidget {
               const SizedBox(height: 7.5),
               Row(
                 children: [
-                  const Text(
-                    '\$0.00',
-                    style: TextStyle(fontSize: 16.0),
+                  Text(
+                    AppLocalizations.of(context)!.cashValue(0.00),
+                    style: const TextStyle(fontSize: 16.0),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -52,7 +57,8 @@ class LevelInfoCard extends ConsumerWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '\$${nextLevelCash.toStringAsFixed(2)}',
+                    AppLocalizations.of(context)!
+                        .cashValue((nextLevelCash.roundToDouble())),
                     style: const TextStyle(fontSize: 16.0),
                   ),
                 ],

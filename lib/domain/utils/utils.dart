@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../config/color_palette.dart';
 import '../../domain/concepts/recorded_data.dart';
@@ -42,32 +43,39 @@ List<Loan> copyLoanArray(List<Loan> loanList) {
 }
 
 // get random double value
-double getRandomDouble({required double start, required double end, required double steps}) {
+double getRandomDouble(
+    {required double start, required double end, required double steps}) {
   List<double> randomStepList = List.generate(
-      (end * 100 - start * 100) ~/ (steps * 100) + 1, (index) => start + index * steps);
+      (end * 100 - start * 100) ~/ (steps * 100) + 1,
+      (index) => start + index * steps);
   return randomStepList[Random().nextInt(randomStepList.length)];
 }
 
 String generateCashTipMessage({
   required Asset asset,
   required Level level,
+  required BuildContext context,
 }) {
-  String tipString = 'Cash: ';
+  String tipString = '${AppLocalizations.of(context)!.cash}: ';
   double profit = asset.income * asset.lifeExpectancy - asset.price;
-  String profitString = '${profit > 0 ? '' : '-'} \$${profit.abs()}';
-  tipString += '(\$${asset.income} x ${asset.lifeExpectancy}) - \$${asset.price} = $profitString';
+  String profitString = AppLocalizations.of(context)!.cashValue(profit);
+  tipString +=
+      '(${AppLocalizations.of(context)!.cashValue(asset.income)} x ${asset.lifeExpectancy}) - ${AppLocalizations.of(context)!.cashValue(asset.price)} = '
+      '$profitString';
   return tipString;
 }
 
 String generateLoanTipMessage({
   required Asset asset,
   required Level level,
+  required BuildContext context,
 }) {
-  String tipString = 'Loan: ';
-  double profit = asset.income * asset.lifeExpectancy - asset.price * (1 + level.loan.interestRate);
-  String profitString = '${profit > 0 ? '' : '-'} \$${profit.abs().toStringAsFixed(2)}';
+  String tipString = '${AppLocalizations.of(context)!.loan(1)}: ';
+  double profit = asset.income * asset.lifeExpectancy -
+      asset.price * (1 + level.loan.interestRate);
+  String profitString = AppLocalizations.of(context)!.cashValue(profit);
   tipString +=
-      '(\$${asset.income} x ${asset.lifeExpectancy}) - (\$${asset.price} x ${1 + level.loan.interestRate}) = '
+      '(${AppLocalizations.of(context)!.cashValue(asset.income)} x ${asset.lifeExpectancy}) - (${AppLocalizations.of(context)!.cashValue(asset.price)} x ${1 + level.loan.interestRate}) = '
       '$profitString';
   return tipString;
 }
@@ -79,7 +87,8 @@ extension StringExtension on String {
   }
 }
 
-void showErrorSnackBar({required BuildContext context, required String errorMessage}) {
+void showErrorSnackBar(
+    {required BuildContext context, required String errorMessage}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       duration: const Duration(seconds: 2),

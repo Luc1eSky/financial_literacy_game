@@ -28,7 +28,7 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
     if (enteredPerson.firstName == '' || enteredPerson.lastName == '') {
       showErrorSnackBar(
         context: context,
-        errorMessage: AppLocalizations.of(context)!.enterName,
+        errorMessage: AppLocalizations.of(context)!.enterName.capitalize(),
       );
       return false;
     }
@@ -83,7 +83,7 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
       children: [
         MenuDialog(
           showCloseButton: false,
-          title: AppLocalizations.of(context)!.titleSignIn,
+          title: AppLocalizations.of(context)!.titleSignIn.capitalize(),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -91,25 +91,30 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
                 height:
                     MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
                 child: SingleChildScrollView(
-                  child: Text(AppLocalizations.of(context)!.welcomeText),
+                  child: Text(
+                      AppLocalizations.of(context)!.welcomeText.capitalize()),
                 ),
               ),
               TextField(
                 enabled: !isProcessing,
                 controller: firstNameTextController,
                 decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.hintFirstName),
+                    hintText: AppLocalizations.of(context)!
+                        .hintFirstName
+                        .capitalize()),
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))
+                  FilteringTextInputFormatter.allow(RegExp('[^0-9]'))
                 ],
               ),
               TextField(
                 enabled: !isProcessing,
                 controller: lastNameTextController,
                 decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.hintLastName),
+                    hintText: AppLocalizations.of(context)!
+                        .hintLastName
+                        .capitalize()),
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z -]'))
+                  FilteringTextInputFormatter.allow(RegExp('[^0-9]'))
                 ],
               ),
             ],
@@ -154,7 +159,8 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
                         });
                       }
                     },
-              child: Text(AppLocalizations.of(context)!.continueButton),
+              child: Text(
+                  AppLocalizations.of(context)!.continueButton.capitalize()),
             ),
           ],
         ),

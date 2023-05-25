@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +22,7 @@ class LostGameDialog extends StatelessWidget {
         height: 100,
         width: 100,
         child: AutoSizeText(
-          AppLocalizations.of(context)!.lostGame,
+          AppLocalizations.of(context)!.lostGame.capitalize(),
           style: TextStyle(
             fontSize: 20,
             height:
@@ -37,7 +38,7 @@ class LostGameDialog extends StatelessWidget {
             ref.read(gameDataNotifierProvider.notifier).restartLevel();
             Navigator.pop(context);
           },
-          child: Text(AppLocalizations.of(context)!.restartLevel.toUpperCase()),
+          child: Text(AppLocalizations.of(context)!.restartLevel.capitalize()),
         ),
         TextButton(
           onPressed: () {
@@ -45,7 +46,7 @@ class LostGameDialog extends StatelessWidget {
             ref.read(gameDataNotifierProvider.notifier).resetGame();
             Navigator.pop(context);
           },
-          child: Text(AppLocalizations.of(context)!.restartGame.toUpperCase()),
+          child: Text(AppLocalizations.of(context)!.restartGame.capitalize()),
         ),
       ],
     );

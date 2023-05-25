@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -73,7 +74,7 @@ class LoanCard extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: AutoSizeText(
-                      '\$${loan.asset.price}',
+                      AppLocalizations.of(context)!.cashValue(loan.asset.price),
                       maxLines: 1,
                       style: TextStyle(
                         color: ColorPalette().lightText,
@@ -87,7 +88,8 @@ class LoanCard extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: AutoSizeText(
-                      '\$${loan.paymentPerPeriod.toStringAsFixed(2)}',
+                      AppLocalizations.of(context)!
+                          .cashValue(loan.paymentPerPeriod),
                       maxLines: 1,
                       style: TextStyle(
                         color: ColorPalette().lightText,

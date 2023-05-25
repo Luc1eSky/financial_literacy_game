@@ -1,5 +1,15 @@
 {
     "language": "ಕನ್ನಡ",
     "overview": "OVERVIEW KANNADA",
-    "welcomeText": "Dear participants KANNADA"
+    "welcomeText": "Dear participants KANNADA",
+     "cashValue": "{value}",
+        "@cashValue": {
+        "description" : "How cash values are displayed in App",
+        "placeholders": {
+         "value": {
+           "type": "double",
+           "format": "simpleCurrency"
+        }
+      }
+     }
 }
