@@ -1,0 +1,191 @@
+{
+    "assetDied": "{asset} kifudde",
+    "@assetDied":{
+        "description": "dialog when the asset has died",
+        "placeholders": {
+            "asset": {
+                "type": "String",
+                "example": "cow"
+            }
+        }
+    },
+    "assets": "enyingizza eva mu ky'oguze",
+    "assetsDied": "Ensolozzo zifudde",
+    "borrow": "okwewola",
+    "borrowAt": "wewole ku {interestRate}% omugate gw'amagoba",
+    "@borrowAt":{
+        "description": "displays at which interest rate the user can borrow money. E.g borrow at 12% interest rate",
+        "placeholders": {
+            "interestRate": {
+                "type": "String",
+                "example": "12"
+            }
+        }
+    },
+    "cash": "Sente ez'obuliwo",
+    "cashAlert": "Sente zolinawo tezimala",
+    "cashGoal": "Sente zolina okuwezza",
+    "cashGoalReach": "Sente zolina okuwezza : Wezza",
+    "chicken": "Enkoko",
+    "clearCache": "jamu ebilimu",
+    "confirm": "Kaale",
+    "congratulations": "Tukuyozayozza",
+    "continueButton": "Weyongereyo",
+    "cow": "Ente",
+    "currentCash": "Sente zolinawo kati: {cashAmount}",
+    "@currentCash":{
+        "description": "displays the current amount of cash a user has",
+        "placeholders": {
+            "cashAmount": {
+                "type": "double",
+                "format": "simpleCurrency",
+                "example": "Price: $15.00"
+            }
+        }
+    },
+    "dontBuy": "Togula",
+    "enterName": "Teekamu elinya lyo elisooka n'elinya lyo ely'okubiri",
+    "error": "Ensobi",
+    "expenses": "Ensasanya",
+    "gameFinished": "Tukuyozayozza okumalayo akazanyo obulunji",
+    "goat": "Embuzi",
+    "hintFirstName": "Elinya elisooka",
+    "hintLastName": "Elinya edala",
+    "howToPlay": "Engeri y'okuzannya",
+    "income": "Enyingizza",
+    "incomePerYear": "Enyingizza: {cashAmount} / buli mwaka",
+    "@incomePerYear":{
+        "description": "Income per period for asset",
+        "placeholders": {
+            "cashAmount": {
+                "type": "double",
+                "format": "simpleCurrency",
+                "example": "Price: $15.00"
+            }
+        }
+    },
+    "instructionText1": "Okutandika okuzanya,nyinga wolaba akagambo “EKIDDAKKO“ wagulu ku mukono gwa ddyo",
+    "instructionText2": "Osobola okugula ekisolo nga okozesa sente z'olinawo, oba nga wewola oba oyinza okusalawo obutagula",
+    "instructionText3": "Buli luzannya,ebisolo bikyuka ebeeyi, sente z'ebiyingiza n'ebanga lyebimala nga bilamu",
+    "instructionText4": "Ebibalo ebili wansi w'ekisolo biyinza okubeera eby'omugasso jooli",
+    "instructionText5": "Olina okuweza omuwendo gwa sente ogwesalila okusobola okweyongerayo ku mutendera ogudako",
+    "instructionText6": "Osobola okusanga engeri zino  ez'okuzannya akazannyo kano bwokebeera mu nteekateeka",
+    "interestCash": "• Amagoba singa ogula nga okozesa sente zolina gali {interestRate}% / buli mwaka",
+    "@interestCash":{
+        "description": "Interest rate on cash when saving, not used right now",
+        "placeholders": {
+            "interestRate": {
+                "type": "String",
+                "example": "12"
+            }
+        }
+    },
+    "investmentOptions": "Ky'osobola okugula",
+    "language": "oluzungu",
+    "languagesTitle": "Enimi",
+    "level": "Omutendeera {level} / {levelTotal}",
+    "@level":{
+        "description": "Level which user is in out of all levels",
+        "placeholders": {
+            "level": {
+                "type": "int",
+                "example": "2"},
+            "levelTotal": {
+                "type": "int",
+                "example": "6"
+            }
+        }
+    },
+    "lifeExpectancy": "Obulamu: : {yearsNum} bw'ekisolo",
+    "@lifeExpectancy":{
+        "description": "how long an asset will live",
+        "placeholders": {
+            "yearsNum": {
+                "type": "int",
+                "example": "Life expectancy: 4 years"
+            }
+        }
+    },
+    "lifeRisk": "ekisobola okugwawo: 1 ku {number} ejja kuffa",
+    "@lifeRisk":{
+        "description": "risk level described as one out of number will not survive",
+        "placeholders": {
+            "number": {
+                "type": "String",
+                "example": "5"
+            }
+        }
+    },
+    "loan": "{count, plural, =1{mkopo} other{mikopo}}",
+    "@loan":{
+        "description": "Translate loan and loans in brackets to be used",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "example": "loans"
+            }
+        }
+    },
+    "lostGame": "ekibi sente zikuweddeko. Osobola okuddamu omutendeera guno gwenyini oba okudayo n'otandikila akazannyo jekatandikila.",
+    "next": "ekiddako",
+    "nextLevel": "omutendeera oguddako",
+    "notMe": "oyo ssi nze",
+    "overview": "mubufuunze",
+    "payCash": "sasuzza sente zolinawo",
+    "personal": "Ebyange",
+    "price": "Ebeeyi: {cashAmount}",
+    "@price":{
+        "description": "Price for asset",
+        "placeholders": {
+            "cashAmount": {
+                "type": "double",
+                "format": "simpleCurrency",
+                "example": "Price: $15.00"
+            }
+        }
+    },
+    "reachedNextLevel": "Otuuse ku mutendeera oguddako",
+    "restart": "Ddamu",
+    "restartGame": "Ddamu akazannyi okuva ku ntandikwa",
+    "restartLevel": "Ddamu omutendeera guno",
+    "sameUser": "Bwoba nga yegwe {firstName}, tandika akazannyo",
+    "@sameUser": {
+        "description:": "asks if the user is the same that logs back in",
+        "placeholders": {
+            "firstName": {
+                "type": "String",
+                "example": "John"
+            }
+        }
+    },
+    "settings": "Enteekateeka",
+    "signInDifferentPerson": "sasuzza sente zolinawo",
+    "startAtLevel": "Tandikala kumutedeera {level}",
+    "@startAtLevel":{
+        "description": "At which level the user can start the game",
+        "placeholders": {
+            "level": {
+                "type": "String",
+                "example": "5"
+            }
+        }
+    },
+    "tip": "Enkozesa",
+    "titleSignIn": "Nkwanilizza ku kazannyo kano akayitibwa FinSim",
+    "warning": "Okukulaalika",
+    "welcomeBack": "Webale kukomawo, , {firstName} {lastName}!",
+    "@welcomeBack":{
+        "description": "Welcomes back user e.g Welcome back, John Doe",
+        "placeholders": {
+            "firstName": {
+                "type": "String",
+                "example": "John"
+            },
+            "lastName": {
+                "type": "String",
+                "example": "Doe"
+            }
+        }
+    },
+    "welcomeText": "Munaffe omuzannyi,\n\n akazannyo kano kagezako kwefananyiliza byanfuna era kajja kozesebwa mu kusemesa kwoka. Okuzannya akazannyo kano tekijja kubaako kyekikyuusa mu nkolagana wakatiwo ne Bank yyo. Nkusaba otekemu ebikukwatako wansi"
+}
