@@ -205,8 +205,10 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
               children: [
                 AutoSizeText(
                   AppLocalizations.of(context)!
-                      .currentCash(
-                          widget.ref.read(gameDataNotifierProvider).cash)
+                      .currentCash(widget.ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .convertAmount(
+                              widget.ref.read(gameDataNotifierProvider).cash))
                       .capitalize(),
                   maxLines: 1,
                   style: const TextStyle(fontSize: 100),
@@ -255,6 +257,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     currentLevel.showCashBuyOption)
                   AutoSizeText(
                     generateCashTipMessage(
+                      ref: widget.ref,
                       context: context,
                       asset: _selectedAsset,
                       level: currentLevel,
@@ -274,6 +277,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                       context: context,
                       asset: _selectedAsset,
                       level: currentLevel,
+                      ref: widget.ref,
                     ),
                     maxLines: 1,
                     style: const TextStyle(

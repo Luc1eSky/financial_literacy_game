@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:financial_literacy_game/domain/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
 import '../../domain/concepts/recorded_data.dart';
@@ -55,12 +57,17 @@ String generateCashTipMessage({
   required Asset asset,
   required Level level,
   required BuildContext context,
+  required WidgetRef ref,
 }) {
   String tipString = '${AppLocalizations.of(context)!.cash}: ';
   double profit = asset.income * asset.lifeExpectancy - asset.price;
-  String profitString = AppLocalizations.of(context)!.cashValue(profit);
+  double convertedProfit =
+      ref.read(gameDataNotifierProvider.notifier).convertAmount(profit);
+  String profitString =
+      AppLocalizations.of(context)!.cashValue(convertedProfit);
   tipString +=
-      '(${AppLocalizations.of(context)!.cashValue(asset.income)} x ${asset.lifeExpectancy}) - ${AppLocalizations.of(context)!.cashValue(asset.price)} = '
+      '(${AppLocalizations.of(context)!.cashValue(ref.read(gameDataNotifierProvider.notifier).convertAmount(asset.income))} x '
+      '${asset.lifeExpectancy}) - ${AppLocalizations.of(context)!.cashValue(ref.read(gameDataNotifierProvider.notifier).convertAmount(asset.price))} = '
       '$profitString';
   return tipString;
 }
@@ -69,13 +76,17 @@ String generateLoanTipMessage({
   required Asset asset,
   required Level level,
   required BuildContext context,
+  required WidgetRef ref,
 }) {
   String tipString = '${AppLocalizations.of(context)!.loan(1)}: ';
   double profit = asset.income * asset.lifeExpectancy -
       asset.price * (1 + level.loan.interestRate);
-  String profitString = AppLocalizations.of(context)!.cashValue(profit);
+  double convertedProfit =
+      ref.read(gameDataNotifierProvider.notifier).convertAmount(profit);
+  String profitString =
+      AppLocalizations.of(context)!.cashValue(convertedProfit);
   tipString +=
-      '(${AppLocalizations.of(context)!.cashValue(asset.income)} x ${asset.lifeExpectancy}) - (${AppLocalizations.of(context)!.cashValue(asset.price)} x ${1 + level.loan.interestRate}) = '
+      '(${AppLocalizations.of(context)!.cashValue(ref.read(gameDataNotifierProvider.notifier).convertAmount(asset.income))} x ${asset.lifeExpectancy}) - (${AppLocalizations.of(context)!.cashValue(ref.read(gameDataNotifierProvider.notifier).convertAmount(asset.price))} x ${1 + level.loan.interestRate}) = '
       '$profitString';
   return tipString;
 }

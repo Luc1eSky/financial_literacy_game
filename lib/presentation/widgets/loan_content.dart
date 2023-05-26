@@ -61,83 +61,54 @@ class LoanCard extends ConsumerWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
+            child: Row(
               children: [
-                Row(
-                  children: [
-                    AutoSizeText(
-                      "test",
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Image.asset(loan.asset.imagePath),
+                  ),
+                ),
+                Expanded(
+                  child: AutoSizeText(
+                    AppLocalizations.of(context)!.cashValue(ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .convertAmount(
+                            loan.asset.price * (1 + loan.interestRate))),
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: ColorPalette().lightText,
+                      fontSize: 50,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: AutoSizeText(
+                      AppLocalizations.of(context)!.cashValue(ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .convertAmount(loan.paymentPerPeriod)),
                       maxLines: 1,
                       style: TextStyle(
                         color: ColorPalette().lightText,
                         fontSize: 50.0,
                       ),
                     ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Image.asset(loan.asset.imagePath),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-                const SizedBox(width: 10.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: AutoSizeText(
-                          AppLocalizations.of(context)!.cashValue(ref
-                              .read(gameDataNotifierProvider.notifier)
-                              .convertAmount(loan.asset.price * (1 + loan.interestRate))),
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: ColorPalette().lightText,
-                            fontSize: 50.0,
-                          ),
-                        ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: AutoSizeText(
+                      '${loan.age} / ${loan.termInPeriods}',
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: ColorPalette().lightText,
+                        fontSize: 50.0,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(width: 10.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: AutoSizeText(
-                          AppLocalizations.of(context)!.cashValue(ref
-                              .read(gameDataNotifierProvider.notifier)
-                              .convertAmount(loan.paymentPerPeriod)),
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: ColorPalette().lightText,
-                            fontSize: 50.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(width: 10.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: AutoSizeText(
-                          '${loan.age} / ${loan.termInPeriods}',
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: ColorPalette().lightText,
-                            fontSize: 50.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),

@@ -3,11 +3,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
 import '../../domain/concepts/asset.dart';
+import '../../domain/game_data_notifier.dart';
 
-class AssetCarousel extends StatelessWidget {
+class AssetCarousel extends ConsumerWidget {
   final List<Asset> assets;
   final AutoSizeGroup textGroup;
   final Function changingIndex;
@@ -19,7 +21,7 @@ class AssetCarousel extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // build widget to display from asset
     List<Widget> widgetList = [];
     for (Asset asset in assets) {
@@ -92,7 +94,9 @@ class AssetCarousel extends StatelessWidget {
                     flex: 2,
                     child: AutoSizeText(
                       AppLocalizations.of(context)!
-                          .price(asset.price)
+                          .price(ref
+                              .read(gameDataNotifierProvider.notifier)
+                              .convertAmount(asset.price))
                           .capitalize(),
                       style: const TextStyle(
                         fontSize: 100,
@@ -105,7 +109,9 @@ class AssetCarousel extends StatelessWidget {
                     flex: 2,
                     child: AutoSizeText(
                       AppLocalizations.of(context)!
-                          .incomePerYear(asset.income)
+                          .incomePerYear(ref
+                              .read(gameDataNotifierProvider.notifier)
+                              .convertAmount(asset.income))
                           .capitalize(),
                       style: const TextStyle(
                         fontSize: 100,

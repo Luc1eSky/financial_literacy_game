@@ -262,7 +262,7 @@
             }
         }
     },
-    "borrowAt": "borrow at {interestRate}% interest total",
+    "borrowAt": "borrow at {interestRate}% simple interest over 2 periods",
     "@borrowAt":{
         "description": "displays at which interest rate the user can borrow money. E.g borrow at 12% interest rate",
         "placeholders": {
@@ -353,5 +353,9 @@
        "format": "simpleCurrency"
     }
   }
- }
+ },
+    "selectLanguage": "Please select language:",
+    "@selectLanguage":{
+        "description": "Dialog when asking user about language"
+    }
 }
