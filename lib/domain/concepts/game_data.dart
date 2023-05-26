@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:confetti/confetti.dart';
+import 'package:financial_literacy_game/l10n/l10n.dart';
 
 import '../../config/constants.dart';
 import '../../domain/concepts/recorded_data.dart';
@@ -109,5 +110,9 @@ class GameData {
       }
     }
     return goats;
+  }
+
+  double get conversionRate {
+    return L10n.getConversionRate(locale);
   }
 }

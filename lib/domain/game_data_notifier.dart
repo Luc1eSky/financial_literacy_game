@@ -43,13 +43,15 @@ class GameDataNotifier extends StateNotifier<GameData> {
     debugPrint('Person set to ${newPerson.firstName} ${newPerson.lastName} in game data.');
   }
 
+  // convert money amounts to display in local currency based on locale
+  double convertAmount(double defaultMoneyInUSD) {
+    return state.conversionRate * defaultMoneyInUSD;
+  }
+
   // setting new locale (language and format)
   void setLocale(Locale newLocale) {
     if (L10n.all.contains(newLocale)) {
-      state = state.copyWith(
-        locale: newLocale,
-        //currencyFormat: NumberFormat.simpleCurrency(locale: newLocale.toString()),
-      );
+      state = state.copyWith(locale: newLocale);
       debugPrint('New locale set to $newLocale');
     } else {
       debugPrint('Locale $newLocale not supported');

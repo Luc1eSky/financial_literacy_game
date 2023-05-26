@@ -1,4 +1,5 @@
 import 'package:financial_literacy_game/config/color_palette.dart';
+import 'package:financial_literacy_game/domain/game_data_notifier.dart';
 import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -23,18 +24,19 @@ class LevelInfoCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    double convertedCurrentCash =
+        ref.read(gameDataNotifierProvider.notifier).convertAmount(currentCash);
+    double convertedNextLevelCash =
+        ref.read(gameDataNotifierProvider.notifier).convertAmount(nextLevelCash);
+
     return Stack(
       children: [
         SectionCard(
-          title: AppLocalizations.of(context)!
-              .level((levelId + 1), levels.length)
-              .capitalize(),
+          title: AppLocalizations.of(context)!.level((levelId + 1), levels.length).capitalize(),
           content: Column(
             children: [
               Text(
-                AppLocalizations.of(context)!
-                    .cashGoalReach(nextLevelCash)
-                    .capitalize(),
+                AppLocalizations.of(context)!.cashGoalReach(convertedNextLevelCash).capitalize(),
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
@@ -51,14 +53,13 @@ class LevelInfoCard extends ConsumerWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: CashIndicator(
-                      currentCash: currentCash,
-                      cashGoal: levels[levelId].cashGoal,
+                      currentCash: convertedCurrentCash,
+                      cashGoal: convertedNextLevelCash,
                     ),
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    AppLocalizations.of(context)!
-                        .cashValue((nextLevelCash.roundToDouble())),
+                    AppLocalizations.of(context)!.cashValue(convertedNextLevelCash),
                     style: const TextStyle(fontSize: 16.0),
                   ),
                 ],

@@ -39,7 +39,7 @@ class LoanContent extends ConsumerWidget {
   }
 }
 
-class LoanCard extends StatelessWidget {
+class LoanCard extends ConsumerWidget {
   const LoanCard({
     super.key,
     required this.loan,
@@ -49,7 +49,7 @@ class LoanCard extends StatelessWidget {
   final AutoSizeGroup group;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: AspectRatio(
@@ -61,56 +61,83 @@ class LoanCard extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Image.asset(loan.asset.imagePath),
-                  ),
-                ),
-                const SizedBox(width: 10.0),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: AutoSizeText(
-                      AppLocalizations.of(context)!.cashValue(loan.asset.price),
+                Row(
+                  children: [
+                    AutoSizeText(
+                      "test",
                       maxLines: 1,
                       style: TextStyle(
                         color: ColorPalette().lightText,
                         fontSize: 50.0,
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 10.0),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: AutoSizeText(
-                      AppLocalizations.of(context)!
-                          .cashValue(loan.paymentPerPeriod),
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: ColorPalette().lightText,
-                        fontSize: 50.0,
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Image.asset(loan.asset.imagePath),
                       ),
                     ),
-                  ),
+                  ],
                 ),
                 const SizedBox(width: 10.0),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: AutoSizeText(
-                      '${loan.age} / ${loan.termInPeriods}',
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: ColorPalette().lightText,
-                        fontSize: 50.0,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: AutoSizeText(
+                          AppLocalizations.of(context)!.cashValue(ref
+                              .read(gameDataNotifierProvider.notifier)
+                              .convertAmount(loan.asset.price * (1 + loan.interestRate))),
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: ColorPalette().lightText,
+                            fontSize: 50.0,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
+                ),
+                const SizedBox(width: 10.0),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: AutoSizeText(
+                          AppLocalizations.of(context)!.cashValue(ref
+                              .read(gameDataNotifierProvider.notifier)
+                              .convertAmount(loan.paymentPerPeriod)),
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: ColorPalette().lightText,
+                            fontSize: 50.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 10.0),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: AutoSizeText(
+                          '${loan.age} / ${loan.termInPeriods}',
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: ColorPalette().lightText,
+                            fontSize: 50.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -21,15 +21,23 @@ class AssetContent extends ConsumerWidget {
     int chickens = ref.watch(gameDataNotifierProvider).chickens;
     int goats = ref.watch(gameDataNotifierProvider).goats;
 
-    double cowIncome = ref
-        .watch(gameDataNotifierProvider.notifier)
-        .calculateIncome(AssetType.cow);
-    double chickenIncome = ref
-        .watch(gameDataNotifierProvider.notifier)
-        .calculateIncome(AssetType.chicken);
-    double goatIncome = ref
-        .watch(gameDataNotifierProvider.notifier)
-        .calculateIncome(AssetType.goat);
+    double cowIncome = ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.cow);
+
+    double convertedCowIncome =
+        ref.read(gameDataNotifierProvider.notifier).convertAmount(cowIncome);
+
+    double chickenIncome =
+        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.chicken);
+
+    double convertedChickenIncome =
+        ref.read(gameDataNotifierProvider.notifier).convertAmount(chickenIncome);
+
+    double goatIncome =
+        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.goat);
+
+    double convertedGoatIncome =
+        ref.read(gameDataNotifierProvider.notifier).convertAmount(goatIncome);
+
     return GestureDetector(
       onTap: () {
         // showDialog(
@@ -45,7 +53,7 @@ class AssetContent extends ConsumerWidget {
               child: SmallAssetCard(
             title: AppLocalizations.of(context)!.cow,
             count: cows,
-            income: cowIncome,
+            income: convertedCowIncome,
             group: valueSizeGroup,
             imagePath: 'assets/images/cow.png',
           )),
@@ -54,7 +62,7 @@ class AssetContent extends ConsumerWidget {
               child: SmallAssetCard(
             title: AppLocalizations.of(context)!.chicken,
             count: chickens,
-            income: chickenIncome,
+            income: convertedChickenIncome,
             group: valueSizeGroup,
             imagePath: 'assets/images/chicken.png',
           )),
@@ -63,7 +71,7 @@ class AssetContent extends ConsumerWidget {
               child: SmallAssetCard(
             title: AppLocalizations.of(context)!.goat,
             count: goats,
-            income: goatIncome,
+            income: convertedGoatIncome,
             group: valueSizeGroup,
             imagePath: 'assets/images/goat.png',
           )),

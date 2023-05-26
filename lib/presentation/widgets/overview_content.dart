@@ -18,11 +18,16 @@ class OverviewContent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AutoSizeGroup valueSizeGroup = AutoSizeGroup();
 
-    double cash = ref.watch(gameDataNotifierProvider).cash;
-    double income =
-        ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome();
-    double expenses =
-        ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses();
+    double convertedCash = ref
+        .read(gameDataNotifierProvider.notifier)
+        .convertAmount(ref.watch(gameDataNotifierProvider).cash);
+    double convertedIncome = ref
+        .read(gameDataNotifierProvider.notifier)
+        .convertAmount(ref.watch(gameDataNotifierProvider.notifier).calculateTotalIncome());
+
+    double convertedExpenses = ref
+        .read(gameDataNotifierProvider.notifier)
+        .convertAmount(ref.watch(gameDataNotifierProvider.notifier).calculateTotalExpenses());
 
     return Row(
       children: [
@@ -31,7 +36,7 @@ class OverviewContent extends ConsumerWidget {
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
               title: AppLocalizations.of(context)!.cash.capitalize(),
-              value: cash,
+              value: convertedCash,
               group: valueSizeGroup,
             ),
           ),
@@ -42,7 +47,7 @@ class OverviewContent extends ConsumerWidget {
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
               title: AppLocalizations.of(context)!.income.capitalize(),
-              value: income,
+              value: convertedIncome,
               group: valueSizeGroup,
             ),
           ),
@@ -53,7 +58,7 @@ class OverviewContent extends ConsumerWidget {
             aspectRatio: overviewAspectRatio,
             content: OverviewTileContent(
               title: AppLocalizations.of(context)!.expenses.capitalize(),
-              value: -expenses,
+              value: -convertedExpenses,
               group: valueSizeGroup,
             ),
           ),

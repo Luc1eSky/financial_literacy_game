@@ -34,4 +34,17 @@ class L10n {
         '${defaultLocale.languageCode} / ${defaultLocale.countryCode}');
     return L10n.defaultLocale;
   }
+
+  static double getConversionRate(Locale locale) {
+    switch (locale.countryCode) {
+      case 'US':
+        return 1;
+      case 'UG':
+        return 4000;
+      case 'IN':
+        return 80;
+      default:
+        return 1;
+    }
+  }
 }

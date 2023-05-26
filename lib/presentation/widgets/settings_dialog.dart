@@ -48,7 +48,9 @@ class SettingsDialog extends ConsumerWidget {
             onPressed: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               await prefs.clear();
-              Navigator.of(context).pop();
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
             },
             child: Text(AppLocalizations.of(context)!.clearCache.capitalize()),
           ),
@@ -77,11 +79,13 @@ class SettingsDialog extends ConsumerWidget {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return const LanguageSelectionDialog();
+                  return LanguageSelectionDialog(
+                    title: AppLocalizations.of(context)!.languagesTitle.capitalize(),
+                  );
                 },
               );
             },
-            child: Text(AppLocalizations.of(context)!.languagesTitle),
+            child: Text(AppLocalizations.of(context)!.languagesTitle.capitalize()),
           ),
           // ElevatedButton(
           //   style: ElevatedButton.styleFrom(
