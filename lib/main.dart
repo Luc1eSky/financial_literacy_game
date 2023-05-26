@@ -49,6 +49,7 @@ class MaterialAppConsumerWidget extends ConsumerWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        //LgMaterialLocalizations.delegate,
       ],
       supportedLocales: L10n.all,
       home: const Homepage(),

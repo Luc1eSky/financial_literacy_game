@@ -3,7 +3,7 @@
     "assets": "enyingizza eva mu ky'oguze",
     "assetsDied": "Ensolozzo zifudde",
     "borrow": "okwewola",
-    "borrowAt": "wewole ku {interestRate}% omugate gw'amagoba",
+    "borrowAt": "okwewola ku {interestRate}% amagoba mu biseera 2",
     "cash": "Sente ez'obuliwo",
     "cashAlert": "Sente zolinawo tezimala",
     "cashGoal": "Sente zolina okuwezza",
@@ -60,5 +60,6 @@
     "titleSignIn": "Nkwanilizza ku kazannyo kano akayitibwa FinSim",
     "warning": "Okukulaalika",
     "welcomeBack": "Webale kukomawo, , {firstName} {lastName}!",
-    "welcomeText": "Munaffe omuzannyi,\n\n akazannyo kano kagezako kwefananyiliza byanfuna era kajja kozesebwa mu kusemesa kwoka. Okuzannya akazannyo kano tekijja kubaako kyekikyuusa mu nkolagana wakatiwo ne Bank yyo. Nkusaba otekemu ebikukwatako wansi"
+    "welcomeText": "Munaffe omuzannyi,\n\n akazannyo kano kagezako kwefananyiliza byanfuna era kajja kozesebwa mu kusemesa kwoka. Okuzannya akazannyo kano tekijja kubaako kyekikyuusa mu nkolagana wakatiwo ne Bank yyo. Nkusaba otekemu ebikukwatako wansi",
+    "selectLanguage": "Nsaba olondeko olulimi lwo"
 }
