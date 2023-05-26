@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:financial_literacy_game/domain/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/domain/utils/utils.dart';
 import '../../config/color_palette.dart';
 import '../../config/constants.dart';
 import '../../domain/game_data_notifier.dart';

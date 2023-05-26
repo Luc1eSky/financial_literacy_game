@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/l10n/lg_intl.dart';
 import 'config/constants.dart';
 import 'config/themes.dart';
 import 'domain/game_data_notifier.dart';
@@ -47,8 +48,9 @@ class MaterialAppConsumerWidget extends ConsumerWidget {
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
+        //GlobalCupertinoLocalizations.delegate,
+        //GlobalWidgetsLocalizations.delegate,
+        LgMaterialLocalizations.delegate,
         //LgMaterialLocalizations.delegate,
       ],
       supportedLocales: L10n.all,

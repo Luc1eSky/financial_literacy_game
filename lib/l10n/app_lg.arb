@@ -7,7 +7,7 @@
     "cash": "Sente ez'obuliwo",
     "cashAlert": "Sente zolinawo tezimala",
     "cashGoal": "Sente zolina okuwezza",
-    "cashGoalReach": "Sente zolina okuwezza : Wezza",
+    "cashGoalReach": "Sente zolina okuwezza : Wezza {cashAmount}",
     "chicken": "Enkoko",
     "clearCache": "jamu ebilimu",
     "confirm": "Kaale",
@@ -59,7 +59,7 @@
     "tip": "Enkozesa",
     "titleSignIn": "Nkwanilizza ku kazannyo kano akayitibwa FinSim",
     "warning": "Okukulaalika",
-    "welcomeBack": "Webale kukomawo, , {firstName} {lastName}!",
-    "welcomeText": "Munaffe omuzannyi,\n\n akazannyo kano kagezako kwefananyiliza byanfuna era kajja kozesebwa mu kusemesa kwoka. Okuzannya akazannyo kano tekijja kubaako kyekikyuusa mu nkolagana wakatiwo ne Bank yyo. Nkusaba otekemu ebikukwatako wansi",
+    "welcomeBack": "Webale kukomawo, {firstName} {lastName}!",
+    "welcomeText": "Munaffe omuzannyi,\n\nakazannyo kano kagezako kwefananyiliza byanfuna era kajja kozesebwa mu kusemesa kwoka. Okuzannya akazannyo kano tekijja kubaako kyekikyuusa mu nkolagana wakatiwo ne Bank yyo. Nkusaba otekemu ebikukwatako wansi",
     "selectLanguage": "Nsaba olondeko olulimi lwo"
 }

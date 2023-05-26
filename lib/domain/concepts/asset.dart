@@ -29,7 +29,7 @@ class Asset {
     double? price,
     double? income,
     double? riskLevel,
-    int? lifeSpan,
+    int? lifeExpectancy,
     int? age,
   }) {
     return Asset(
@@ -39,7 +39,7 @@ class Asset {
       price: price ?? this.price,
       income: income ?? this.income,
       riskLevel: riskLevel ?? this.riskLevel,
-      lifeExpectancy: lifeSpan ?? this.lifeExpectancy,
+      lifeExpectancy: lifeExpectancy ?? this.lifeExpectancy,
       age: age ?? this.age,
     );
   }

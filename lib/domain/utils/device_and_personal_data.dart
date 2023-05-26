@@ -68,10 +68,13 @@ Future<Locale?> loadLocaleFromLocal() async {
   String? languageCode = prefs.getString('languageCode');
   String? countryCode = prefs.getString('countryCode');
 
-  if (languageCode == null || countryCode == null) {
+  if (languageCode == null || languageCode != 'lg' && countryCode == null) {
     return null;
   } else {
-    Locale loadedLocale = Locale(languageCode, countryCode);
-    return loadedLocale;
+    if (countryCode == null) {
+      return Locale(languageCode);
+    } else {
+      return Locale(languageCode, countryCode);
+    }
   }
 }

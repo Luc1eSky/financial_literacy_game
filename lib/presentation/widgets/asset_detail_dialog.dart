@@ -22,7 +22,7 @@ class AssetDetailDialog extends ConsumerWidget {
             child: Container(
               color: Colors.lightBlue,
               child: Row(
-                children: [],
+                children: const [],
               ),
             ),
           ),
@@ -52,8 +52,7 @@ class AssetDetailDialog extends ConsumerWidget {
                         Expanded(
                           flex: 4,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Container(
                               height: 10.0,
                               decoration: BoxDecoration(
@@ -91,18 +90,15 @@ class AssetDetailDialog extends ConsumerWidget {
               .toList(),
           AspectRatio(
             aspectRatio: 9.0,
-            child: Container(
-              //color: Colors.green,
-              child: Text(
-                ref
-                    .watch(gameDataNotifierProvider.notifier)
-                    .calculateTotalIncome()
-                    .toStringAsFixed(2),
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: ColorPalette().darkText,
-                ),
+            child: Text(
+              ref
+                  .watch(gameDataNotifierProvider.notifier)
+                  .calculateTotalIncome()
+                  .toStringAsFixed(2),
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: ColorPalette().darkText,
               ),
             ),
           )

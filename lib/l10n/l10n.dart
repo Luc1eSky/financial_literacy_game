@@ -10,7 +10,7 @@ class L10n {
   static final all = [
     defaultLocale,
     const Locale('kn', 'IN'),
-    //const Locale('lg', 'UG')
+    const Locale('lg'),
   ];
 
   static Future<Locale> getSystemLocale() async {
@@ -23,8 +23,7 @@ class L10n {
 
     // get default locale from system
     Locale systemLocale = window.locale;
-    debugPrint(
-        'System locale: ${systemLocale.languageCode} / ${systemLocale.countryCode}');
+    debugPrint('System locale: ${systemLocale.languageCode} / ${systemLocale.countryCode}');
 
     // use system locale only if supported
     if (L10n.all.contains(systemLocale)) {
@@ -38,12 +37,12 @@ class L10n {
   }
 
   static double getConversionRate(Locale locale) {
-    switch (locale.countryCode) {
-      case 'US':
+    switch (locale.languageCode) {
+      case 'en':
         return 1;
-      case 'UG':
+      case 'lg':
         return 4000;
-      case 'IN':
+      case 'kn':
         return 80;
       default:
         return 1;

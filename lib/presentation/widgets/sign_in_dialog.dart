@@ -88,34 +88,24 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height:
-                    MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
+                height: MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
                 child: SingleChildScrollView(
-                  child: Text(
-                      AppLocalizations.of(context)!.welcomeText.capitalize()),
+                  child: Text(AppLocalizations.of(context)!.welcomeText),
                 ),
               ),
               TextField(
                 enabled: !isProcessing,
                 controller: firstNameTextController,
                 decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!
-                        .hintFirstName
-                        .capitalize()),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[^0-9]'))
-                ],
+                    hintText: AppLocalizations.of(context)!.hintFirstName.capitalize()),
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[^0-9]'))],
               ),
               TextField(
                 enabled: !isProcessing,
                 controller: lastNameTextController,
                 decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!
-                        .hintLastName
-                        .capitalize()),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[^0-9]'))
-                ],
+                    hintText: AppLocalizations.of(context)!.hintLastName.capitalize()),
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[^0-9]'))],
               ),
             ],
           ),
@@ -159,8 +149,7 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
                         });
                       }
                     },
-              child: Text(
-                  AppLocalizations.of(context)!.continueButton.capitalize()),
+              child: Text(AppLocalizations.of(context)!.continueButton.capitalize()),
             ),
           ],
         ),

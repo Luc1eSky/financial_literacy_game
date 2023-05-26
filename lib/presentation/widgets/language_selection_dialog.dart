@@ -48,6 +48,7 @@ class LanguageSelectionDialog extends ConsumerWidget {
                       builder: (context) {
                         return Text(
                           '${AppLocalizations.of(context)!.language} / '
+                          //'${Localizations.localeOf(context).toString()}'
                           '${NumberFormat.simpleCurrency(locale: Localizations.localeOf(context).toString()).currencyName}',
                         );
                       },
