@@ -3,11 +3,11 @@
     "@language":{
         "description": "The current Language"
     },
-    "titleSignIn": "welcome to the FinSim Game",
+    "titleSignIn": "Welcome to the FinSim Game",
     "@titleSignIn":{
         "description": "Welcoming users to the Game"
     },
-    "welcomeText": "Dear participants,\n\nthis game is meant to mimic financial investments. It will only be used for the purpose of teaching. This game will not affect the relationship with your bank.\n\n Please enter your contact info below:",
+    "welcomeText": "Dear participants, this game is meant to mimic financial investments. It will only be used for the purpose of teaching. This game will not affect the relationship with your bank.\n\n Please enter your contact info below:",
     "@welcomeText":{
         "description": "welcome instructions for users when opening the app"
     },
@@ -111,7 +111,7 @@
     "@borrow":{
         "description": "option for user to buy asset via loan"
     },
-    "lostGame": "unfortunately you ran out of cash. You can either restart this level or start a new game.",
+    "lostGame": "Unfortunately you ran out of cash. You can either restart this level or start a new game.",
     "@lostGame":{
         "description": "warning message when the user lost because they ran out of cash"
     },

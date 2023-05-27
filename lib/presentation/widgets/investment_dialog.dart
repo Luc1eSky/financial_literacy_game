@@ -76,9 +76,12 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
 
   @override
   void initState() {
-    Level defaultLevel = levels[widget.ref.read(gameDataNotifierProvider).levelId];
+    Level defaultLevel =
+        levels[widget.ref.read(gameDataNotifierProvider).levelId];
     currentLevel = defaultLevel.copyWith(
-      loan: defaultLevel.loanInterestRandomized ? getRandomLoan() : defaultLevel.loan,
+      loan: defaultLevel.loanInterestRandomized
+          ? getRandomLoan()
+          : defaultLevel.loan,
       savingsRate: defaultLevel.savingsInterestRandomized
           ? getRandomDouble(
               start: minimumSavingsRate,
@@ -97,7 +100,8 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
       currentLevel = currentLevel.copyWith(assets: randomizedAssets);
     }
 
-    if (currentLevel.assetRiskLevelActive && currentLevel.assetRiskLevelRandomized) {
+    if (currentLevel.assetRiskLevelActive &&
+        currentLevel.assetRiskLevelRandomized) {
       List<Asset> randomizedRiskAssets = [];
       for (Asset asset in currentLevel.assets) {
         randomizedRiskAssets.add(
@@ -120,14 +124,18 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
           asset.copyWith(
             price: asset.price +
                 (asset.price ~/
-                    (1 / getRandomDouble(start: 0, end: priceVariation, steps: 0.01)) *
+                    (1 /
+                        getRandomDouble(
+                            start: 0, end: priceVariation, steps: 0.01)) *
                     (Random().nextBool() ? -1 : 1)),
             income: asset.income +
-                (Random().nextBool() ? -1 : 1) * (Random().nextBool() ? 0 : incomeVariation),
+                (Random().nextBool() ? -1 : 1) *
+                    (Random().nextBool() ? 0 : incomeVariation),
           ),
         );
       }
-      currentLevel = currentLevel.copyWith(assets: randomizedIncomeAndCostsAssets);
+      currentLevel =
+          currentLevel.copyWith(assets: randomizedIncomeAndCostsAssets);
     }
 
     levelAssets = currentLevel.assets;
@@ -165,7 +173,8 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
               title: Text(AppLocalizations.of(context)!.warning),
               content: asset.numberOfAnimals > 1
                   ? Text(AppLocalizations.of(context)!.assetsDied.capitalize())
-                  : Text(AppLocalizations.of(context)!.assetDied(asset.type.name)),
+                  : Text(
+                      AppLocalizations.of(context)!.assetDied(asset.type.name)),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context, true),
@@ -184,7 +193,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
           title: Text(
             AppLocalizations.of(context)!.investmentOptions,
             style: const TextStyle(
-              fontSize: 25.0,
+              fontSize: 20.0,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -198,10 +207,11 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                   AppLocalizations.of(context)!
                       .currentCash(widget.ref
                           .read(gameDataNotifierProvider.notifier)
-                          .convertAmount(widget.ref.read(gameDataNotifierProvider).cash))
+                          .convertAmount(
+                              widget.ref.read(gameDataNotifierProvider).cash))
                       .capitalize(),
                   maxLines: 1,
-                  style: const TextStyle(fontSize: 100),
+                  style: const TextStyle(fontSize: 20),
                   group: textGroup,
                 ),
                 const SizedBox(height: 20),
@@ -218,7 +228,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                   AppLocalizations.of(context)!.tip.capitalize(),
                   maxLines: 1,
                   style: const TextStyle(
-                    fontSize: 100,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                   group: textGroup,
@@ -226,22 +236,25 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                 if (currentLevel.showLoanBorrowOption)
                   AutoSizeText(
                     AppLocalizations.of(context)!
-                        .borrowAt(
-                            (levelLoan.interestRate * 100).toStringAsFixed(decimalValuesToDisplay))
+                        .borrowAt((levelLoan.interestRate * 100)
+                            .toStringAsFixed(decimalValuesToDisplay))
                         .capitalize(),
-                    maxLines: 1,
+                    maxLines: 2,
                     style: const TextStyle(fontSize: 100),
                     group: textGroup,
                   ),
-                if (currentLevel.savingsRate != 0 || currentLevel.savingsInterestRandomized)
+                if (currentLevel.savingsRate != 0 ||
+                    currentLevel.savingsInterestRandomized)
                   AutoSizeText(
                     AppLocalizations.of(context)!.interestCash(
-                        (currentLevel.savingsRate * 100).toStringAsFixed(decimalValuesToDisplay)),
-                    maxLines: 1,
+                        (currentLevel.savingsRate * 100)
+                            .toStringAsFixed(decimalValuesToDisplay)),
+                    maxLines: 2,
                     style: const TextStyle(fontSize: 100),
                     group: textGroup,
                   ),
-                if (currentLevel.savingsRate == 0 && currentLevel.showCashBuyOption)
+                if (currentLevel.savingsRate == 0 &&
+                    currentLevel.showCashBuyOption)
                   AutoSizeText(
                     generateCashTipMessage(
                       ref: widget.ref,
@@ -249,7 +262,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                       asset: selectedAsset,
                       level: currentLevel,
                     ),
-                    maxLines: 1,
+                    maxLines: 2,
                     style: const TextStyle(
                       fontSize: 100,
                       fontStyle: FontStyle.italic,
@@ -257,7 +270,8 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     ),
                     group: textGroup,
                   ),
-                if (currentLevel.savingsRate == 0 && currentLevel.showLoanBorrowOption)
+                if (currentLevel.savingsRate == 0 &&
+                    currentLevel.showLoanBorrowOption)
                   AutoSizeText(
                     generateLoanTipMessage(
                       context: context,
@@ -265,7 +279,7 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                       level: currentLevel,
                       ref: widget.ref,
                     ),
-                    maxLines: 1,
+                    maxLines: 2,
                     style: const TextStyle(
                       fontSize: 100,
                       fontStyle: FontStyle.italic,
@@ -304,7 +318,9 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     textStyle: const TextStyle(fontSize: 13.0),
                   ),
                   onPressed: () async {
-                    if (await widget.ref.read(gameDataNotifierProvider.notifier).buyAsset(
+                    if (await widget.ref
+                            .read(gameDataNotifierProvider.notifier)
+                            .buyAsset(
                               selectedAsset,
                               showNotEnoughCash,
                               showAnimalDiedWarning,
@@ -329,8 +345,10 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     textStyle: const TextStyle(fontSize: 13.0),
                   ),
                   onPressed: () async {
-                    await widget.ref.read(gameDataNotifierProvider.notifier).loanAsset(
-                        levelLoan, selectedAsset, showAnimalDiedWarning, currentLevel.savingsRate);
+                    await widget.ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .loanAsset(levelLoan, selectedAsset,
+                            showAnimalDiedWarning, currentLevel.savingsRate);
                     if (context.mounted) {
                       Navigator.pop(context);
                       checkBankruptcy(widget.ref, context);
