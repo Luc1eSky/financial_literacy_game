@@ -3,7 +3,6 @@ import 'package:financial_literacy_game/presentation/widgets/menu_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../domain/game_data_notifier.dart';
 import '../../domain/utils/device_and_personal_data.dart';
@@ -12,7 +11,8 @@ import '../../l10n/l10n.dart';
 class LanguageSelectionDialog extends ConsumerWidget {
   final String title;
   final Widget? showDialogWidgetAfterPop;
-  const LanguageSelectionDialog({required this.title, this.showDialogWidgetAfterPop, Key? key})
+  const LanguageSelectionDialog(
+      {required this.title, this.showDialogWidgetAfterPop, Key? key})
       : super(key: key);
 
   @override
@@ -37,7 +37,9 @@ class LanguageSelectionDialog extends ConsumerWidget {
                     foregroundColor: ColorPalette().lightText,
                   ),
                   onPressed: () {
-                    ref.read(gameDataNotifierProvider.notifier).setLocale(locale);
+                    ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .setLocale(locale);
                     saveLocalLocally(locale);
                     //Navigator.of(context).pop();
                   },
@@ -47,9 +49,7 @@ class LanguageSelectionDialog extends ConsumerWidget {
                     child: Builder(
                       builder: (context) {
                         return Text(
-                          '${AppLocalizations.of(context)!.language} / '
-                          //'${Localizations.localeOf(context).toString()}'
-                          '${NumberFormat.simpleCurrency(locale: Localizations.localeOf(context).toString()).currencyName}',
+                          AppLocalizations.of(context)!.language,
                         );
                       },
                     ),

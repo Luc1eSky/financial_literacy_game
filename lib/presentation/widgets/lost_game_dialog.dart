@@ -22,7 +22,7 @@ class LostGameDialog extends StatelessWidget {
         height: 100,
         width: 100,
         child: AutoSizeText(
-          AppLocalizations.of(context)!.lostGame.capitalize(),
+          AppLocalizations.of(context)!.lostGame,
           style: TextStyle(
             fontSize: 20,
             height:

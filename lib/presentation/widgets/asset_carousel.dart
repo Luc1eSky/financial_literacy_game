@@ -68,13 +68,13 @@ class AssetCarousel extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    flex: 3,
+                    flex: 2,
                     child: Align(
                       alignment: Alignment.center,
                       child: AutoSizeText(
                         '${asset.numberOfAnimals} x $assetName',
                         style: const TextStyle(
-                          fontSize: 100,
+                          fontSize: 70,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -83,7 +83,7 @@ class AssetCarousel extends ConsumerWidget {
                   ),
                   const Spacer(),
                   Expanded(
-                    flex: 8,
+                    flex: 5,
                     child: Align(
                       alignment: Alignment.center,
                       child: Image.asset(asset.imagePath, fit: BoxFit.cover),

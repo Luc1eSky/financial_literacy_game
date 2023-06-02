@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,7 +35,7 @@ class NextPeriodButton extends ConsumerWidget {
                 });
           }
         },
-        child: Text(AppLocalizations.of(context)!.next),
+        child: AutoSizeText(AppLocalizations.of(context)!.next.toUpperCase()),
       ),
     );
   }
