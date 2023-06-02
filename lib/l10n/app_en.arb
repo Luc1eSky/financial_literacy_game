@@ -7,9 +7,13 @@
     "@titleSignIn":{
         "description": "Welcoming users to the Game"
     },
-    "welcomeText": "Dear participants,\n\nthis game is meant to mimic financial investments. It will only be used for the purpose of teaching. This game will not affect the relationship with your bank.\n\n Please enter your contact info below:",
+    "welcomeText": "Dear participants,\n\nthis game is meant to mimic financial investments. It will only be used for the purpose of teaching. This game will not affect the relationship with your bank.\n\n Please enter your code below:",
     "@welcomeText":{
         "description": "welcome instructions for users when opening the app"
+    },
+    "hintUID": "e.g. XH5YT",
+    "@hintUID":{
+        "description": "Hint text for user to enter their UID, for example XH5YT"
     },
     "hintFirstName": "first name",
     "@hintFirstName":{
@@ -134,6 +138,10 @@
     "nextLevel": "next level",
     "@nextLevel":{
         "description": "allows user to advance to next level. Only used for testing"
+    },
+    "enterUID": "please enter a 5 digit code",
+    "@enterUID":{
+        "description": "Hint text for user to enter their 5 digit code"
     },
     "enterName": "please enter first and last name.",
     "@enterName":{

@@ -8,6 +8,7 @@ class ColorPalette {
   Color get cashIndicator => const Color.fromRGBO(255, 160, 122, 1.0);
   Color get popUpBackground => const Color.fromRGBO(224, 247, 250, 1.0);
   Color get buttonBackground => const Color.fromRGBO(0, 131, 143, 1.0);
+  Color get buttonBackgroundSpecial => const Color.fromRGBO(90, 97, 97, 1.0);
   Color get selectedButtonBackground => const Color.fromRGBO(76, 175, 80, 1.0);
 
   Color get darkText => const Color.fromRGBO(0, 0, 0, 0.85);

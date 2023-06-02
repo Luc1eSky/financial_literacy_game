@@ -5,15 +5,21 @@ import '../concepts/person.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 CollectionReference userCollectionRef = db.collection('users');
+CollectionReference uidListsCollectionRef = db.collection('uidLists');
 
 // variables to save current documents in database
 DocumentReference? currentGameSessionRef;
 DocumentReference? currentLevelDataRef;
 
+Future<QuerySnapshot> _findUserInFirestoreByUID({required String uid}) async {
+  return await userCollectionRef.where('uid', isEqualTo: uid).get();
+}
+
 Future<QuerySnapshot> _findUserInFirestore({required Person person}) async {
   return await userCollectionRef
       .where('firstName', isEqualTo: person.firstName)
       .where('lastName', isEqualTo: person.lastName)
+      .where('uid', isEqualTo: person.uid)
       .get();
 }
 
@@ -97,6 +103,42 @@ Future<bool> reconnectToGameSession({required Person person}) async {
   return true;
 }
 
+Future<Person?> searchUserbyUIDInFirestore(String uid) async {
+  QuerySnapshot userQuerySnapshot = await _findUserInFirestoreByUID(uid: uid);
+
+  if (userQuerySnapshot.docs.isEmpty) {
+    debugPrint("No active user found. Checking uid lists...");
+    // get all documents from uidLists collection
+    QuerySnapshot uidListsQuerySnapshot = await uidListsCollectionRef.get();
+    for (QueryDocumentSnapshot docSnap in uidListsQuerySnapshot.docs) {
+      // get uidList from document
+      List<dynamic> uidList = docSnap.get('uids');
+      // go through list
+      for (Map<String, dynamic> listEntry in uidList) {
+        if (uid == listEntry['uid']) {
+          return Person(
+            firstName: listEntry['firstName'],
+            lastName: listEntry['lastName'],
+            uid: listEntry['uid'],
+          );
+        }
+      }
+    }
+
+    return null;
+  } else {
+    debugPrint("User with uid $uid found.");
+    QueryDocumentSnapshot docSnap = userQuerySnapshot.docs.first;
+    String firstName = docSnap.get('firstName');
+    String lastName = docSnap.get('lastName');
+    return Person(
+      firstName: firstName,
+      lastName: lastName,
+      uid: uid,
+    );
+  }
+}
+
 Future<void> saveUserInFirestore(Person person) async {
   // get snapshot for specific user search
   QuerySnapshot userQuerySnapshot = await _findUserInFirestore(person: person);
@@ -107,6 +149,7 @@ Future<void> saveUserInFirestore(Person person) async {
     Map<String, dynamic> userEntry = <String, dynamic>{
       "firstName": person.firstName,
       "lastName": person.lastName,
+      "uid": person.uid,
       "createdOn": DateTime.now(),
     };
     await userCollectionRef.add(userEntry);

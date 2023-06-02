@@ -30,11 +30,13 @@ Future<bool> loadPerson({required WidgetRef ref}) async {
 }
 
 void savePersonLocally(Person person) async {
-  debugPrint('Save person ${person.firstName} ${person.lastName} to local storage.');
+  debugPrint('Save person ${person.firstName} ${person.lastName} with UID ${person.uid} to local '
+      'storage.');
   if (person.exists()) {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('firstName', person.firstName!);
     prefs.setString('lastName', person.lastName!);
+    prefs.setString('uid', person.uid!);
   }
 }
 
