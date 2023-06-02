@@ -24,7 +24,7 @@ class _SignInDialogNewState extends ConsumerState<SignInDialogNew> {
 
   Future<Person?> findPersonByUID({required String uid}) async {
     // Exit if code has wrong length and show warning
-    if (uid.length != 5) {
+    if (uid.length != 7) {
       showErrorSnackBar(
         context: context,
         errorMessage: AppLocalizations.of(context)!.enterUID.capitalize(),
@@ -45,7 +45,7 @@ class _SignInDialogNewState extends ConsumerState<SignInDialogNew> {
       if (context.mounted) {
         showErrorSnackBar(
           context: context,
-          errorMessage: "CODE NOT FOUND", // TODO: Localization of message
+          errorMessage: AppLocalizations.of(context)!.codeNotFound,
         );
       }
       return null;
@@ -75,7 +75,8 @@ class _SignInDialogNewState extends ConsumerState<SignInDialogNew> {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
+                height:
+                    MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
                 child: SingleChildScrollView(
                   child: Text(AppLocalizations.of(context)!.welcomeText),
                 ),
@@ -83,10 +84,14 @@ class _SignInDialogNewState extends ConsumerState<SignInDialogNew> {
               TextField(
                 enabled: !isProcessing,
                 controller: uidTextController,
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.hintUID),
-                maxLength: 5,
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.hintUID),
+                // Length of code 7
+                maxLength: 7,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[A-Z0-9]'))],
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[A-Z0-9]'))
+                ],
                 keyboardType: TextInputType.text,
                 textCapitalization: TextCapitalization.characters,
               ),
@@ -109,7 +114,7 @@ class _SignInDialogNewState extends ConsumerState<SignInDialogNew> {
                   },
                 );
               },
-              child: const Text("No Code"),
+              child: Text(AppLocalizations.of(context)!.noCodeButton),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -124,7 +129,8 @@ class _SignInDialogNewState extends ConsumerState<SignInDialogNew> {
                         isProcessing = true;
                       });
 
-                      Person? foundPerson = await findPersonByUID(uid: uidTextController.text);
+                      Person? foundPerson =
+                          await findPersonByUID(uid: uidTextController.text);
 
                       if (foundPerson != null) {
                         if (context.mounted) {
@@ -143,7 +149,8 @@ class _SignInDialogNewState extends ConsumerState<SignInDialogNew> {
                         });
                       }
                     },
-              child: Text(AppLocalizations.of(context)!.continueButton.capitalize()),
+              child: Text(
+                  AppLocalizations.of(context)!.continueButton.capitalize()),
             ),
           ],
         ),

@@ -1,5 +1,6 @@
-import 'package:financial_literacy_game/presentation/widgets/sign_in_dialog_new.dart';
+import 'package:financial_literacy_game/presentation/widgets/sign_in_dialog_with_code.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../config/color_palette.dart';
@@ -37,8 +38,9 @@ class _IsThisYouDialogState extends ConsumerState<IsThisYouDialog> {
       children: [
         MenuDialog(
           showCloseButton: false,
-          title: "Is this you?", // TODO: BETTER TITLE
-          content: Text("Are you ${widget.person.firstName} ${widget.person.lastName} ?"),
+          title: AppLocalizations.of(context)!.confirmNameTitle,
+          content: Text(AppLocalizations.of(context)!
+              .confirmName(widget.person.firstName!, widget.person.lastName!)),
           actions: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -56,7 +58,9 @@ class _IsThisYouDialogState extends ConsumerState<IsThisYouDialog> {
                   },
                 );
               },
-              child: const Text("No"),
+              child: Text(
+                AppLocalizations.of(context)!.noButton,
+              ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -71,7 +75,9 @@ class _IsThisYouDialogState extends ConsumerState<IsThisYouDialog> {
                         isProcessing = true;
                       });
 
-                      ref.read(gameDataNotifierProvider.notifier).setPerson(widget.person);
+                      ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .setPerson(widget.person);
                       savePersonLocally(widget.person);
                       await saveUserInFirestore(widget.person);
                       ref.read(gameDataNotifierProvider.notifier).resetGame();
@@ -90,7 +96,7 @@ class _IsThisYouDialogState extends ConsumerState<IsThisYouDialog> {
                         );
                       }
                     },
-              child: const Text("Yes"),
+              child: Text(AppLocalizations.of(context)!.yesButton),
             ),
           ],
         ),

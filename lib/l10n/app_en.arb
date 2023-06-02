@@ -11,10 +11,7 @@
     "@welcomeText":{
         "description": "welcome instructions for users when opening the app"
     },
-    "hintUID": "e.g. XH5YT",
-    "@hintUID":{
-        "description": "Hint text for user to enter their UID, for example XH5YT"
-    },
+
     "hintFirstName": "first name",
     "@hintFirstName":{
         "description": "Hint text for user to enter the first name"
@@ -23,6 +20,7 @@
     "@hintLastName":{
         "description": "Hint text for user to enter the last name"
     },
+
     "continueButton": "continue",
     "@continueButton":{
         "description": "Button after user entered name to continue to play"
@@ -365,5 +363,51 @@
     "selectLanguage": "Please select language:",
     "@selectLanguage":{
         "description": "Dialog when asking user about language"
+    },
+    "hintUID": "e.g. UGRT999",
+    "@hintUID":{
+        "description": "Hint text for user to enter their UID, for example XH5YT"
+    },
+    "confirmNameTitle": "Confirm your name",
+    "@confirmNameTitle":{
+        "description": "Ask user to confirm their name"
+    },
+    "confirmName": "Are you {firstName} {lastName}?",
+    "@confirmName":{
+            "description": "Display User name to confirm",
+            "placeholders": {
+                "firstName": {
+                    "type": "String",
+                    "example": "John"
+                },
+                "lastName": {
+                    "type": "String",
+                    "example": "Doe"
+                }
+            }
+        },
+    "noButton": "No",
+    "@noButton":{
+        "description": "No button in dialog"
+    },
+    "yesButton": "Yes",
+    "@yesButton":{
+        "description": "Yes button in dialog"
+    },
+    "codeNotFound": "CODE NOT FOUND",
+    "@codeNotFound":{
+        "description": "If the entered code is not in database"
+    },
+    "noCodeButton": "No code",
+    "@noCodeButton":{
+        "description": "no code available for user, e.g tester"
+    },
+    "signInName": "Please sign in with your first and last name: \n",
+    "@signInName":{
+        "description": "sign in with first and last name when no code available"
+    },
+    "backButton": "Back",
+    "@signInName":{
+        "description": "back button"
     }
 }

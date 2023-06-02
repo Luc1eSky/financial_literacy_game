@@ -22,6 +22,6 @@ class Person {
   }
 
   bool exists() {
-    return firstName != null && lastName != null;
+    return firstName != null && lastName != null && uid != null;
   }
 }

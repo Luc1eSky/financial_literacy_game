@@ -1,4 +1,4 @@
-import 'package:financial_literacy_game/presentation/widgets/sign_in_dialog_new.dart';
+import 'package:financial_literacy_game/presentation/widgets/sign_in_dialog_with_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,7 +17,8 @@ class SignInWithNameDialog extends ConsumerStatefulWidget {
   const SignInWithNameDialog({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<SignInWithNameDialog> createState() => _SignInWithNameDialogState();
+  ConsumerState<SignInWithNameDialog> createState() =>
+      _SignInWithNameDialogState();
 }
 
 class _SignInWithNameDialogState extends ConsumerState<SignInWithNameDialog> {
@@ -89,20 +90,28 @@ class _SignInWithNameDialogState extends ConsumerState<SignInWithNameDialog> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text("Please sign in with your first and last name: \n"),
+              Text(AppLocalizations.of(context)!.signInName),
               TextField(
                 enabled: !isProcessing,
                 controller: firstNameTextController,
                 decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.hintFirstName.capitalize()),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[^0-9]'))],
+                    hintText: AppLocalizations.of(context)!
+                        .hintFirstName
+                        .capitalize()),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[^0-9]'))
+                ],
               ),
               TextField(
                 enabled: !isProcessing,
                 controller: lastNameTextController,
                 decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.hintLastName.capitalize()),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[^0-9]'))],
+                    hintText: AppLocalizations.of(context)!
+                        .hintLastName
+                        .capitalize()),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[^0-9]'))
+                ],
               ),
             ],
           ),
@@ -123,7 +132,7 @@ class _SignInWithNameDialogState extends ConsumerState<SignInWithNameDialog> {
                   },
                 );
               },
-              child: const Text("Back"),
+              child: Text(AppLocalizations.of(context)!.backButton),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -165,7 +174,8 @@ class _SignInWithNameDialogState extends ConsumerState<SignInWithNameDialog> {
                         });
                       }
                     },
-              child: Text(AppLocalizations.of(context)!.continueButton.capitalize()),
+              child: Text(
+                  AppLocalizations.of(context)!.continueButton.capitalize()),
             ),
           ],
         ),

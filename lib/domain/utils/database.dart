@@ -23,17 +23,21 @@ Future<QuerySnapshot> _findUserInFirestore({required Person person}) async {
       .get();
 }
 
-Future<DocumentReference?> _findLatestGameSessionRef({required Person person}) async {
+Future<DocumentReference?> _findLatestGameSessionRef(
+    {required Person person}) async {
   QuerySnapshot userQuerySnapshot = await _findUserInFirestore(person: person);
 
   if (userQuerySnapshot.docs.length == 1) {
     debugPrint("Unique User Found.");
 
     QueryDocumentSnapshot docSnap = userQuerySnapshot.docs.first;
-    CollectionReference gameSessionRef = docSnap.reference.collection('gameSessions');
+    CollectionReference gameSessionRef =
+        docSnap.reference.collection('gameSessions');
 
-    QuerySnapshot lastGameSessionSnap =
-        await gameSessionRef.orderBy('startedOn', descending: true).limit(1).get();
+    QuerySnapshot lastGameSessionSnap = await gameSessionRef
+        .orderBy('startedOn', descending: true)
+        .limit(1)
+        .get();
 
     debugPrint("Last game session found.");
     return lastGameSessionSnap.docs.first.reference;
@@ -60,7 +64,8 @@ void _createNewLevel({
     'cash': [startingCash],
   };
 
-  CollectionReference levelDataRef = currentGameSessionRef!.collection('levelData');
+  CollectionReference levelDataRef =
+      currentGameSessionRef!.collection('levelData');
   currentLevelDataRef = await levelDataRef.add(levelContent);
 }
 
@@ -145,7 +150,8 @@ Future<void> saveUserInFirestore(Person person) async {
 
   // save user if document does not exist yet
   if (userQuerySnapshot.docs.isEmpty) {
-    debugPrint('save new user ${person.firstName} ${person.lastName} to firebase...');
+    debugPrint(
+        'save new user ${person.firstName} ${person.lastName} to firebase...');
     Map<String, dynamic> userEntry = <String, dynamic>{
       "firstName": person.firstName,
       "lastName": person.lastName,
@@ -175,7 +181,8 @@ Future<void> startGameSession({
   }
 
   QueryDocumentSnapshot docSnap = userQuerySnapshot.docs.first;
-  CollectionReference gameSessionRef = docSnap.reference.collection('gameSessions');
+  CollectionReference gameSessionRef =
+      docSnap.reference.collection('gameSessions');
 
   Map<String, dynamic> gameSessionContent = {
     'startedOn': DateTime.now(),
@@ -186,7 +193,8 @@ Future<void> startGameSession({
   _createNewLevel(level: 1, startingCash: startingCash);
 }
 
-Future<void> endCurrentGameSession({required Status status, Person? person}) async {
+Future<void> endCurrentGameSession(
+    {required Status status, Person? person}) async {
   if (currentGameSessionRef == null) {
     debugPrint('No current game session could be found.');
     if (person == null) {
