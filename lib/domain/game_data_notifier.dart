@@ -75,7 +75,11 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = state.copyWith(cashInterest: newInterest);
   }
 
-  void advance(double newCashInterest) async {
+  void advance({
+    required double newCashInterest,
+    required BuyDecision buyDecision,
+    required Asset selectedAsset,
+  }) async {
     // update cash interest
     state = state.copyWith(cashInterest: newCashInterest);
     // calculate interest on cash
@@ -107,7 +111,11 @@ class GameDataNotifier extends StateNotifier<GameData> {
     double newCash = state.cash + netIncome;
     state = state.copyWith(cash: newCash);
 
-    advancePeriodFirestore(newCashValue: newCash);
+    advancePeriodFirestore(
+      newCashValue: newCash,
+      buyDecision: buyDecision,
+      offeredAsset: selectedAsset,
+    );
 
     // check if bankrupt
     if (state.cash < 0) {
@@ -196,15 +204,24 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  Future<bool> buyAsset(Asset asset, Function showNotEnoughCash, Function showAnimalDied,
-      double newCashInterest) async {
+  Future<bool> buyAsset(
+    Asset asset,
+    Function showNotEnoughCash,
+    Function showAnimalDied,
+    double newCashInterest,
+  ) async {
     if (state.cash >= asset.price) {
       state = state.copyWith(cash: state.cash - asset.price);
       //check if animal died based on risk level
       if (!await _animalDied(asset, showAnimalDied)) {
         _addAsset(asset);
       }
-      advance(newCashInterest);
+
+      advance(
+        newCashInterest: newCashInterest,
+        buyDecision: BuyDecision.buyCash,
+        selectedAsset: asset,
+      );
       return true;
     } else {
       showNotEnoughCash();
@@ -213,14 +230,22 @@ class GameDataNotifier extends StateNotifier<GameData> {
   }
 
   Future<void> loanAsset(
-      Loan loan, Asset asset, Function showAnimalDied, double newCashInterest) async {
+    Loan loan,
+    Asset asset,
+    Function showAnimalDied,
+    double newCashInterest,
+  ) async {
     // check if animal died based on risk level
     if (!await _animalDied(asset, showAnimalDied)) {
       _addAsset(asset);
     }
     Loan issuedLoan = loan.copyWith(asset: asset);
     _addLoan(issuedLoan);
-    advance(newCashInterest);
+    advance(
+      newCashInterest: newCashInterest,
+      buyDecision: BuyDecision.loan,
+      selectedAsset: asset,
+    );
   }
 
   double calculateTotalExpenses() {

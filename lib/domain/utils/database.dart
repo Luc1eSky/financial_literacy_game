@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:financial_literacy_game/config/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../concepts/asset.dart';
 import '../concepts/person.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
@@ -23,21 +25,17 @@ Future<QuerySnapshot> _findUserInFirestore({required Person person}) async {
       .get();
 }
 
-Future<DocumentReference?> _findLatestGameSessionRef(
-    {required Person person}) async {
+Future<DocumentReference?> _findLatestGameSessionRef({required Person person}) async {
   QuerySnapshot userQuerySnapshot = await _findUserInFirestore(person: person);
 
   if (userQuerySnapshot.docs.length == 1) {
     debugPrint("Unique User Found.");
 
     QueryDocumentSnapshot docSnap = userQuerySnapshot.docs.first;
-    CollectionReference gameSessionRef =
-        docSnap.reference.collection('gameSessions');
+    CollectionReference gameSessionRef = docSnap.reference.collection('gameSessions');
 
-    QuerySnapshot lastGameSessionSnap = await gameSessionRef
-        .orderBy('startedOn', descending: true)
-        .limit(1)
-        .get();
+    QuerySnapshot lastGameSessionSnap =
+        await gameSessionRef.orderBy('startedOn', descending: true).limit(1).get();
 
     debugPrint("Last game session found.");
     return lastGameSessionSnap.docs.first.reference;
@@ -62,10 +60,11 @@ void _createNewLevel({
     'levelStatus': Status.active.name,
     'periods': 0,
     'cash': [startingCash],
+    'decisions': [],
+    'offeredAssets': [],
   };
 
-  CollectionReference levelDataRef =
-      currentGameSessionRef!.collection('levelData');
+  CollectionReference levelDataRef = currentGameSessionRef!.collection('levelData');
   currentLevelDataRef = await levelDataRef.add(levelContent);
 }
 
@@ -150,8 +149,7 @@ Future<void> saveUserInFirestore(Person person) async {
 
   // save user if document does not exist yet
   if (userQuerySnapshot.docs.isEmpty) {
-    debugPrint(
-        'save new user ${person.firstName} ${person.lastName} to firebase...');
+    debugPrint('save new user ${person.firstName} ${person.lastName} to firebase...');
     Map<String, dynamic> userEntry = <String, dynamic>{
       "firstName": person.firstName,
       "lastName": person.lastName,
@@ -181,8 +179,7 @@ Future<void> startGameSession({
   }
 
   QueryDocumentSnapshot docSnap = userQuerySnapshot.docs.first;
-  CollectionReference gameSessionRef =
-      docSnap.reference.collection('gameSessions');
+  CollectionReference gameSessionRef = docSnap.reference.collection('gameSessions');
 
   Map<String, dynamic> gameSessionContent = {
     'startedOn': DateTime.now(),
@@ -193,8 +190,7 @@ Future<void> startGameSession({
   _createNewLevel(level: 1, startingCash: startingCash);
 }
 
-Future<void> endCurrentGameSession(
-    {required Status status, Person? person}) async {
+Future<void> endCurrentGameSession({required Status status, Person? person}) async {
   if (currentGameSessionRef == null) {
     debugPrint('No current game session could be found.');
     if (person == null) {
@@ -232,15 +228,37 @@ void newLevelFirestore({
   _createNewLevel(level: levelID + 1, startingCash: startingCash);
 }
 
-void advancePeriodFirestore({required double newCashValue}) async {
+void advancePeriodFirestore({
+  required double newCashValue,
+  required BuyDecision buyDecision,
+  required Asset offeredAsset,
+}) async {
   DocumentSnapshot docSnap = await currentLevelDataRef!.get();
+  // add cash value to list
   List<double> cashArray = List.from(docSnap.get('cash'));
   cashArray.add(double.parse(newCashValue.toStringAsFixed(2)));
+
+  // add buy decision to list
+  List<String> decisionArray = List.from(docSnap.get('decisions'));
+  decisionArray.add(buyDecision.name);
+
+  // add cashROI to list
+  List<Map<String, dynamic>> offeredAssets = List.from(docSnap.get('offeredAssets'));
+  Map<String, dynamic> newMapFromAsset = {
+    'type': offeredAsset.type.name,
+    'price': offeredAsset.price,
+    'income': offeredAsset.income,
+    'riskLevel': offeredAsset.riskLevel,
+    'lifeExpectancy': offeredAsset.lifeExpectancy,
+  };
+  offeredAssets.add(newMapFromAsset);
 
   docSnap.reference.set(
       {
         'periods': FieldValue.increment(1),
         'cash': cashArray,
+        'decisions': decisionArray,
+        'offeredAssets': offeredAssets,
       },
       SetOptions(
         merge: true,
