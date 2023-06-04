@@ -27,9 +27,7 @@ Randomized Shocks: Players will be confronted with shocks in each simulation rou
 
 Localization: The app has been translated into Luganda and Kannada since those were the locations, where the experiments were taking place. For the internationalization the Flutter International Package has been used.
 
-## Screenshots 
-
-##Contributing
+## Contributing
 Contributions to this project are welcome. If you encounter any issues or have suggestions for improvements, please open an issue on the project's GitHub repository. When contributing to this repository, please follow the existing code style and structure. Additionally, adhere to the Flutter best practices and conventions.
 
 ## License
