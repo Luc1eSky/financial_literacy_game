@@ -86,7 +86,7 @@ class _SignInDialogNewState extends ConsumerState<SignInDialogNew> {
                 controller: uidTextController,
                 decoration: InputDecoration(
                     hintText: AppLocalizations.of(context)!.hintUID),
-                // Length of code 7
+                // Length of code is 7 characters
                 maxLength: 7,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 inputFormatters: [
@@ -104,6 +104,7 @@ class _SignInDialogNewState extends ConsumerState<SignInDialogNew> {
                 backgroundColor: ColorPalette().buttonBackgroundSpecial,
                 foregroundColor: ColorPalette().lightText,
               ),
+              // button when no code available
               onPressed: () {
                 Navigator.of(context).pop();
                 showDialog(

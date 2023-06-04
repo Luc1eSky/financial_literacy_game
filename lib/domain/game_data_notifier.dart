@@ -17,7 +17,8 @@ import 'utils/device_and_personal_data.dart';
 import 'utils/utils.dart';
 
 final gameDataNotifierProvider =
-    StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
+    StateNotifierProvider<GameDataNotifier, GameData>(
+        (ref) => GameDataNotifier());
 
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
@@ -26,8 +27,12 @@ class GameDataNotifier extends StateNotifier<GameData> {
             person: Person(),
             locale: L10n.defaultLocale,
             cash: levels[0].startingCash,
-            personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
-            personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
+            personalIncome: (levels[0].includePersonalIncome
+                ? levels[0].personalIncome
+                : 0),
+            personalExpenses: (levels[0].includePersonalIncome
+                ? levels[0].personalExpenses
+                : 0),
             confettiController: ConfettiController(),
             recordedDataList: [
               RecordedData(
@@ -40,7 +45,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void setPerson(Person newPerson) {
     state = state.copyWith(person: newPerson);
-    debugPrint('Person set to ${newPerson.firstName} ${newPerson.lastName} in game data.');
+    debugPrint(
+        'Person set to ${newPerson.firstName} ${newPerson.lastName} in game data.');
   }
 
   // convert money amounts to display in local currency based on locale
@@ -71,10 +77,11 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state.confettiController.stop();
   }
 
-  void setCashInterest(double newInterest) {
-    state = state.copyWith(cashInterest: newInterest);
-  }
+  // void setCashInterest(double newInterest) {
+  //   state = state.copyWith(cashInterest: newInterest);
+  // }
 
+  // function to advance to next period in game
   void advance({
     required double newCashInterest,
     required BuyDecision buyDecision,
@@ -89,7 +96,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     List<Asset> survivedAssets = [];
     for (Asset asset in state.assets) {
       if (asset.age < asset.lifeExpectancy) {
-        // add to survived list if not too old
+        // add to survived list if not too old and let animal age
         Asset olderAsset = asset.copyWith(age: asset.age + 1);
         survivedAssets.add(olderAsset);
       }
@@ -100,7 +107,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     List<Loan> activeLoans = [];
     for (Loan loan in state.loans) {
       if (loan.age < loan.termInPeriods) {
-        // add to survived list if not too old
+        // add to loan list if not paid off
         Loan olderLoan = loan.copyWith(age: loan.age + 1);
         activeLoans.add(olderLoan);
       }
@@ -133,16 +140,10 @@ class GameDataNotifier extends StateNotifier<GameData> {
         state = state.copyWith(currentLevelSolved: true);
       }
     }
-
-    // record data
-    //state.recordedDataList.last.cashValues.add(state.cash);
-    // print('CASH RECORD FOR LEVEL ${state.recordedDataList.last.levelId}: ');
-    // for (double cash in state.recordedDataList.last.cashValues) {
-    //   print('$cash, ');
-    // }
   }
 
   void restartLevel() {
+    // TODO: double-check why this is saved to same game session
     restartLevelFirebase(
       level: state.levelId + 1,
       startingCash: levels[state.levelId].startingCash,
@@ -254,8 +255,10 @@ class GameDataNotifier extends StateNotifier<GameData> {
       loanPayments += loan.paymentPerPeriod;
     }
 
-    double totalExpenses =
-        loanPayments + (levels[state.levelId].includePersonalIncome ? state.personalExpenses : 0);
+    double totalExpenses = loanPayments +
+        (levels[state.levelId].includePersonalIncome
+            ? state.personalExpenses
+            : 0);
     return totalExpenses;
   }
 
@@ -265,8 +268,10 @@ class GameDataNotifier extends StateNotifier<GameData> {
     for (Asset asset in state.assets) {
       assetIncome += asset.income;
     }
-    double totalIncome =
-        assetIncome + (levels[state.levelId].includePersonalIncome ? state.personalIncome : 0);
+    double totalIncome = assetIncome +
+        (levels[state.levelId].includePersonalIncome
+            ? state.personalIncome
+            : 0);
     return totalIncome;
   }
 
@@ -285,38 +290,44 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = GameData(
       person: state.person,
       locale: state.locale,
+      // reset to level 1 with starting cash
       cash: levels[0].startingCash,
-      personalIncome: (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
-      personalExpenses: (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
+      personalIncome:
+          (levels[0].includePersonalIncome ? levels[0].personalIncome : 0),
+      personalExpenses:
+          (levels[0].includePersonalIncome ? levels[0].personalExpenses : 0),
       confettiController: state.confettiController,
     );
     // save current level locally
     saveLevelIDLocally(0);
 
-    startGameSession(person: state.person, startingCash: levels[0].startingCash);
+    startGameSession(
+        person: state.person, startingCash: levels[0].startingCash);
   }
 
-  double calculateSavingsROI({required double cashInterest, int lifeExpectancy = 6}) {
-    return (state.cash * pow(1 + cashInterest, lifeExpectancy) - state.cash) / lifeExpectancy;
-  }
-
-  double calculateBuyCashROI({
-    required double riskLevel,
-    required double expectedIncome,
-    required double assetPrice,
-    int lifeExpectancy = 6,
-  }) {
-    return (lifeExpectancy * expectedIncome * (1 - riskLevel) - assetPrice) / lifeExpectancy;
-  }
-
-  double calculateBorrowROI({
-    required double riskLevel,
-    required double expectedIncome,
-    required double assetPrice,
-    required double interestRate,
-    int lifeExpectancy = 6,
-  }) {
-    return (lifeExpectancy * expectedIncome * (1 - riskLevel) - (assetPrice * (1 + interestRate))) /
+  // not being used in current version of the game
+  double calculateSavingsROI(
+      {required double cashInterest, int lifeExpectancy = 6}) {
+    return (state.cash * pow(1 + cashInterest, lifeExpectancy) - state.cash) /
         lifeExpectancy;
   }
+  // double calculateBuyCashROI({
+  //   required double riskLevel,
+  //   required double expectedIncome,
+  //   required double assetPrice,
+  //   int lifeExpectancy = 6,
+  // }) {
+  //   return (lifeExpectancy * expectedIncome * (1 - riskLevel) - assetPrice) / lifeExpectancy;
+  // }
+  //
+  // double calculateBorrowROI({
+  //   required double riskLevel,
+  //   required double expectedIncome,
+  //   required double assetPrice,
+  //   required double interestRate,
+  //   int lifeExpectancy = 6,
+  // }) {
+  //   return (lifeExpectancy * expectedIncome * (1 - riskLevel) - (assetPrice * (1 + interestRate))) /
+  //       lifeExpectancy;
+  // }
 }

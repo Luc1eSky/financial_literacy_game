@@ -10,6 +10,7 @@ class CashAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      // Dialog will be displayed when user does not have enough cash
       title: Text(AppLocalizations.of(context)!.error.capitalize()),
       content: Text(AppLocalizations.of(context)!.cashAlert.capitalize()),
       actions: [

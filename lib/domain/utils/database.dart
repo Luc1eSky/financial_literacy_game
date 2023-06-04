@@ -6,7 +6,9 @@ import '../concepts/asset.dart';
 import '../concepts/person.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
+// store the Firestore collection of users
 CollectionReference userCollectionRef = db.collection('users');
+// store the Firestore collection of uid user list
 CollectionReference uidListsCollectionRef = db.collection('uidLists');
 
 // variables to save current documents in database
@@ -14,28 +16,35 @@ DocumentReference? currentGameSessionRef;
 DocumentReference? currentLevelDataRef;
 
 Future<QuerySnapshot> _findUserInFirestoreByUID({required String uid}) async {
+  // call to Firestore to look up user via uid that was entered
   return await userCollectionRef.where('uid', isEqualTo: uid).get();
 }
 
 Future<QuerySnapshot> _findUserInFirestore({required Person person}) async {
   return await userCollectionRef
+      // look for current person in database
       .where('firstName', isEqualTo: person.firstName)
       .where('lastName', isEqualTo: person.lastName)
       .where('uid', isEqualTo: person.uid)
       .get();
 }
 
-Future<DocumentReference?> _findLatestGameSessionRef({required Person person}) async {
+Future<DocumentReference?> _findLatestGameSessionRef(
+    {required Person person}) async {
   QuerySnapshot userQuerySnapshot = await _findUserInFirestore(person: person);
 
   if (userQuerySnapshot.docs.length == 1) {
+    // TODO: Can we change this to make it more general?
     debugPrint("Unique User Found.");
-
+    // get the first document in list
     QueryDocumentSnapshot docSnap = userQuerySnapshot.docs.first;
-    CollectionReference gameSessionRef = docSnap.reference.collection('gameSessions');
+    CollectionReference gameSessionRef =
+        docSnap.reference.collection('gameSessions');
 
-    QuerySnapshot lastGameSessionSnap =
-        await gameSessionRef.orderBy('startedOn', descending: true).limit(1).get();
+    QuerySnapshot lastGameSessionSnap = await gameSessionRef
+        .orderBy('startedOn', descending: true)
+        .limit(1)
+        .get();
 
     debugPrint("Last game session found.");
     return lastGameSessionSnap.docs.first.reference;
@@ -55,6 +64,7 @@ void _createNewLevel({
   }
 
   Map<String, dynamic> levelContent = {
+    // information that gets saved to the database per level
     'level': level,
     'startedOn': DateTime.now(),
     'levelStatus': Status.active.name,
@@ -64,7 +74,8 @@ void _createNewLevel({
     'offeredAssets': [],
   };
 
-  CollectionReference levelDataRef = currentGameSessionRef!.collection('levelData');
+  CollectionReference levelDataRef =
+      currentGameSessionRef!.collection('levelData');
   currentLevelDataRef = await levelDataRef.add(levelContent);
 }
 
@@ -108,6 +119,7 @@ Future<bool> reconnectToGameSession({required Person person}) async {
 }
 
 Future<Person?> searchUserbyUIDInFirestore(String uid) async {
+  // get snapshot of users from Firestore
   QuerySnapshot userQuerySnapshot = await _findUserInFirestoreByUID(uid: uid);
 
   if (userQuerySnapshot.docs.isEmpty) {
@@ -117,9 +129,10 @@ Future<Person?> searchUserbyUIDInFirestore(String uid) async {
     for (QueryDocumentSnapshot docSnap in uidListsQuerySnapshot.docs) {
       // get uidList from document
       List<dynamic> uidList = docSnap.get('uids');
-      // go through list
+      // go through list that consists of users
       for (Map<String, dynamic> listEntry in uidList) {
         if (uid == listEntry['uid']) {
+          // return the person connected to uid
           return Person(
             firstName: listEntry['firstName'],
             lastName: listEntry['lastName'],
@@ -131,6 +144,7 @@ Future<Person?> searchUserbyUIDInFirestore(String uid) async {
 
     return null;
   } else {
+    // if the user is not found in Firestore
     debugPrint("User with uid $uid found.");
     QueryDocumentSnapshot docSnap = userQuerySnapshot.docs.first;
     String firstName = docSnap.get('firstName');
@@ -149,7 +163,8 @@ Future<void> saveUserInFirestore(Person person) async {
 
   // save user if document does not exist yet
   if (userQuerySnapshot.docs.isEmpty) {
-    debugPrint('save new user ${person.firstName} ${person.lastName} to firebase...');
+    debugPrint(
+        'save new user ${person.firstName} ${person.lastName} to firebase...');
     Map<String, dynamic> userEntry = <String, dynamic>{
       "firstName": person.firstName,
       "lastName": person.lastName,
@@ -179,7 +194,8 @@ Future<void> startGameSession({
   }
 
   QueryDocumentSnapshot docSnap = userQuerySnapshot.docs.first;
-  CollectionReference gameSessionRef = docSnap.reference.collection('gameSessions');
+  CollectionReference gameSessionRef =
+      docSnap.reference.collection('gameSessions');
 
   Map<String, dynamic> gameSessionContent = {
     'startedOn': DateTime.now(),
@@ -190,7 +206,8 @@ Future<void> startGameSession({
   _createNewLevel(level: 1, startingCash: startingCash);
 }
 
-Future<void> endCurrentGameSession({required Status status, Person? person}) async {
+Future<void> endCurrentGameSession(
+    {required Status status, Person? person}) async {
   if (currentGameSessionRef == null) {
     debugPrint('No current game session could be found.');
     if (person == null) {
@@ -243,7 +260,8 @@ void advancePeriodFirestore({
   decisionArray.add(buyDecision.name);
 
   // add cashROI to list
-  List<Map<String, dynamic>> offeredAssets = List.from(docSnap.get('offeredAssets'));
+  List<Map<String, dynamic>> offeredAssets =
+      List.from(docSnap.get('offeredAssets'));
   Map<String, dynamic> newMapFromAsset = {
     'type': offeredAsset.type.name,
     'price': offeredAsset.price,

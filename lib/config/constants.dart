@@ -1,7 +1,7 @@
 const String appTitle = 'FinSim Game';
 
 // confetti duration in seconds
-const int showConfettiSeconds = 3;
+const int showConfettiSeconds = 2;
 
 // maximum Width of play area
 const double playAreaMaxWidth = 600;

@@ -31,6 +31,7 @@ class SettingsDialog extends ConsumerWidget {
               showDialog(
                 context: context,
                 builder: (context) {
+                  // returns the how to dialog
                   return const HowToPlayDialog();
                 },
               );
@@ -53,6 +54,7 @@ class SettingsDialog extends ConsumerWidget {
             },
             child: Text(AppLocalizations.of(context)!.clearCache.capitalize()),
           ),
+          // COMMENTED OUT: OPTION TO ADVANCE TO THE NEXT LEVEL
           // const SizedBox(height: 10),
           // ElevatedButton(
           //   style: ElevatedButton.styleFrom(

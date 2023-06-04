@@ -33,11 +33,15 @@ class _HomepageState extends ConsumerState<Homepage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // get info from device that has been stored previously
       await getDeviceInfo();
       bool personLoaded = await loadPerson(ref: ref);
+      // get locale from system settings
       Locale locale = await L10n.getSystemLocale();
       ref.read(gameDataNotifierProvider.notifier).setLocale(locale);
+      // if the person has been stored from previous game sessions
       if (personLoaded) {
+        // loading last level the user played
         bool levelLoaded = await loadLevelIDFromLocal(ref: ref);
         if (levelLoaded) {
           if (context.mounted) {
@@ -51,11 +55,13 @@ class _HomepageState extends ConsumerState<Homepage> {
           }
         }
       } else {
+        // if there is no user stored on device
         if (context.mounted) {
           showDialog(
             barrierDismissible: false,
             context: context,
             builder: (context) {
+              // show language options available
               return LanguageSelectionDialog(
                 title: AppLocalizations.of(context)!.selectLanguage,
                 showDialogWidgetAfterPop: const SignInDialogNew(),
@@ -83,6 +89,7 @@ class _HomepageState extends ConsumerState<Homepage> {
           resizeToAvoidBottomInset: false,
           appBar: const GameAppBar(),
           body: SafeArea(
+            // homepage scrollable when screen to small
             child: SingleChildScrollView(
               child: Center(
                 child: ConstrainedBox(

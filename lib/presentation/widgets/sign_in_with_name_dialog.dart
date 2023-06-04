@@ -27,6 +27,7 @@ class _SignInWithNameDialogState extends ConsumerState<SignInWithNameDialog> {
   bool isProcessing = false;
 
   Future<bool> setPersonData(Person enteredPerson) async {
+    // show error message when text field left blank
     if (enteredPerson.firstName == '' || enteredPerson.lastName == '') {
       showErrorSnackBar(
         context: context,
@@ -35,7 +36,7 @@ class _SignInWithNameDialogState extends ConsumerState<SignInWithNameDialog> {
       return false;
     }
 
-    // remove whitespaces
+    // remove whitespaces from text fields
     String trimmedFirstName = enteredPerson.firstName!.trim();
     String trimmedLastName = enteredPerson.lastName!.trim();
 
@@ -51,16 +52,18 @@ class _SignInWithNameDialogState extends ConsumerState<SignInWithNameDialog> {
     cleanedLastName =
         "${cleanedLastName[0].toUpperCase()}${cleanedLastName.substring(1).toLowerCase()}";
 
+    // create cleaned person
     Person cleanedPerson = Person(
       firstName: cleanedFirstName,
       lastName: cleanedLastName,
       uid: enteredPerson.uid,
     );
 
+    // set the new person in the game data as current player
     ref.read(gameDataNotifierProvider.notifier).setPerson(cleanedPerson);
     savePersonLocally(cleanedPerson);
     await saveUserInFirestore(cleanedPerson);
-
+    // reset game when new user starts playing
     ref.read(gameDataNotifierProvider.notifier).resetGame();
 
     return true;

@@ -27,6 +27,7 @@ class HowToPlayDialog extends ConsumerWidget {
             enableInfiniteScroll: false,
           ),
           items: [
+            // Carousel with text instructions to swipe through
             HowToPlayCard(
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

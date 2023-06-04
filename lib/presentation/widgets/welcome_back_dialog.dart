@@ -21,11 +21,13 @@ class _WelcomeBackDialogState extends ConsumerState<WelcomeBackDialog> {
   bool isClicked = false;
   @override
   Widget build(BuildContext context) {
+    // get current person from game data
     Person person = ref.read(gameDataNotifierProvider).person;
     return Stack(
       children: [
         MenuDialog(
           showCloseButton: false,
+          // welcomes back user with first and last name
           title: AppLocalizations.of(context)!.welcomeBack(
               person.firstName!.capitalize(), person.lastName!.capitalize()),
           content: Column(
