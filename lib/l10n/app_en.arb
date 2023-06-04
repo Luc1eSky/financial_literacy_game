@@ -7,7 +7,7 @@
     "@titleSignIn":{
         "description": "Welcoming users to the Game"
     },
-    "welcomeText": "Dear participants,\nthis game is meant to mimic financial investments. It will only be used for the purpose of teaching. This game will not affect the relationship with your bank.\n Please enter your code below:",
+    "welcomeText": "Dear participants,\nthis game is meant to mimic financial investments. It will only be used for the purpose of teaching. This game will not affect the relationship with your bank.\nPlease enter your code below:",
     "@welcomeText":{
         "description": "welcome instructions for users when opening the app"
     },
