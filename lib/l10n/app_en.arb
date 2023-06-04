@@ -137,9 +137,9 @@
     "@nextLevel":{
         "description": "allows user to advance to next level. Only used for testing"
     },
-    "enterUID": "please enter a 5 digit code",
+    "enterUID": "please enter a 7 digit code",
     "@enterUID":{
-        "description": "Hint text for user to enter their 5 digit code"
+        "description": "Hint text for user to enter their 7 digit code"
     },
     "enterName": "please enter first and last name.",
     "@enterName":{
@@ -407,7 +407,7 @@
         "description": "sign in with first and last name when no code available"
     },
     "backButton": "Back",
-    "@signInName":{
+    "@backButton":{
         "description": "back button"
     }
 }

@@ -11,7 +11,7 @@
 "cashGoalReach": "Sente zolina okuwezza : Wezza {cashAmount}",
 "chicken": "Enkoko",
 "clearCache": "jamu ebilimu",
-"confirm": "okay",
+"confirm": "tandika okuzannya",
 "congratulations": "Tukuyozayozza",
 "continueButton": "Weyongereyo",
 "cow": "Ente",
@@ -35,7 +35,7 @@
 "instructionText6": "6. Osobola okusanga engeri zino  ez'okuzannya akazannyo kano bwokebeera mu nteekateeka",
 "interestCash": "Amagoba singa ogula nga okozesa sente zolina gali {interestRate}% / buli mwaka",
 "investmentOptions": "Ky'osobola okugula",
-"language": "oluzungu",
+"language": "Oluganda",
 "languagesTitle": "Enimi",
 "level": "Omutendeera {level} / {levelTotal}",
 "lifeExpectancy": "Obuwangazzi bw'ekisolo: emyaka {yearsNum}",
@@ -62,5 +62,14 @@
 "warning": "Okukulaalika",
 "welcomeBack": "Webale kukomawo, , {firstName} {lastName}!",
 "welcomeText": "Munaffe omuzannyi, akazannyo kano kagezako kwefananyiliza byanfuna era kajja kozesebwa mu kusomesa kwoka. Okuzannya akazannyo kano tekijja kubaako kyekikyuusa mu nkolagana wakatiwo ne Bank yyo. Nkusaba otekemu ebikukwatako wansi",
-"selectLanguage": "Nsaba olondeko olulimi lwo:"
+"selectLanguage": "Nsaba olondeko olulimi lwo:",
+"hintUID": "ennamba y’omukozesa. e.g. UGRT999",
+"confirmNameTitle": "Kakasa erinnya lyo",
+"confirmName": "Are you {firstName} {lastName}?",
+"noButton": "Nedda",
+"yesButton": "Yee",
+"codeNotFound": "Koodi tezuuliddwa",
+"noCodeButton": "Tewali koodi",
+"signInName": "Nsaba oyingire ne'linyalyo elisooka ne'liddako: \n",
+"backButton": "Okukomawo"
 }

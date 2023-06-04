@@ -5,7 +5,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../domain/game_data_notifier.dart';
 import 'how_to_play_dialog.dart';
 import 'language_selection_dialog.dart';
 import 'menu_dialog.dart';
@@ -54,19 +53,19 @@ class SettingsDialog extends ConsumerWidget {
             },
             child: Text(AppLocalizations.of(context)!.clearCache.capitalize()),
           ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              elevation: 5.0,
-              backgroundColor: ColorPalette().buttonBackground,
-              foregroundColor: ColorPalette().lightText,
-            ),
-            onPressed: () {
-              ref.read(gameDataNotifierProvider.notifier).moveToNextLevel();
-              Navigator.of(context).pop();
-            },
-            child: Text(AppLocalizations.of(context)!.nextLevel.capitalize()),
-          ),
+          // const SizedBox(height: 10),
+          // ElevatedButton(
+          //   style: ElevatedButton.styleFrom(
+          //     elevation: 5.0,
+          //     backgroundColor: ColorPalette().buttonBackground,
+          //     foregroundColor: ColorPalette().lightText,
+          //   ),
+          //   onPressed: () {
+          //     ref.read(gameDataNotifierProvider.notifier).moveToNextLevel();
+          //     Navigator.of(context).pop();
+          //   },
+          //   child: Text(AppLocalizations.of(context)!.nextLevel.capitalize()),
+          // ),
           const SizedBox(height: 10),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -80,12 +79,15 @@ class SettingsDialog extends ConsumerWidget {
                 context: context,
                 builder: (context) {
                   return LanguageSelectionDialog(
-                    title: AppLocalizations.of(context)!.languagesTitle.capitalize(),
+                    title: AppLocalizations.of(context)!
+                        .languagesTitle
+                        .capitalize(),
                   );
                 },
               );
             },
-            child: Text(AppLocalizations.of(context)!.languagesTitle.capitalize()),
+            child:
+                Text(AppLocalizations.of(context)!.languagesTitle.capitalize()),
           ),
           // ElevatedButton(
           //   style: ElevatedButton.styleFrom(
