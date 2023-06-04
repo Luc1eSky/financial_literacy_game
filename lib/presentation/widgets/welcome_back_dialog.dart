@@ -38,67 +38,60 @@ class _WelcomeBackDialogState extends ConsumerState<WelcomeBackDialog> {
                     .sameUser(person.firstName!.capitalize()),
               ),
               const SizedBox(height: 10.0),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (ref.read(gameDataNotifierProvider).levelId != 0)
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 5.0,
-                        backgroundColor: ColorPalette().buttonBackground,
-                        foregroundColor: ColorPalette().lightText,
-                      ),
-                      onPressed: isClicked
-                          ? null
-                          : () async {
-                              setState(() {
-                                isClicked = true;
-                              });
-                              bool couldReconnect =
-                                  await reconnectToGameSession(person: person);
-                              if (!couldReconnect) {
-                                ref
-                                    .read(gameDataNotifierProvider.notifier)
-                                    .resetGame();
-                              }
-                              if (context.mounted) {
-                                Navigator.of(context).pop();
-                              }
-                            },
-                      child: Text(AppLocalizations.of(context)!
-                          .startAtLevel(
-                              (ref.read(gameDataNotifierProvider).levelId + 1)
-                                  .toStringAsFixed(0))
-                          .capitalize()),
-                    ),
-                  if (ref.read(gameDataNotifierProvider).levelId != 0)
-                    const SizedBox(width: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 5.0,
-                      backgroundColor: ColorPalette().buttonBackground,
-                      foregroundColor: ColorPalette().lightText,
-                    ),
-                    onPressed: isClicked
-                        ? null
-                        : () async {
-                            setState(() {
-                              isClicked = true;
-                            });
-                            await endCurrentGameSession(
-                                status: Status.abandoned, person: person);
+              if (ref.read(gameDataNotifierProvider).levelId != 0)
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 5.0,
+                    backgroundColor: ColorPalette().buttonBackground,
+                    foregroundColor: ColorPalette().lightText,
+                  ),
+                  onPressed: isClicked
+                      ? null
+                      : () async {
+                          setState(() {
+                            isClicked = true;
+                          });
+                          bool couldReconnect =
+                              await reconnectToGameSession(person: person);
+                          if (!couldReconnect) {
                             ref
                                 .read(gameDataNotifierProvider.notifier)
                                 .resetGame();
-                            if (context.mounted) {
-                              Navigator.of(context).pop();
-                            }
-                          },
-                    child: Text(
-                        AppLocalizations.of(context)!.restartGame.capitalize()),
-                  ),
-                ],
+                          }
+                          if (context.mounted) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                  child: Text(AppLocalizations.of(context)!
+                      .startAtLevel(
+                          (ref.read(gameDataNotifierProvider).levelId + 1)
+                              .toStringAsFixed(0))
+                      .capitalize()),
+                ),
+              if (ref.read(gameDataNotifierProvider).levelId != 0)
+                const SizedBox(width: 20),
+              const SizedBox(height: 10.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 5.0,
+                  backgroundColor: ColorPalette().buttonBackground,
+                  foregroundColor: ColorPalette().lightText,
+                ),
+                onPressed: isClicked
+                    ? null
+                    : () async {
+                        setState(() {
+                          isClicked = true;
+                        });
+                        await endCurrentGameSession(
+                            status: Status.abandoned, person: person);
+                        ref.read(gameDataNotifierProvider.notifier).resetGame();
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                child: Text(
+                    AppLocalizations.of(context)!.restartGame.capitalize()),
               ),
               const SizedBox(height: 25.0),
               Text(
