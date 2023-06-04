@@ -1,9 +1,7 @@
 # Financial Literacy Game
-
  This is an educational web app designed to enhance financial literacy among users and was developed for a field experiment conducted in Uganda and India. The app is developed using Flutter, a cross-platform framework for building native applications for mobile, web, and desktop from a single codebase.
 
 ## Getting Started
-
 1. Make sure you have Flutter SDK installed on your machine. If not, refer to the Flutter installation guide.
 2. Clone this repository to your local machine.
 3. Open a terminal or command prompt and navigate to the project directory.
@@ -26,6 +24,8 @@ Progressive Difficulty: The game has a progressive difficulty curve, starting wi
 Randomized Shocks: Players will be confronted with shocks in each simulation round, those can be positive or negative and are influenced by the risk level of the investment.
 
 Localization: The app has been translated into Luganda and Kannada since those were the locations, where the experiments were taking place. For the internationalization the Flutter International Package has been used.
+
+<a href="ps://financelitsim.web.app" target="_blank">Web App</a>
 
 ## Contributing
 Contributions to this project are welcome. If you encounter any issues or have suggestions for improvements, please open an issue on the project's GitHub repository. When contributing to this repository, please follow the existing code style and structure. Additionally, adhere to the Flutter best practices and conventions.
