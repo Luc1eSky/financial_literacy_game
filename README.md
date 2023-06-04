@@ -8,11 +8,9 @@
 2. Clone this repository to your local machine.
 3. Open a terminal or command prompt and navigate to the project directory.
 4. Run the following command to install the required dependencies:
-
 -> flutter pub get
 5. Connect a device or start an emulator.
 6. Run the app using the following command:
-
 -> flutter run
 The app should launch on your device or emulator, and you can explore its features and functionalities.
 
