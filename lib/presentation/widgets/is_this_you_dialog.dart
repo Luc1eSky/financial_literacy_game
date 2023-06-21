@@ -8,7 +8,6 @@ import '../../domain/concepts/person.dart';
 import '../../domain/game_data_notifier.dart';
 import '../../domain/utils/database.dart';
 import '../../domain/utils/device_and_personal_data.dart';
-import 'how_to_play_dialog.dart';
 import 'menu_dialog.dart';
 
 class IsThisYouDialog extends ConsumerStatefulWidget {
@@ -87,13 +86,13 @@ class _IsThisYouDialogState extends ConsumerState<IsThisYouDialog> {
                       });
                       if (context.mounted) {
                         Navigator.of(context).pop();
-                        showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) {
-                            return const HowToPlayDialog();
-                          },
-                        );
+                        // showDialog(
+                        //   barrierDismissible: false,
+                        //   context: context,
+                        //   builder: (context) {
+                        //     return const HowToPlayDialog();
+                        //   },
+                        // );
                       }
                     },
               child: Text(AppLocalizations.of(context)!.yesButton),

@@ -56,26 +56,26 @@ class AssetCarousel extends ConsumerWidget {
 
           return Container(
             height: constraints.maxHeight,
-            width: constraints.maxWidth,
+            width: constraints.maxWidth * 1.2,
             decoration: BoxDecoration(
               color: ColorPalette().backgroundContentCard,
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(5.0),
               child: Column(
                 //mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: 1,
                     child: Align(
                       alignment: Alignment.center,
                       child: AutoSizeText(
                         '${asset.numberOfAnimals} x $assetName',
                         style: const TextStyle(
-                          fontSize: 70,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          //fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
@@ -83,7 +83,7 @@ class AssetCarousel extends ConsumerWidget {
                   ),
                   const Spacer(),
                   Expanded(
-                    flex: 5,
+                    flex: 2,
                     child: Align(
                       alignment: Alignment.center,
                       child: Image.asset(asset.imagePath, fit: BoxFit.cover),

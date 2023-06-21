@@ -74,13 +74,14 @@ class _SignInDialogNewState extends ConsumerState<SignInDialogNew> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height:
-                    MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
-                child: SingleChildScrollView(
-                  child: Text(AppLocalizations.of(context)!.welcomeText),
-                ),
-              ),
+              // Commented out the welcome screen
+              // SizedBox(
+              //   height:
+              //       MediaQuery.of(context).viewInsets.bottom == 0 ? 150 : 100,
+              //   child: SingleChildScrollView(
+              //     child: Text(AppLocalizations.of(context)!.welcomeText),
+              //   ),
+              // ),
               TextField(
                 enabled: !isProcessing,
                 controller: uidTextController,

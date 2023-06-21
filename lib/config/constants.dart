@@ -7,10 +7,10 @@ const int showConfettiSeconds = 2;
 const double playAreaMaxWidth = 600;
 
 // aspect ratio of overview content cards (cash, income, expenses)
-const double overviewAspectRatio = 1.4;
+const double overviewAspectRatio = 1;
 
 // aspect ratio of asset content cards (cows, chickens, goats)
-const double assetsAspectRatio = 0.8;
+const double assetsAspectRatio = 1;
 
 // decimal points for borrow and interest rates
 // on "investment options" screen

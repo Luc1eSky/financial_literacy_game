@@ -9,7 +9,6 @@ import '../../domain/game_data_notifier.dart';
 import '../../domain/utils/database.dart';
 import '../../domain/utils/device_and_personal_data.dart';
 import '../../domain/utils/utils.dart';
-import 'how_to_play_dialog.dart';
 import 'menu_dialog.dart';
 
 class SignInDialog extends ConsumerStatefulWidget {
@@ -144,13 +143,13 @@ class _SignInDialogState extends ConsumerState<SignInDialog> {
                       if (personWasCreated) {
                         if (context.mounted) {
                           Navigator.of(context).pop();
-                          showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (context) {
-                              return const HowToPlayDialog();
-                            },
-                          );
+                          // showDialog(
+                          //   barrierDismissible: false,
+                          //   context: context,
+                          //   builder: (context) {
+                          //     return const HowToPlayDialog();
+                          //   },
+                          //);
                         }
                       } else {
                         setState(() {

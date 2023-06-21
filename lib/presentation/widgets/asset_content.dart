@@ -21,19 +21,24 @@ class AssetContent extends ConsumerWidget {
     int chickens = ref.watch(gameDataNotifierProvider).chickens;
     int goats = ref.watch(gameDataNotifierProvider).goats;
 
-    double cowIncome = ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.cow);
+    double cowIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.cow);
 
     double convertedCowIncome =
         ref.read(gameDataNotifierProvider.notifier).convertAmount(cowIncome);
 
-    double chickenIncome =
-        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.chicken);
+    double chickenIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.chicken);
 
-    double convertedChickenIncome =
-        ref.read(gameDataNotifierProvider.notifier).convertAmount(chickenIncome);
+    double convertedChickenIncome = ref
+        .read(gameDataNotifierProvider.notifier)
+        .convertAmount(chickenIncome);
 
-    double goatIncome =
-        ref.watch(gameDataNotifierProvider.notifier).calculateIncome(AssetType.goat);
+    double goatIncome = ref
+        .watch(gameDataNotifierProvider.notifier)
+        .calculateIncome(AssetType.goat);
 
     double convertedGoatIncome =
         ref.read(gameDataNotifierProvider.notifier).convertAmount(goatIncome);
@@ -106,7 +111,7 @@ class SmallAssetCard extends ConsumerWidget {
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(5.0),
           child: Column(
             children: [
               Expanded(
@@ -116,7 +121,7 @@ class SmallAssetCard extends ConsumerWidget {
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     color: ColorPalette().lightText,
-                    fontSize: 100.0,
+                    fontSize: 50.0,
                   ),
                 ),
               ),
