@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import '../domain/utils/device_and_personal_data.dart';
 
 class L10n {
-  static const defaultLocale = Locale('en', 'US');
+  static const defaultLocale = Locale('en', 'GB');
 
   static final all = [
     defaultLocale,
     const Locale('kn', 'IN'),
     const Locale('lg'),
+    const Locale('es', 'GT'),
   ];
 
   static Future<Locale> getSystemLocale() async {

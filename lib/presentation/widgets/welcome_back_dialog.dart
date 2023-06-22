@@ -34,8 +34,7 @@ class _WelcomeBackDialogState extends ConsumerState<WelcomeBackDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                AppLocalizations.of(context)!
-                    .sameUser(person.firstName!.capitalize()),
+                AppLocalizations.of(context)!.sameUser(person.firstName!),
               ),
               const SizedBox(height: 10.0),
               if (ref.read(gameDataNotifierProvider).levelId != 0)

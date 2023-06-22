@@ -26,17 +26,21 @@ class LevelInfoCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     double convertedCurrentCash =
         ref.read(gameDataNotifierProvider.notifier).convertAmount(currentCash);
-    double convertedNextLevelCash =
-        ref.read(gameDataNotifierProvider.notifier).convertAmount(nextLevelCash);
+    double convertedNextLevelCash = ref
+        .read(gameDataNotifierProvider.notifier)
+        .convertAmount(nextLevelCash);
 
     return Stack(
       children: [
         SectionCard(
-          title: AppLocalizations.of(context)!.level((levelId + 1), levels.length).capitalize(),
+          title: AppLocalizations.of(context)!
+              .level((levelId + 1), levels.length)
+              .capitalize(),
           content: Column(
             children: [
               Text(
-                AppLocalizations.of(context)!.cashGoalReach(convertedNextLevelCash).capitalize(),
+                AppLocalizations.of(context)!
+                    .cashGoalReach(convertedNextLevelCash),
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
@@ -59,7 +63,8 @@ class LevelInfoCard extends ConsumerWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    AppLocalizations.of(context)!.cashValue(convertedNextLevelCash),
+                    AppLocalizations.of(context)!
+                        .cashValue(convertedNextLevelCash),
                     style: const TextStyle(fontSize: 16.0),
                   ),
                 ],
