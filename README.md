@@ -30,10 +30,10 @@ Localization: The app has been translated into Luganda and Kannada since those w
 ## Main Packages being used
 
 Riverpod: It is a state management package for Flutter, which aims to simplify and improve the way you manage state in your Flutter applications. It is built on top of Flutter's provider package and provides a more intuitive and flexible API.
-[Riverpod package](https://financelitsim.web.app](https://pub.dev/packages/riverpod)
+[Riverpod package](https://pub.dev/packages/riverpod)
 
 Localizations: The flutter_localizations package is a collection of localization delegates and utility classes that provide internationalization (i18n) support for Flutter applications. It is a part of the Flutter SDK and is automatically included when you create a new Flutter project.
-[Internationalizing a Flutter app](https://financelitsim.web.app](https://pub.dev/packages/riverpod](https://docs.flutter.dev/accessibility-and-localization/internationalization))
+[Internationalizing a Flutter app](https://pub.dev/packages/riverpod](https://docs.flutter.dev/accessibility-and-localization/internationalization))
 
 
 
