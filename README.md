@@ -1,5 +1,5 @@
 # Financial Literacy Game
- This is an educational web app designed to enhance financial literacy among users and was developed for a field experiment conducted in Uganda and India. The app is developed using Flutter, a cross-platform framework for building native applications for mobile, web, and desktop from a single codebase.
+ This is an educational web app designed to enhance financial literacy among users and was developed for a field experiment conducted in Uganda and India. The app is developed using Flutter, a cross-platform framework for building native applications for mobile, web, and desktop from a single codebase. The game was played by over 500 study participants over the summer 2023 in order to teach simple financial decision making and investments and was playable with minimal digitial literacy levels since most study participants do not own their own smartphone to play the game. The study results will be published in 2024 and I will provide a link here in the future.
 
 ## Getting Started
 1. Make sure you have Flutter SDK installed on your machine. If not, refer to the Flutter installation guide.
