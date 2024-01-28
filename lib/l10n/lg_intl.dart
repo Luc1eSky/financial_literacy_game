@@ -759,4 +759,48 @@ class LgMaterialLocalizations extends GlobalMaterialLocalizations {
   get keyboardKeyShift => throw UnimplementedError();
 
   get scrimLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement collapsedHint
+  String get collapsedHint => throw UnimplementedError();
+
+  @override
+  // TODO: implement expandedHint
+  String get expandedHint => throw UnimplementedError();
+
+  @override
+  // TODO: implement expansionTileCollapsedHint
+  String get expansionTileCollapsedHint => throw UnimplementedError();
+
+  @override
+  // TODO: implement expansionTileCollapsedTapHint
+  String get expansionTileCollapsedTapHint => throw UnimplementedError();
+
+  @override
+  // TODO: implement expansionTileExpandedHint
+  String get expansionTileExpandedHint => throw UnimplementedError();
+
+  @override
+  // TODO: implement expansionTileExpandedTapHint
+  String get expansionTileExpandedTapHint => throw UnimplementedError();
+
+  @override
+  // TODO: implement lookUpButtonLabel
+  String get lookUpButtonLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement menuDismissLabel
+  String get menuDismissLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement scanTextButtonLabel
+  String get scanTextButtonLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement searchWebButtonLabel
+  String get searchWebButtonLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement shareButtonLabel
+  String get shareButtonLabel => throw UnimplementedError();
 }

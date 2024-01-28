@@ -17,7 +17,6 @@ import '../widgets/language_selection_dialog.dart';
 import '../widgets/level_info_card.dart';
 import '../widgets/loan_content.dart';
 import '../widgets/overview_content.dart';
-import '../widgets/personal_content.dart';
 import '../widgets/section_card.dart';
 import '../widgets/sign_in_dialog_with_code.dart';
 import '../widgets/welcome_back_dialog.dart';
@@ -105,33 +104,27 @@ class _HomepageState extends ConsumerState<Homepage> {
                         ),
                         const SizedBox(height: 10),
                         SectionCard(
-                          title: AppLocalizations.of(context)!
-                              .overview
-                              .toUpperCase(),
+                          title: AppLocalizations.of(context)!.overview.toUpperCase(),
                           content: const OverviewContent(),
                         ),
                         const SizedBox(height: 10),
-                        if (levels[ref.read(gameDataNotifierProvider).levelId]
-                            .includePersonalIncome)
-                          SectionCard(
-                              title: AppLocalizations.of(context)!
-                                  .personal
-                                  .toUpperCase(),
-                              content: const PersonalContent()),
-                        if (levels[ref.read(gameDataNotifierProvider).levelId]
-                            .includePersonalIncome)
-                          const SizedBox(height: 10),
+                        // if (levels[ref.read(gameDataNotifierProvider).levelId]
+                        //     .includePersonalIncome)
+                        //   SectionCard(
+                        //       title: AppLocalizations.of(context)!
+                        //           .personal
+                        //           .toUpperCase(),
+                        //       content: const PersonalContent()),
+                        // if (levels[ref.read(gameDataNotifierProvider).levelId]
+                        //     .includePersonalIncome)
+                        //   const SizedBox(height: 10),
                         SectionCard(
-                          title: AppLocalizations.of(context)!
-                              .assets
-                              .toUpperCase(),
+                          title: AppLocalizations.of(context)!.assets.toUpperCase(),
                           content: const AssetContent(),
                         ),
                         const SizedBox(height: 10),
                         SectionCard(
-                          title: AppLocalizations.of(context)!
-                              .loan(2)
-                              .toUpperCase(),
+                          title: AppLocalizations.of(context)!.loan(2).toUpperCase(),
                           content: const LoanContent(),
                         ),
                       ],
@@ -145,8 +138,7 @@ class _HomepageState extends ConsumerState<Homepage> {
         Align(
           alignment: Alignment.topCenter,
           child: ConfettiWidget(
-            confettiController:
-                ref.watch(gameDataNotifierProvider).confettiController,
+            confettiController: ref.watch(gameDataNotifierProvider).confettiController,
             shouldLoop: true,
             emissionFrequency: 0.03,
             numberOfParticles: 20,

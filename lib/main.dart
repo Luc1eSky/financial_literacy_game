@@ -13,9 +13,11 @@ import 'l10n/l10n.dart';
 import 'presentation/screens/home_page.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -48,7 +50,7 @@ class MaterialAppConsumerWidget extends ConsumerWidget {
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
-        //GlobalCupertinoLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
         //GlobalWidgetsLocalizations.delegate,
         LgMaterialLocalizations.delegate,
         //LgMaterialLocalizations.delegate,

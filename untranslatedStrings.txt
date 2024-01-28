@@ -1,0 +1,21 @@
+{
+  "es": [
+    "enterUID",
+    "cashValue"
+  ],
+
+  "es_GT": [
+    "enterUID",
+    "cashValue"
+  ],
+
+  "kn": [
+    "enterUID",
+    "cashValue"
+  ],
+
+  "lg": [
+    "enterUID",
+    "cashValue"
+  ]
+}
