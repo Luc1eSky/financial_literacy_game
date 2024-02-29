@@ -1,4 +1,4 @@
-const String appTitle = 'FinSim Game';
+const String appTitle = 'FinSim Meeting Coding - TEST Title';
 
 // confetti duration in seconds
 const int showConfettiSeconds = 2;
