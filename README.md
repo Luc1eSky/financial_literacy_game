@@ -9,7 +9,7 @@ The study results will be published in 2024 and I will provide a link here in th
 3. Open a terminal or command prompt and navigate to the project directory.
 4. Run the following command to install the required dependencies:
 -> flutter pub get
-5. Connect a device or start an emulator. ( I typically used AndroidStudio)
+5. Connect a device or start an emulator. (recommended: AndroidStudio)
 6. Run the app using the following command:
 -> flutter run
 The app should launch on your device or emulator, and you can explore its features and functionalities.
