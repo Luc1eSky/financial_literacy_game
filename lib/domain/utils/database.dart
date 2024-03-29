@@ -277,6 +277,7 @@ void advancePeriodFirestore({
         'cash': cashArray,
         'decisions': decisionArray,
         'offeredAssets': offeredAssets,
+        'advanceTime': DateTime.now(),
       },
       SetOptions(
         merge: true,
