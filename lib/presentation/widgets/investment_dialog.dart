@@ -260,24 +260,26 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     ),
                     group: textGroup,
                   ),
-                // if (currentLevel.savingsRate == 0 &&
-                //     currentLevel.showCashBuyOption)
-                //   AutoSizeText(
-                //     generateCashTipMessage(
-                //       ref: widget.ref,
-                //       context: context,
-                //       asset: selectedAsset,
-                //       level: currentLevel,
-                //     ),
-                //     maxLines: 2,
-                //     style: const TextStyle(
-                //       fontSize: 100,
-                //       fontWeight: FontWeight.bold,
-                //       fontStyle: FontStyle.italic,
-                //       color: Colors.black,
-                //     ),
-                //     group: textGroup,
-                //   ),
+                if (currentLevel.savingsRate == 0 &&
+                    currentLevel.showCashBuyOption &&
+                    widget.ref.read(gameDataNotifierProvider).levelId == 0)
+                  AutoSizeText(
+                    generateCashTipMessage(
+                      ref: widget.ref,
+                      context: context,
+                      asset: selectedAsset,
+                      level: currentLevel,
+                    ),
+                    maxLines: 2,
+                    style: const TextStyle(
+                      fontSize: 100,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black,
+                    ),
+                    group: textGroup,
+                  ),
+
                 if (currentLevel.savingsRate == 0 &&
                     currentLevel.showLoanBorrowOption)
                   AutoSizeText(
