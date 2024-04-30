@@ -1,39 +1,30 @@
 {
   "project_info": {
-    "project_number": "82638775223",
-    "project_id": "financelitsim",
-    "storage_bucket": "financelitsim.appspot.com"
+    "project_number": "310545133265",
+    "firebase_url": "https://finlitsim-default-rtdb.firebaseio.com",
+    "project_id": "finlitsim",
+    "storage_bucket": "finlitsim.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:82638775223:android:447c2a7e13e42b1161fe32",
+        "mobilesdk_app_id": "1:310545133265:android:31ae1b6d8522f20b761ff0",
         "android_client_info": {
           "package_name": "com.finsimusfca.financial_literacy_game"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "82638775223-aepca616motkchcvgl4nq8qod9cav76b.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCRSDMdquT6-6D--Dc4gW4R4Qi9tSCUcc4"
+          "current_key": "AIzaSyDM4jyrvBJcT78pRcBHdHeTKQOM5IvKRes"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "82638775223-aepca616motkchcvgl4nq8qod9cav76b.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
   ],
-  "configuration_version": "1"
+  "configuration_version": "1"
 }

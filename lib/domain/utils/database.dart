@@ -259,6 +259,10 @@ void advancePeriodFirestore({
   List<String> decisionArray = List.from(docSnap.get('decisions'));
   decisionArray.add(buyDecision.name);
 
+  // add timestamp to list
+  List timeArray = List<DateTime>.from(docSnap.get('advanceTimes'));
+  timeArray.add(DateTime.now());
+
   // add cashROI to list
   List<Map<String, dynamic>> offeredAssets =
       List.from(docSnap.get('offeredAssets'));
@@ -277,7 +281,7 @@ void advancePeriodFirestore({
         'cash': cashArray,
         'decisions': decisionArray,
         'offeredAssets': offeredAssets,
-        'advanceTime': DateTime.now(),
+        'advanceTimes': timeArray,
       },
       SetOptions(
         merge: true,

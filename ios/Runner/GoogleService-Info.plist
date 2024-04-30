@@ -2,22 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>82638775223-lqd71ad390dq1pjalkimeqv7oh8sk9d1.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.82638775223-lqd71ad390dq1pjalkimeqv7oh8sk9d1</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDbHUgA6010ybvrYb516xnDaLpj5ZQJUp8</string>
+	<string>AIzaSyAXHsKB83FNfrkhCCR6uMFsQ-M2Gh4zzgs</string>
 	<key>GCM_SENDER_ID</key>
-	<string>82638775223</string>
+	<string>310545133265</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.finsimusfca.financialLiteracyGame</string>
 	<key>PROJECT_ID</key>
-	<string>financelitsim</string>
+	<string>finlitsim</string>
 	<key>STORAGE_BUCKET</key>
-	<string>financelitsim.appspot.com</string>
+	<string>finlitsim.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +25,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:82638775223:ios:094f0197d47409c961fe32</string>
+	<string>1:310545133265:ios:ca7d24cd8c26c5f2761ff0</string>
+	<key>DATABASE_URL</key>
+	<string>https://finlitsim-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
