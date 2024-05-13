@@ -72,6 +72,7 @@ void _createNewLevel({
     'cash': [startingCash],
     'decisions': [],
     'offeredAssets': [],
+    'advanceTimes': [],
   };
 
   CollectionReference levelDataRef =
