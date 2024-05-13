@@ -35,7 +35,7 @@ class GameData {
     required this.personalExpenses,
     required this.confettiController,
     this.levelId = 0,
-    this.period = 0,
+    this.period = 1,
     this.cashInterest = defaultCashInterest,
     this.assets = const [],
     this.loans = const [],
@@ -78,7 +78,8 @@ class GameData {
       isBankrupt: isBankrupt ?? this.isBankrupt,
       currentLevelSolved: currentLevelSolved ?? this.currentLevelSolved,
       gameIsFinished: gameIsFinished ?? this.gameIsFinished,
-      recordedDataList: recordedDataList ?? copyRecordedDataArray(this.recordedDataList),
+      recordedDataList:
+          recordedDataList ?? copyRecordedDataArray(this.recordedDataList),
     );
   }
 

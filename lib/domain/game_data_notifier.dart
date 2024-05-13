@@ -87,6 +87,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     required BuyDecision buyDecision,
     required Asset selectedAsset,
   }) async {
+    // increase period by one
+    state = state.copyWith(period: state.period + 1);
     // update cash interest
     state = state.copyWith(cashInterest: newCashInterest);
     // calculate interest on cash
@@ -179,6 +181,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
         assets: [], // remove all previous assets
         loans: [], // remove all previous loans
         currentLevelSolved: false, // resetLevelSolved flag
+        period: 1, // reset to period 1 in new level
       );
       // save current level locally
       saveLevelIDLocally(levelID);

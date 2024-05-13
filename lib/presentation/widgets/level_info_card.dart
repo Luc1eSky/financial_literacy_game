@@ -38,6 +38,8 @@ class LevelInfoCard extends ConsumerWidget {
               .capitalize(),
           content: Column(
             children: [
+              // TODO: REMOVE PERIOD INDICATION FROM SCREEN
+              Text(ref.watch(gameDataNotifierProvider).period.toString()),
               Text(
                 AppLocalizations.of(context)!
                     .cashGoalReach(convertedNextLevelCash),
