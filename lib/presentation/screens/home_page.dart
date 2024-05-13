@@ -123,10 +123,10 @@ class _HomepageState extends ConsumerState<Homepage> {
                           content: const AssetContent(),
                         ),
                         const SizedBox(height: 10),
-                        SectionCard(
+                        levelId != 0 && levelId != 1 ? SectionCard(
                           title: AppLocalizations.of(context)!.loan(2).toUpperCase(),
                           content: const LoanContent(),
-                        ),
+                        ) : Container(),
                       ],
                     ),
                   ),
