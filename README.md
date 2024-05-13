@@ -1,5 +1,5 @@
 # Financial Literacy Game
- This is an educational web app designed to enhance financial literacy among users and was developed for a field experiment by the University of San Francisco conducted in Uganda and India in the summer of 2023. The game was played by over 500 study participants over time span of the study in order to teach simple financial decision making and investments concept. The game playable with minimal digitial literacy levels since most study participants do not own their own smartphone to play the game and have no prior experience with digital games. The app is developed using Flutter, a cross-platform framework for building native applications for mobile, web, and desktop from a single codebase. 
+ This is an educational web app designed to enhance financial literacy among users and was developed for a study conducted by the University of San Francisco in Uganda and India in the summer of 2023. The game was played by over 250 study participants with the goal to teach simple financial decision making and investment concepts. The game is playable with minimal digital literacy levels since most study participants do not own a smartphone and have no prior experience with digital games. The app is developed using Flutter, a cross-platform framework for building native applications for mobile, web, and desktop from a single codebase. 
  
 The study results will be published in 2024 and I will provide a link here in the future.
 
@@ -9,7 +9,7 @@ The study results will be published in 2024 and I will provide a link here in th
 3. Open a terminal or command prompt and navigate to the project directory.
 4. Run the following command to install the required dependencies:
 -> flutter pub get
-5. Connect a device or start an emulator. ( I typically used AndroidStudio)
+5. Connect a device or start an emulator. (recommended: AndroidStudio)
 6. Run the app using the following command:
 -> flutter run
 The app should launch on your device or emulator, and you can explore its features and functionalities.
