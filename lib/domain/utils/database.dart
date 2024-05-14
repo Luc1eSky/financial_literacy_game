@@ -261,8 +261,8 @@ void advancePeriodFirestore({
   decisionArray.add(buyDecision.name);
 
   // add timestamp to list
-  List timeArray = List<DateTime>.from(docSnap.get('advanceTimes'));
-  timeArray.add(DateTime.now());
+  List timeArray = List<String>.from(docSnap.get('advanceTimes'));
+  timeArray.add(DateTime.now().toString());
 
   // add cashROI to list
   List<Map<String, dynamic>> offeredAssets =
