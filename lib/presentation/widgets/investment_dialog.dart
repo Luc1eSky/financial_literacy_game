@@ -261,7 +261,9 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     group: textGroup,
                   ),
                 if (currentLevel.savingsRate == 0 &&
-                    currentLevel.showCashBuyOption)
+                    currentLevel.showCashBuyOption &&
+                    (widget.ref.read(gameDataNotifierProvider).levelId == 0 ||
+                        widget.ref.read(gameDataNotifierProvider).period < 4))
                   AutoSizeText(
                     generateCashTipMessage(
                       ref: widget.ref,
@@ -279,7 +281,8 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     group: textGroup,
                   ),
                 if (currentLevel.savingsRate == 0 &&
-                    currentLevel.showLoanBorrowOption)
+                    currentLevel.showLoanBorrowOption &&
+                    widget.ref.read(gameDataNotifierProvider).period < 4)
                   AutoSizeText(
                     generateLoanTipMessage(
                       context: context,
