@@ -72,6 +72,7 @@ void _createNewLevel({
     'cash': [startingCash],
     'decisions': [],
     'offeredAssets': [],
+    'advanceTimes': [],
   };
 
   CollectionReference levelDataRef =
@@ -259,6 +260,10 @@ void advancePeriodFirestore({
   List<String> decisionArray = List.from(docSnap.get('decisions'));
   decisionArray.add(buyDecision.name);
 
+  // add timestamp to list
+  List timeArray = List<String>.from(docSnap.get('advanceTimes'));
+  timeArray.add(DateTime.now().toString());
+
   // add cashROI to list
   List<Map<String, dynamic>> offeredAssets =
       List.from(docSnap.get('offeredAssets'));
@@ -277,6 +282,7 @@ void advancePeriodFirestore({
         'cash': cashArray,
         'decisions': decisionArray,
         'offeredAssets': offeredAssets,
+        'advanceTimes': timeArray,
       },
       SetOptions(
         merge: true,

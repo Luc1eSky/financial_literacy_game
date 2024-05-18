@@ -43,7 +43,7 @@ dependencies:
   confetti: ^0.7.0
   shared_preferences: ^2.1.0
   device_info_plus: ^8.2.2
-  firebase_core: ^2.13.0
+  firebase_core: ^2.30.0
   cloud_firestore: ^4.7.1
   intl: ^0.18.1
 
