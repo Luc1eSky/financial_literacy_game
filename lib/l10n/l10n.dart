@@ -11,7 +11,7 @@ class L10n {
     defaultLocale,
     // const Locale('kn', 'IN'),
     // const Locale('lg'),
-    const Locale('es', 'GT'),
+    const Locale('es', 'PE'),
   ];
 
   static Future<Locale> getSystemLocale() async {
