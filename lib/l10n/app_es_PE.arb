@@ -32,6 +32,7 @@
   "instructionText4": "4. Es posible que encuentre útiles los cálculos debajo de la tarjeta de animales.",
   "instructionText5": "5. Debe alcanzar una cantidad en efectivo determinada para llegar al siguiente nivel.",
   "instructionText6": "6. Puedes encontrar estas instrucciones del juego en el menú de Configuración.",
+  "interestAmount": "Monto total de intereses",
   "interestCash": "• La tasa de interés en efectivo es {interestRate}% / año",
   "investmentOptions": "Opciones de inversión",
   "language": "Español - PEN",

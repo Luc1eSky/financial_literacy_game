@@ -90,6 +90,23 @@ String generateLoanTipMessage({
       '$profitString';
   return tipString;
 }
+String generateInterestAmountTipMessage({
+  required Asset asset,
+  required Level level,
+  required BuildContext context,
+  required WidgetRef ref,
+}) {
+  String tipString = '${AppLocalizations.of(context)!.interestAmount}: ';
+  double interest =   asset.price * (1 + level.loan.interestRate);
+  double convertedInterest =
+      ref.read(gameDataNotifierProvider.notifier).convertAmount(interest);
+  String interestString =
+      AppLocalizations.of(context)!.cashValue(convertedInterest);
+  tipString +=
+      '(${AppLocalizations.of(context)!.cashValue(ref.read(gameDataNotifierProvider.notifier).convertAmount(asset.price))} x ${1 + level.loan.interestRate}) = '
+      '$interestString';
+  return tipString;
+}
 
 // extension to allow capitalization of first letter in strings
 extension StringExtension on String {
