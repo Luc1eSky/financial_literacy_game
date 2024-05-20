@@ -161,6 +161,10 @@
     "@cash":{
         "description": "pay with cash"
     },
+    "interestAmount": "Total interest amount",
+    "@interestAmount":{
+        "description": "Total interest amount for each investment option when the loans option is displayed"
+    },
     "expenses": "expenses",
     "@expenses":{
         "description": "expenses per period"

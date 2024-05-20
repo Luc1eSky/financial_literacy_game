@@ -299,6 +299,25 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
                     ),
                     group: textGroup,
                   ),
+                if (currentLevel.savingsRate == 0 &&
+                    currentLevel.showLoanBorrowOption &&
+                    widget.ref.read(gameDataNotifierProvider).period >= 4)
+                  AutoSizeText(
+                    generateInterestAmountTipMessage(
+                      context: context,
+                      asset: selectedAsset,
+                      level: currentLevel,
+                      ref: widget.ref,
+                    ),
+                    maxLines: 2,
+                    style: const TextStyle(
+                      fontSize: 100,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black,
+                    ),
+                    group: textGroup,
+                  ),
               ],
             ),
           ),
