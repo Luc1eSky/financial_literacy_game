@@ -43,5 +43,5 @@ Loan getRandomLoan() {
         end: maximumInterestRate,
         steps: stepsInterestRate,
       ),
-      asset: cow);
+      asset: pig);
 }

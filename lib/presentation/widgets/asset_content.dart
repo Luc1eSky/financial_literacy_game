@@ -17,16 +17,16 @@ class AssetContent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AutoSizeGroup valueSizeGroup = AutoSizeGroup();
 
-    int cows = ref.watch(gameDataNotifierProvider).cows;
+    int pigs = ref.watch(gameDataNotifierProvider).pigs;
     int chickens = ref.watch(gameDataNotifierProvider).chickens;
     int goats = ref.watch(gameDataNotifierProvider).goats;
 
-    double cowIncome = ref
+    double pigIncome = ref
         .watch(gameDataNotifierProvider.notifier)
-        .calculateIncome(AssetType.cow);
+        .calculateIncome(AssetType.pig);
 
-    double convertedCowIncome =
-        ref.read(gameDataNotifierProvider.notifier).convertAmount(cowIncome);
+    double convertedPigIncome =
+        ref.read(gameDataNotifierProvider.notifier).convertAmount(pigIncome);
 
     double chickenIncome = ref
         .watch(gameDataNotifierProvider.notifier)
@@ -56,11 +56,11 @@ class AssetContent extends ConsumerWidget {
         children: [
           Expanded(
               child: SmallAssetCard(
-            title: AppLocalizations.of(context)!.cow,
-            count: cows,
-            income: convertedCowIncome,
+            title: AppLocalizations.of(context)!.pig,
+            count: pigs,
+            income: convertedPigIncome,
             group: valueSizeGroup,
-            imagePath: 'assets/images/cow.png',
+            imagePath: 'assets/images/pig.png',
           )),
           const SizedBox(width: 7.0),
           Expanded(

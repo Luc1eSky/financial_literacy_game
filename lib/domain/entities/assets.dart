@@ -12,10 +12,10 @@ Asset goats = Asset(
   riskLevel: 0.15,
 );
 
-Asset cow = Asset(
-  type: AssetType.cow,
+Asset pig = Asset(
+  type: AssetType.pig,
   numberOfAnimals: 1,
-  imagePath: 'assets/images/cow.png',
+  imagePath: 'assets/images/pig.png',
   price: 14,
   income: 4,
   lifeExpectancy: 4,
@@ -32,7 +32,7 @@ Asset chickens = Asset(
   riskLevel: 0.10,
 );
 
-List<Asset> allDefaultAssets = [goats, cow, chickens];
+List<Asset> allDefaultAssets = [goats, pig, chickens];
 
 Asset getRandomAsset() {
   return allDefaultAssets[Random().nextInt(allDefaultAssets.length)];

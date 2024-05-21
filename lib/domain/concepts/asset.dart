@@ -46,7 +46,7 @@ class Asset {
 }
 
 enum AssetType {
-  cow,
+  pig,
   chicken,
   goat,
 }
