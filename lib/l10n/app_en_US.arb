@@ -37,9 +37,9 @@
     "@assets":{
         "description": "Title for overview section of assets that the user owns and income they generate"
     },
-    "cow": "cow",
-    "@cow":{
-        "description": "Asset cow that user can buy"
+    "pig": "pig",
+    "@pig":{
+        "description": "Asset pig that user can buy"
     },
     "chicken": "chicken",
     "@chicken":{
@@ -253,7 +253,7 @@
         "placeholders": {
             "asset": {
                 "type": "String",
-                "example": "cow"
+                "example": "pig"
             }
         }
     },

@@ -29,9 +29,9 @@ class AssetCarousel extends ConsumerWidget {
         LayoutBuilder(builder: (context, constraints) {
           String assetName;
           switch (asset.type) {
-            case AssetType.cow:
+            case AssetType.pig:
               {
-                assetName = AppLocalizations.of(context)!.cow;
+                assetName = AppLocalizations.of(context)!.pig;
               }
               break;
 

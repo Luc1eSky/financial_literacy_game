@@ -83,14 +83,14 @@ class GameData {
     );
   }
 
-  int get cows {
-    int cows = 0;
+  int get pigs {
+    int pigs = 0;
     for (Asset asset in assets) {
-      if (asset.type == AssetType.cow) {
-        cows += asset.numberOfAnimals;
+      if (asset.type == AssetType.pig) {
+        pigs += asset.numberOfAnimals;
       }
     }
-    return cows;
+    return pigs;
   }
 
   int get chickens {
