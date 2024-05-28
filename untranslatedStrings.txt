@@ -1,21 +1,35 @@
 {
+  "en": [
+    "interestAmount"
+  ],
+
   "es": [
     "enterUID",
+    "interestAmount",
     "cashValue"
   ],
 
   "es_GT": [
     "enterUID",
+    "interestAmount",
     "cashValue"
   ],
 
+  "es_PE": [
+    "enterUID"
+  ],
+
   "kn": [
+    "pig",
     "enterUID",
+    "interestAmount",
     "cashValue"
   ],
 
   "lg": [
+    "pig",
     "enterUID",
+    "interestAmount",
     "cashValue"
   ]
 }

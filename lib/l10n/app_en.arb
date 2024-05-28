@@ -209,7 +209,7 @@
         "placeholders": {
             "cashAmount": {
                 "type": "double",
-                "format": "simpleCurrency",
+                "format": "decimalPatternDigits",
                 "example": "Price: $15.00"
             }
         }

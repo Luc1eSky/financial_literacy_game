@@ -3,6 +3,7 @@ import 'package:financial_literacy_game/presentation/widgets/menu_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../domain/game_data_notifier.dart';
 import '../../domain/utils/device_and_personal_data.dart';
@@ -48,6 +49,9 @@ class LanguageSelectionDialog extends ConsumerWidget {
                     locale: locale,
                     child: Builder(
                       builder: (context) {
+                        Locale locale = Localizations.localeOf(context);
+                        var format = NumberFormat.simpleCurrency(
+                            locale: locale.toString());
                         return Text(
                           AppLocalizations.of(context)!.language,
                         );

@@ -34,12 +34,11 @@ class LevelInfoCard extends ConsumerWidget {
       children: [
         SectionCard(
           title: AppLocalizations.of(context)!
-              .level((levelId + 1), levels.length)
+              .level((levelId + 1), levels.length,
+                  ref.watch(gameDataNotifierProvider).period.toString())
               .capitalize(),
           content: Column(
             children: [
-              // TODO: REMOVE PERIOD INDICATION FROM SCREEN
-              Text(ref.watch(gameDataNotifierProvider).period.toString()),
               Text(
                 AppLocalizations.of(context)!
                     .cashGoalReach(convertedNextLevelCash),

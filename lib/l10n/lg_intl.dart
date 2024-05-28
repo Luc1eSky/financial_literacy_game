@@ -258,7 +258,8 @@ const lgDateSymbols = {
 };
 
 // #docregion Delegate
-class _LgMaterialLocalizationsDelegate extends LocalizationsDelegate<MaterialLocalizations> {
+class _LgMaterialLocalizationsDelegate
+    extends LocalizationsDelegate<MaterialLocalizations> {
   const _LgMaterialLocalizationsDelegate();
 
   @override
@@ -409,7 +410,8 @@ class LgMaterialLocalizations extends GlobalMaterialLocalizations {
   String get pageRowsInfoTitleRaw => r'$firstRow–$lastRow of $rowCount';
 
   @override
-  String get pageRowsInfoTitleApproximateRaw => r'$firstRow–$lastRow of about $rowCount';
+  String get pageRowsInfoTitleApproximateRaw =>
+      r'$firstRow–$lastRow of about $rowCount';
 // #enddocregion Raw
 
   @override
@@ -443,7 +445,8 @@ class LgMaterialLocalizations extends GlobalMaterialLocalizations {
   String get remainingTextFieldCharacterCountOne => r'1 character remaining';
 
   @override
-  String get remainingTextFieldCharacterCountOther => r'$remainingCount characters remaining';
+  String get remainingTextFieldCharacterCountOther =>
+      r'$remainingCount characters remaining';
 
   @override
   String? get remainingTextFieldCharacterCountTwo => null;
@@ -524,7 +527,8 @@ class LgMaterialLocalizations extends GlobalMaterialLocalizations {
   String get viewLicensesButtonLabel => r'VIEW LICENSES';
 
   @override
-  List<String> get narrowWeekdays => const <String>['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  List<String> get narrowWeekdays =>
+      const <String>['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   @override
   int get firstDayOfWeekIndex => 0;
@@ -750,14 +754,19 @@ class LgMaterialLocalizations extends GlobalMaterialLocalizations {
   @override
   String get keyboardKeySpace => throw UnimplementedError();
 
+  @override
   get scrimOnTapHintRaw => throw UnimplementedError();
 
+  @override
   get bottomSheetLabel => throw UnimplementedError();
 
+  @override
   get currentDateLabel => throw UnimplementedError();
 
+  @override
   get keyboardKeyShift => throw UnimplementedError();
 
+  @override
   get scrimLabel => throw UnimplementedError();
 
   @override
@@ -803,4 +812,12 @@ class LgMaterialLocalizations extends GlobalMaterialLocalizations {
   @override
   // TODO: implement shareButtonLabel
   String get shareButtonLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement clearButtonTooltip
+  String get clearButtonTooltip => throw UnimplementedError();
+
+  @override
+  // TODO: implement selectedDateLabel
+  String get selectedDateLabel => throw UnimplementedError();
 }

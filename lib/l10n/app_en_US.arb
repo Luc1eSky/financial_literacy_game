@@ -196,24 +196,30 @@
             }
         }
     },
-    "price": "price: {cashAmount}",
+    "price": "price: ${cashAmount}",
     "@price":{
         "description": "Price for asset",
         "placeholders": {
             "cashAmount": {
                 "type": "double",
-                "format": "simpleCurrency",
+                "format": "decimalPatternDigits",
+                "optionalParameters": {
+                    "decimalDigits": 2
+                },
                 "example": "Price: $15.00"
             }
         }
     },
-    "incomePerYear": "income: {cashAmount} / year",
+    "incomePerYear": "income: ${cashAmount} / year",
     "@incomePerYear":{
         "description": "Income per period for asset",
         "placeholders": {
             "cashAmount": {
                 "type": "double",
-                "format": "simpleCurrency",
+                "format": "decimalPatternDigits",
+                "optionalParameters": {
+                    "decimalDigits": 2
+                },
                 "example": "Price: $15.00"
             }
         }
@@ -261,13 +267,16 @@
     "@assetsDied":{
         "description": "dialog when the assets have died"
     },
-    "currentCash": "your current cash: {cashAmount}",
+    "currentCash": "your current cash: ${cashAmount}",
     "@currentCash":{
         "description": "displays the current amount of cash a user has",
         "placeholders": {
             "cashAmount": {
                 "type": "double",
-                "format": "simpleCurrency",
+                "format": "decimalPatternDigits",
+                "optionalParameters": {
+                    "decimalDigits": 2
+                },
                 "example": "Price: $15.00"
             }
         }
@@ -292,7 +301,7 @@
             }
         }
     },
-    "level": "level {level} / {levelTotal}",
+    "level": "level {level} / {levelTotal} (Period: {period})",
     "@level":{
         "description": "Level which user is in out of all levels",
         "placeholders": {
@@ -305,14 +314,17 @@
             }
         }
     },
-    "cashGoalReach": "cash goal: reach {cashAmount} ",
+    "cashGoalReach": "cash goal: reach ${cashAmount} ",
     "@cashGoalReach":{
         "description": "Cash goal that user needs to reach. E.g Cash Goal: reach 75",
         "placeholders": {
             "cashAmount": {
                 "type": "double",
-                "format": "simpleCurrency",
-                "example": "Cash goal: reach $50.00"
+                "format": "decimalPatternDigits",
+                "optionalParameters": {
+                    "decimalDigits": 2
+                },
+                "example": "cash goal: reach $15.00"
             }
         }
     },
@@ -354,13 +366,17 @@
             }
         }
     },
-    "cashValue": "{value}",
+    "cashValue": "${value}",
     "@cashValue": {
     "description" : "How cash values are displayed in App",
     "placeholders": {
      "value": {
-       "type": "double",
-       "format": "simpleCurrency"
+         "type": "double",
+         "format": "decimalPatternDigits",
+         "optionalParameters": {
+             "decimalDigits": 2
+         },
+         "example": "$15.00"
     }
   }
  },

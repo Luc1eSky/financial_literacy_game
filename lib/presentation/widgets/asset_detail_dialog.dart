@@ -21,8 +21,8 @@ class AssetDetailDialog extends ConsumerWidget {
             aspectRatio: 9.0,
             child: Container(
               color: Colors.lightBlue,
-              child: Row(
-                children: const [],
+              child: const Row(
+                children: [],
               ),
             ),
           ),
@@ -52,7 +52,8 @@ class AssetDetailDialog extends ConsumerWidget {
                         Expanded(
                           flex: 4,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Container(
                               height: 10.0,
                               decoration: BoxDecoration(
