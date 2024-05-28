@@ -196,7 +196,7 @@
             }
         }
     },
-    "price": "price: ${cashAmount}",
+    "price": "Price: ${cashAmount}",
     "@price":{
         "description": "Price for asset",
         "placeholders": {
@@ -210,7 +210,7 @@
             }
         }
     },
-    "incomePerYear": "income: ${cashAmount} per year",
+    "incomePerYear": "Income: ${cashAmount} per year",
     "@incomePerYear":{
         "description": "Income per period for asset",
         "placeholders": {

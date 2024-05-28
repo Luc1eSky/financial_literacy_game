@@ -93,11 +93,9 @@ class AssetCarousel extends ConsumerWidget {
                   Expanded(
                     flex: 2,
                     child: AutoSizeText(
-                      AppLocalizations.of(context)!
-                          .price(ref
-                              .read(gameDataNotifierProvider.notifier)
-                              .convertAmount(asset.price))
-                          .capitalize(),
+                      AppLocalizations.of(context)!.price(ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .convertAmount(asset.price)),
                       style: const TextStyle(
                         fontSize: 100,
                         color: Colors.white,
@@ -108,11 +106,9 @@ class AssetCarousel extends ConsumerWidget {
                   Expanded(
                     flex: 2,
                     child: AutoSizeText(
-                      AppLocalizations.of(context)!
-                          .incomePerYear(ref
-                              .read(gameDataNotifierProvider.notifier)
-                              .convertAmount(asset.income))
-                          .capitalize(),
+                      AppLocalizations.of(context)!.incomePerYear(ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .convertAmount(asset.income)),
                       style: const TextStyle(
                         fontSize: 100,
                         color: Colors.white,

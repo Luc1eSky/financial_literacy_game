@@ -204,12 +204,10 @@ class _InvestmentDialogState extends State<InvestmentDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  AppLocalizations.of(context)!
-                      .currentCash(widget.ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .convertAmount(
-                              widget.ref.read(gameDataNotifierProvider).cash))
-                      .capitalize(),
+                  AppLocalizations.of(context)!.currentCash(widget.ref
+                      .read(gameDataNotifierProvider.notifier)
+                      .convertAmount(
+                          widget.ref.read(gameDataNotifierProvider).cash)),
                   maxLines: 2,
                   style: const TextStyle(
                       fontSize: 25, fontWeight: FontWeight.bold),
