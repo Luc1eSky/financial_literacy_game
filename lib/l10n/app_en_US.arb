@@ -210,7 +210,7 @@
             }
         }
     },
-    "incomePerYear": "income: ${cashAmount} / year",
+    "incomePerYear": "income: ${cashAmount} per year",
     "@incomePerYear":{
         "description": "Income per period for asset",
         "placeholders": {

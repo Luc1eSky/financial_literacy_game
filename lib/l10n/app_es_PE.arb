@@ -26,7 +26,7 @@
   "hintLastName": "Apellido",
   "howToPlay": "Cómo jugar",
   "income": "Ingreso",
-  "incomePerYear": "Ingresos: S/{cashAmount} / año",
+  "incomePerYear": "Ingresos: S/{cashAmount} per año",
   "instructionText1": "1. Para comenzar el juego, haga clic en el botón “Siguiente“ en la esquina superior derecha.",
   "instructionText2": "2. Puedes decidir comprar un animal con efectivo, sacar un préstamo, o no comprar el activo.",
   "instructionText3": "3. Cada oferta de animales varía en su precio, ingresos, y esperanza de vida.",
